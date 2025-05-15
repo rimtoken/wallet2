@@ -72,4 +72,4 @@ RimToken هي تطبيق محفظة عملات رقمية متكامل يدعم 
 
 ## الترخيص
 
-هذا المشروع مرخص بموجب [MIT License](LICENSE).
+هذا المشروع مرخص بموجب [MIT License](LICENSE).# wallet2
