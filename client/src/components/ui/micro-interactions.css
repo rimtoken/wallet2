@@ -1,0 +1,148 @@
+/* تعريفات لعناصر التفاعلات الدقيقة */
+
+/* تأثير النبض للأزرار */
+.pulse-on-hover {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.pulse-on-hover:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* تأثير التوهج على العناصر */
+.glow-on-hover {
+  transition: box-shadow 0.3s ease;
+}
+
+.glow-on-hover:hover {
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+}
+
+/* تأثير توسع الحدود */
+.border-expand-on-hover {
+  position: relative;
+  overflow: hidden;
+}
+
+.border-expand-on-hover::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: currentColor;
+  transition: width 0.3s ease, left 0.3s ease;
+}
+
+.border-expand-on-hover:hover::after {
+  width: 100%;
+  left: 0;
+}
+
+/* تأثير التلاشي للبطاقات */
+.fade-content-on-hover .fade-content {
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  transition: opacity 0.3s ease, height 0.3s ease;
+}
+
+.fade-content-on-hover:hover .fade-content {
+  opacity: 1;
+  height: auto;
+}
+
+/* تأثير النقل للرموز */
+.icon-shift-on-hover svg {
+  transition: transform 0.2s ease;
+}
+
+.icon-shift-on-hover:hover svg {
+  transform: translateX(4px);
+}
+
+/* تأثير التحول للأزرار */
+.rotate-icon-on-hover svg {
+  transition: transform 0.3s ease;
+}
+
+.rotate-icon-on-hover:hover svg {
+  transform: rotate(15deg);
+}
+
+/* تأثير الموجات */
+.ripple-effect {
+  position: relative;
+  overflow: hidden;
+  transform: translateZ(0);
+}
+
+.ripple-effect:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, currentColor 10%, transparent 10%);
+  background-repeat: no-repeat;
+  background-position: 50%;
+  transform: scale(10, 10);
+  opacity: 0;
+  transition: transform 0.5s, opacity 0.5s;
+}
+
+.ripple-effect:active:after {
+  transform: scale(0, 0);
+  opacity: 0.3;
+  transition: 0s;
+}
+
+/* تأثير تغيير اللون تدريجياً */
+.color-shift-on-hover {
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.color-shift-on-hover:hover {
+  color: hsl(var(--primary));
+  background-color: hsl(var(--primary) / 0.1);
+}
+
+/* تأثير الانزلاق */
+.slide-content-on-hover .slide-content {
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.slide-content-on-hover:hover .slide-content {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* تأثير التكبير على الصور */
+.zoom-image-on-hover {
+  overflow: hidden;
+}
+
+.zoom-image-on-hover img {
+  transition: transform 0.5s ease;
+}
+
+.zoom-image-on-hover:hover img {
+  transform: scale(1.1);
+}
+
+/* تأثير تمييز الخلفية */
+.highlight-bg-on-hover {
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.highlight-bg-on-hover:hover {
+  background-color: hsl(var(--accent) / 0.2);
+  transform: translateY(-2px);
+}
