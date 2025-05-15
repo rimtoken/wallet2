@@ -10,6 +10,7 @@ import Markets from "@/pages/markets";
 import Settings from "@/pages/settings";
 import Web3WalletPage from "@/pages/web3-wallet";
 import PosPage from "@/pages/point-of-sale/pos-page";
+import AuthPage from "@/pages/auth-page";
 import { useState, useEffect } from "react";
 
 function Router() {
@@ -42,6 +43,7 @@ function Router() {
       <Route path="/settings" component={() => <Settings userId={userId} />} />
       <Route path="/web3-wallet" component={() => <Web3WalletPage userId={userId} />} />
       <Route path="/pos" component={PosPage} />
+      <Route path="/auth" component={AuthPage} />
       <Route component={NotFound} />
     </Switch>
   );

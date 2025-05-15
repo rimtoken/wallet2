@@ -1,27 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { PosMap, type PosLocation } from '@/components/pos/pos-map';
-import { PosDetails } from '@/components/pos/pos-details';
+import React from 'react';
 
 export default function PosPage() {
-  // تعيين عنوان الصفحة
-  useEffect(() => {
-    document.title = 'نقاط البيع - RimToken';
-  }, []);
-  
-  const [selectedLocation, setSelectedLocation] = useState<PosLocation | null>(null);
-  const [showDetails, setShowDetails] = useState<boolean>(false);
-  
-  // اختيار موقع
-  const handleSelectLocation = (location: PosLocation) => {
-    setSelectedLocation(location);
-    setShowDetails(true);
-  };
-  
-  // العودة إلى الخريطة
-  const handleBackToMap = () => {
-    setShowDetails(false);
-  };
-  
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-3xl font-bold mb-6 text-center bg-gradient-to-r from-primary to-indigo-600 text-transparent bg-clip-text">
@@ -35,16 +14,20 @@ export default function PosPage() {
       </div>
       
       <div className="grid grid-cols-1 gap-6 max-w-4xl mx-auto">
-        {showDetails && selectedLocation ? (
-          <PosDetails 
-            location={selectedLocation} 
-            onBack={handleBackToMap} 
-          />
-        ) : (
-          <PosMap 
-            onSelectLocation={handleSelectLocation} 
-          />
-        )}
+        <div className="p-8 border rounded-lg shadow-sm">
+          <h2 className="text-xl font-semibold mb-4">مرحبًا بك في خدمة نقاط البيع</h2>
+          <p>قريبًا ستتمكن من:</p>
+          <ul className="list-disc mr-6 mt-2 space-y-2">
+            <li>عرض قائمة بنقاط البيع القريبة منك على الخريطة</li>
+            <li>تصفية نقاط البيع حسب العملات المدعومة</li>
+            <li>الاطلاع على تفاصيل كل نقطة بيع وساعات العمل</li>
+            <li>معرفة أسعار الصرف المحدثة بشكل مباشر</li>
+            <li>حجز موعد لزيارة نقطة البيع وإجراء المعاملات</li>
+          </ul>
+          <div className="mt-6 p-4 bg-yellow-50 rounded-md">
+            <p className="text-yellow-800">هذه الميزة قيد التطوير حاليًا وستكون متاحة قريبًا.</p>
+          </div>
+        </div>
       </div>
     </div>
   );
