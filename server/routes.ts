@@ -209,6 +209,188 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  // واجهة برمجة التطبيقات لنقاط البيع
+  app.get("/api/pos-locations", async (_req: Request, res: Response) => {
+    try {
+      // في تطبيق حقيقي، ستقوم بجلب البيانات من قاعدة البيانات
+      // هذه بيانات مثالية لعرض الميزة
+      const posLocations = [
+        {
+          id: 'pos-001',
+          name: 'صرافة الرياض الرقمية',
+          address: 'شارع العليا، حي العليا',
+          city: 'الرياض',
+          coordinates: { lat: 24.7136, lng: 46.6753 },
+          distance: 2.4,
+          openNow: true,
+          hours: '9:00 - 22:00',
+          phone: '+966112345678',
+          rating: 4.7,
+          totalRatings: 128,
+          paymentMethods: ['cash', 'card'],
+          availableCurrencies: ['BTC', 'ETH', 'BNB', 'USDT'],
+          kyc: 'basic',
+          minAmount: 100,
+          maxAmount: 5000,
+          image: 'https://images.unsplash.com/photo-1521791055366-0d553872125f'
+        },
+        {
+          id: 'pos-002',
+          name: 'مركز كريبتو العربية',
+          address: 'طريق الملك فهد، حي الورود',
+          city: 'الرياض',
+          coordinates: { lat: 24.7741, lng: 46.7388 },
+          distance: 4.1,
+          openNow: true,
+          hours: '10:00 - 20:00',
+          phone: '+966113456789',
+          rating: 4.5,
+          totalRatings: 72,
+          paymentMethods: ['cash', 'card', 'bank_transfer'],
+          availableCurrencies: ['BTC', 'ETH', 'SOL', 'ADA', 'MATIC'],
+          kyc: 'full',
+          minAmount: 500,
+          maxAmount: 10000,
+          image: 'https://images.unsplash.com/photo-1444653614773-995cb1ef9efa'
+        },
+        {
+          id: 'pos-003',
+          name: 'صرافة البلد للعملات الرقمية',
+          address: 'شارع التحلية، حي السليمانية',
+          city: 'جدة',
+          coordinates: { lat: 21.5433, lng: 39.1728 },
+          distance: 5.7,
+          openNow: false,
+          hours: '8:30 - 21:30',
+          phone: '+966122345678',
+          rating: 4.2,
+          totalRatings: 95,
+          paymentMethods: ['cash'],
+          availableCurrencies: ['BTC', 'ETH', 'USDT', 'BNB'],
+          kyc: 'none',
+          minAmount: 50,
+          maxAmount: 3000,
+          image: 'https://images.unsplash.com/photo-1462206092226-f46025ffe607'
+        },
+        {
+          id: 'pos-004',
+          name: 'مركز المستقبل للعملات',
+          address: 'طريق الملك عبدالعزيز، حي الخبر الشمالية',
+          city: 'الخبر',
+          coordinates: { lat: 26.2794, lng: 50.2083 },
+          distance: 8.2,
+          openNow: true,
+          hours: '9:00 - 22:00',
+          phone: '+966132345678',
+          rating: 4.8,
+          totalRatings: 63,
+          paymentMethods: ['cash', 'card', 'bank_transfer'],
+          availableCurrencies: ['BTC', 'ETH', 'SOL', 'DOGE', 'XRP'],
+          kyc: 'full',
+          minAmount: 200,
+          maxAmount: 8000,
+          image: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e'
+        },
+        {
+          id: 'pos-005',
+          name: 'قصر العملات الرقمية',
+          address: 'شارع الأمير محمد بن فهد، حي العزيزية',
+          city: 'الدمام',
+          coordinates: { lat: 26.4207, lng: 50.0887 },
+          distance: 10.5,
+          openNow: true,
+          hours: '10:00 - 23:00',
+          phone: '+966133456789',
+          rating: 4.3,
+          totalRatings: 47,
+          paymentMethods: ['cash', 'card'],
+          availableCurrencies: ['BTC', 'ETH', 'USDT', 'BNB'],
+          kyc: 'basic',
+          minAmount: 100,
+          maxAmount: 5000,
+          image: 'https://images.unsplash.com/photo-1601597111158-2fceff292cdc'
+        }
+      ];
+      
+      res.json(posLocations);
+    } catch (error: any) {
+      console.error("Error getting POS locations:", error);
+      res.status(500).json({ error: "Failed to get POS locations" });
+    }
+  });
+  
+  // واجهة برمجة التطبيقات لأسعار الصرف في نقاط البيع
+  app.get("/api/exchange-rates/:posId", async (req: Request, res: Response) => {
+    try {
+      const posId = req.params.posId;
+      
+      // في تطبيق حقيقي، ستقوم بجلب البيانات من قاعدة البيانات
+      // هذه بيانات مثالية لعرض الميزة
+      const exchangeRates = [
+        { currency: 'BTC', buyRate: 230000, sellRate: 228000 },
+        { currency: 'ETH', buyRate: 12500, sellRate: 12300 },
+        { currency: 'BNB', buyRate: 1800, sellRate: 1750 },
+        { currency: 'SOL', buyRate: 650, sellRate: 630 },
+        { currency: 'USDT', buyRate: 3.76, sellRate: 3.74 },
+        { currency: 'ADA', buyRate: 2.2, sellRate: 2.1 },
+        { currency: 'XRP', buyRate: 3.1, sellRate: 3.0 },
+        { currency: 'DOGE', buyRate: 0.8, sellRate: 0.75 },
+        { currency: 'MATIC', buyRate: 3.5, sellRate: 3.4 },
+      ];
+      
+      res.json(exchangeRates);
+    } catch (error: any) {
+      console.error("Error getting exchange rates:", error);
+      res.status(500).json({ error: "Failed to get exchange rates" });
+    }
+  });
+  
+  // واجهة برمجة التطبيقات للأوقات المتاحة للحجز
+  app.get("/api/available-times/:posId", async (req: Request, res: Response) => {
+    try {
+      const posId = req.params.posId;
+      const date = req.query.date;
+      
+      // في تطبيق حقيقي، ستقوم بجلب البيانات من قاعدة البيانات
+      // هذه بيانات مثالية لعرض الميزة
+      const availableTimes = [
+        '10:00', '10:30', '11:00', '11:30', '12:00', 
+        '13:00', '13:30', '14:00', '14:30', 
+        '15:00', '15:30', '16:00', '16:30', '17:00'
+      ];
+      
+      res.json(availableTimes);
+    } catch (error: any) {
+      console.error("Error getting available times:", error);
+      res.status(500).json({ error: "Failed to get available times" });
+    }
+  });
+  
+  // واجهة برمجة التطبيقات لحجز موعد في نقطة بيع
+  app.post("/api/book-appointment", async (req: Request, res: Response) => {
+    try {
+      const { posId, date, time, currencyCode, amount, userId } = req.body;
+      
+      // في تطبيق حقيقي، ستقوم بتخزين بيانات الحجز في قاعدة البيانات
+      // هذه استجابة مثالية لعرض الميزة
+      res.status(201).json({
+        id: `booking-${Math.floor(Math.random() * 10000)}`,
+        posId,
+        date,
+        time,
+        currencyCode,
+        amount,
+        userId,
+        status: 'confirmed',
+        referenceNumber: `RT-${Math.floor(Math.random() * 1000000)}`,
+        createdAt: new Date().toISOString()
+      });
+    } catch (error: any) {
+      console.error("Error booking appointment:", error);
+      res.status(500).json({ error: "Failed to book appointment" });
+    }
+  });
+  
   // واجهة برمجة التطبيقات لنظام الإنجازات
   app.get("/api/achievements/:userId", async (req: Request, res: Response) => {
     try {

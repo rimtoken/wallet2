@@ -33,6 +33,11 @@ export function Sidebar({ className }: SidebarProps) {
       icon: "ri-currency-line" 
     },
     { 
+      path: "/pos", 
+      label: "نقاط البيع", 
+      icon: "ri-store-2-line" 
+    },
+    { 
       path: "/exchange", 
       label: "Exchange", 
       icon: "ri-swap-line" 
