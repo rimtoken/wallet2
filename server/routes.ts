@@ -176,6 +176,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     }
   });
+  
+  // إضافة واجهة برمجة التطبيقات للصحة المالية
+  app.get("/api/portfolio/:userId/financial-health", async (req: Request, res: Response) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      
+      // في تطبيق حقيقي، ستقوم بجلب البيانات من قاعدة البيانات
+      // هذه بيانات مثالية لعرض الميزة
+      const financialHealth = {
+        savingsRatio: 0.15,
+        debtToIncomeRatio: 0.42,
+        cryptoAllocation: 0.25,
+        diversificationScore: 65,
+        monthlyExpenses: 3200,
+        monthlyIncome: 5000,
+        emergencyFund: 10000,
+        recommendedEmergencyFund: 15000,
+        expenseBreakdown: [
+          { name: 'سكن', value: 1200 },
+          { name: 'طعام', value: 800 },
+          { name: 'نقل', value: 400 },
+          { name: 'ترفيه', value: 300 },
+          { name: 'متنوع', value: 500 }
+        ]
+      };
+      
+      res.json(financialHealth);
+    } catch (error: any) {
+      console.error("Error getting financial health:", error);
+      res.status(500).json({ error: "Failed to get financial health data" });
+    }
+  });
 
   const httpServer = createServer(app);
   return httpServer;

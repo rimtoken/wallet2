@@ -6,6 +6,18 @@
     <title>RimToken | Web3 Cryptocurrency Wallet</title>
     <meta name="description" content="Store and manage your cryptocurrency assets on Web3 with RimToken, the secure wallet for blockchain transactions." />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css">
+    
+    <!-- PWA/Mobile App Meta Tags -->
+    <meta name="theme-color" content="#4f46e5" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="RimToken">
+    
+    <!-- PWA/Mobile Icons -->
+    <link rel="icon" type="image/svg+xml" href="/icons/icon.svg" />
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
+    <link rel="manifest" href="/manifest.json">
+    
     <!-- Open Graph tags -->
     <meta property="og:title" content="RimToken" />
     <meta property="og:description" content="Store and manage your cryptocurrency assets on Web3 with RimToken, the secure wallet for blockchain transactions." />
@@ -14,6 +26,8 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <!-- Register Service Worker for PWA -->
+    <script src="/register-sw.js"></script>
     <!-- This is a replit script which adds a banner on the top of the page when opened in development mode outside the replit environment -->
     <script type="text/javascript" src="https://replit.com/public/js/replit-dev-banner.js"></script>
   </body>
