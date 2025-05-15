@@ -209,6 +209,95 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  // واجهة برمجة لمؤشر الحالة المالية بالرموز التعبيرية
+  app.get("/api/portfolio/:userId/financial-mood", async (req: Request, res: Response) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      if (isNaN(userId)) {
+        return res.status(400).json({ error: "معرف المستخدم غير صالح" });
+      }
+
+      // في تطبيق حقيقي، ستقوم بجلب البيانات من قاعدة البيانات
+      // واستخدامها لحساب الحالة المالية
+      
+      // لأغراض العرض، نستخدم بيانات مثالية
+      // حساب النتيجة الإجمالية (من 0 إلى 100)
+      const score = Math.floor(Math.random() * 100);
+      
+      // تحديد مستوى الحالة المالية
+      let level: 'excellent' | 'good' | 'neutral' | 'concerning' | 'critical';
+      let emoji: string;
+      let message: string;
+      let color: string;
+      
+      if (score >= 80) {
+        level = 'excellent';
+        emoji = '😁';
+        message = 'حالتك المالية ممتازة!';
+        color = 'bg-green-500';
+      } else if (score >= 60) {
+        level = 'good';
+        emoji = '😊';
+        message = 'حالتك المالية جيدة';
+        color = 'bg-emerald-400';
+      } else if (score >= 40) {
+        level = 'neutral';
+        emoji = '😐';
+        message = 'حالتك المالية متوازنة';
+        color = 'bg-yellow-500';
+      } else if (score >= 20) {
+        level = 'concerning';
+        emoji = '😟';
+        message = 'حالتك المالية مقلقة';
+        color = 'bg-orange-500';
+      } else {
+        level = 'critical';
+        emoji = '😰';
+        message = 'حالتك المالية حرجة!';
+        color = 'bg-red-500';
+      }
+      
+      // عوامل إيجابية وسلبية تؤثر على الحالة المالية
+      const factors = [
+        { 
+          type: 'positive', 
+          description: 'محفظتك متنوعة بشكل جيد', 
+          impact: 15 
+        },
+        { 
+          type: 'positive', 
+          description: 'التزام منتظم بالميزانية', 
+          impact: 10 
+        },
+        { 
+          type: 'negative', 
+          description: 'انخفاض في قيمة الأصول هذا الأسبوع', 
+          impact: -12 
+        },
+        { 
+          type: 'negative', 
+          description: 'معدل الإنفاق مرتفع نسبيًا', 
+          impact: -8 
+        }
+      ];
+      
+      // إنشاء كائن الاستجابة
+      const mood = {
+        level,
+        emoji,
+        message,
+        color,
+        score,
+        factors
+      };
+      
+      res.json(mood);
+    } catch (error: any) {
+      console.error("خطأ في تقييم الحالة المالية:", error);
+      res.status(500).json({ error: "فشل في معالجة تقييم الحالة المالية" });
+    }
+  });
+  
   // واجهة برمجة التطبيقات لنقاط البيع
   app.get("/api/pos-locations", async (_req: Request, res: Response) => {
     try {

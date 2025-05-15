@@ -6,7 +6,8 @@ export type WidgetType =
   | 'transaction-history' 
   | 'market-overview'
   | 'price-alerts'
-  | 'news-feed';
+  | 'news-feed'
+  | 'financial-mood-indicator';
 
 // تعريف نموذج العنصر في لوحة المعلومات
 export interface Widget {
@@ -34,25 +35,32 @@ export const DEFAULT_WIDGETS: Widget[] = [
     position: 1,
   },
   {
+    id: 'financial-mood-indicator',
+    type: 'financial-mood-indicator',
+    title: 'مؤشر الحالة المالية',
+    size: 'medium',
+    position: 2,
+  },
+  {
     id: 'asset-list',
     type: 'asset-list',
     title: 'الأصول',
     size: 'full',
-    position: 2,
+    position: 3,
   },
   {
     id: 'transaction-history',
     type: 'transaction-history',
     title: 'سجل المعاملات',
     size: 'large',
-    position: 3,
+    position: 4,
   },
   {
     id: 'market-overview',
     type: 'market-overview',
     title: 'نظرة عامة على السوق',
     size: 'large',
-    position: 4,
+    position: 5,
   },
 ];
 
@@ -92,5 +100,10 @@ export const AVAILABLE_WIDGETS: { type: WidgetType; title: string; description: 
     type: 'news-feed',
     title: 'آخر الأخبار',
     description: 'أحدث أخبار العملات الرقمية والتكنولوجيا المالية',
+  },
+  {
+    type: 'financial-mood-indicator',
+    title: 'مؤشر الحالة المالية',
+    description: 'عرض تقييم فوري لحالة محفظتك المالية بالرموز التعبيرية',
   },
 ];

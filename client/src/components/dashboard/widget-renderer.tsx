@@ -4,6 +4,7 @@ import { PortfolioChart } from '@/components/portfolio/chart';
 import { AssetList } from '@/components/assets/asset-list';
 import { TransactionHistory } from '@/components/transactions/history';
 import { MarketOverview } from '@/components/market/overview';
+import { FinancialMoodIndicator } from '@/components/financial-mood/financial-mood-indicator';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 // نوع الخاصيات لمكون WidgetRenderer
@@ -60,6 +61,9 @@ export function WidgetRenderer({ type, userId }: WidgetRendererProps) {
           </CardContent>
         </Card>
       );
+      
+    case 'financial-mood-indicator':
+      return <FinancialMoodIndicator userId={userId} />;
     
     default:
       return (
