@@ -510,5 +510,5 @@ export class MemStorage implements IStorage {
   }
 }
 
-import { dbStorage } from "./storage-db";
-export const storage = dbStorage;
+// استخدام التخزين المؤقت في الذاكرة بدلاً من قاعدة البيانات بشكل مؤقت
+export const storage = new MemStorage();

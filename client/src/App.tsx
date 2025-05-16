@@ -12,6 +12,7 @@ import Web3WalletPage from "@/pages/web3-wallet";
 import PosPage from "@/pages/point-of-sale/pos-page";
 import AuthPage from "@/pages/auth-page";
 import { useState, useEffect } from "react";
+// سنضيف مزود المصادقة لاحقاً
 
 function Router() {
   // Active user ID for demo purposes
