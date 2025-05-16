@@ -1,11 +1,8 @@
-import { useEffect, useState } from 'react';
-import { DragEndEvent } from '@dnd-kit/core';
-import { arrayMove } from '@dnd-kit/sortable';
+import { useState } from 'react';
 import { useDashboardWidgets } from '@/hooks/use-dashboard-widgets';
-import { DraggableWidget } from './draggable-widget';
 import { Widget, AVAILABLE_WIDGETS, WidgetType } from './types';
 import { Button } from '@/components/ui/button';
-import { PlusCircle, RotateCcw } from 'lucide-react';
+import { PlusCircle, RotateCcw, ArrowUp, ArrowDown } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -24,7 +21,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
-import { TouchFriendlyDndContext } from './touch-friendly-dnd';
+import { StaticWidget } from './static-widget';
 import { VoiceCommands } from '@/components/voice/voice-commands';
 
 // نوع الخاصيات لمكون DashboardGrid
@@ -51,22 +48,40 @@ export function DashboardGrid({ userId }: DashboardGridProps) {
   const [selectedWidgetType, setSelectedWidgetType] = useState<WidgetType | ''>('');
   const [selectedWidgetSize, setSelectedWidgetSize] = useState<Widget['size']>('medium');
 
-  // معالجة نهاية عملية السحب
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event;
-
-    if (active.id !== over?.id) {
-      const oldIndex = widgets.findIndex((w) => w.id === active.id);
-      const newIndex = widgets.findIndex((w) => w.id === over?.id);
-
-      // إعادة ترتيب المصفوفة وتحديث المواضع
-      const updatedWidgets = arrayMove(widgets, oldIndex, newIndex).map(
-        (widget, index) => ({
-          ...widget,
-          position: index,
-        })
-      );
-
+  // معالجة تحريك العنصر للأعلى
+  const handleMoveUp = (widgetId: string) => {
+    const index = widgets.findIndex((w) => w.id === widgetId);
+    if (index > 0) {
+      const newWidgets = [...widgets];
+      const temp = newWidgets[index];
+      newWidgets[index] = newWidgets[index - 1];
+      newWidgets[index - 1] = temp;
+      
+      // تحديث مواضع العناصر
+      const updatedWidgets = newWidgets.map((widget, i) => ({
+        ...widget,
+        position: i,
+      }));
+      
+      updateWidgetOrder(updatedWidgets);
+    }
+  };
+  
+  // معالجة تحريك العنصر للأسفل
+  const handleMoveDown = (widgetId: string) => {
+    const index = widgets.findIndex((w) => w.id === widgetId);
+    if (index < widgets.length - 1) {
+      const newWidgets = [...widgets];
+      const temp = newWidgets[index];
+      newWidgets[index] = newWidgets[index + 1];
+      newWidgets[index + 1] = temp;
+      
+      // تحديث مواضع العناصر
+      const updatedWidgets = newWidgets.map((widget, i) => ({
+        ...widget,
+        position: i,
+      }));
+      
       updateWidgetOrder(updatedWidgets);
     }
   };
@@ -206,23 +221,22 @@ export function DashboardGrid({ userId }: DashboardGridProps) {
         </div>
       </div>
 
-      <TouchFriendlyDndContext
-        items={widgets.map((w) => w.id)}
-        onDragEnd={handleDragEnd}
-      >
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {widgets
-            .sort((a, b) => a.position - b.position)
-            .map((widget) => (
-              <DraggableWidget
-                key={widget.id}
-                widget={widget}
-                userId={userId}
-                onRemove={removeWidget}
-              />
-            ))}
-        </div>
-      </TouchFriendlyDndContext>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {widgets
+          .sort((a, b) => a.position - b.position)
+          .map((widget, index) => (
+            <StaticWidget
+              key={widget.id}
+              widget={widget}
+              userId={userId}
+              onRemove={removeWidget}
+              onMoveUp={handleMoveUp}
+              onMoveDown={handleMoveDown}
+              isFirst={index === 0}
+              isLast={index === widgets.length - 1}
+            />
+          ))}
+      </div>
     </div>
   );
 }

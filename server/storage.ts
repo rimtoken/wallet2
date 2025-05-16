@@ -8,7 +8,12 @@ import {
   type WalletAsset, type MarketAsset, type PortfolioSummary
 } from "@shared/schema";
 
+import session from "express-session";
+
 export interface IStorage {
+  // Session store for express-session
+  sessionStore: session.Store;
+  
   // User methods
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
@@ -42,7 +47,13 @@ export interface IStorage {
   createPortfolioHistoryEntry(entry: InsertPortfolioHistory): Promise<PortfolioHistory>;
 }
 
+import createMemoryStore from "memorystore";
+
+const MemoryStore = createMemoryStore(session);
+
 export class MemStorage implements IStorage {
+  sessionStore: session.Store;
+  
   private users: Map<number, User>;
   private assets: Map<number, Asset>;
   private wallets: Map<number, Wallet>;
@@ -58,6 +69,10 @@ export class MemStorage implements IStorage {
   private portfolioHistoryId: number = 1;
 
   constructor() {
+    this.sessionStore = new MemoryStore({
+      checkPeriod: 86400000 // 24 hours
+    });
+    
     this.users = new Map();
     this.assets = new Map();
     this.wallets = new Map();
@@ -510,9 +525,9 @@ export class MemStorage implements IStorage {
   }
 }
 
-// استخدام التخزين المؤقت في الذاكرة بدلاً من قاعدة البيانات بشكل مؤقت
-export const storage = new MemStorage();
+// استخدام التخزين المعتمد على قاعدة البيانات
+import { dbStorage } from "./storage-db";
+export const storage = dbStorage;
 
-// تعطيل استخدام dbStorage المعتمد على قاعدة البيانات
-// import { dbStorage } from "./storage-db";
-// export const storage = dbStorage;
+// تعطيل استخدام التخزين المؤقت في الذاكرة
+// export const storage = new MemStorage();

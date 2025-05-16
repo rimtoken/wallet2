@@ -35,9 +35,7 @@ export function setupAuth(app: Express) {
     secret: process.env.SESSION_SECRET || "rimtoken-secret-key-change-in-production",
     resave: false,
     saveUninitialized: false,
-    store: new MemoryStore({
-      checkPeriod: 86400000 // 24 hours
-    }),
+    store: storage.sessionStore,
     cookie: {
       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
       httpOnly: true,

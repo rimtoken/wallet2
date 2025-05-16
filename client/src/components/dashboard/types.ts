@@ -7,7 +7,14 @@ export type WidgetType =
   | 'market-overview'
   | 'price-alerts'
   | 'news-feed'
-  | 'financial-mood-indicator';
+  | 'financial-mood-indicator'
+  | 'asset-allocation'
+  | 'recent-transactions'
+  | 'trending-markets'
+  | 'quick-actions'
+  | 'watchlist'
+  | 'news'
+  | 'financial-mood';
 
 // تعريف نموذج العنصر في لوحة المعلومات
 export interface Widget {
