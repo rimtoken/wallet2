@@ -45,45 +45,48 @@ export function Topbar({ onToggleSidebar }: TopbarProps) {
         </div>
       </div>
       
-      <div className="flex items-center space-x-3">
+      <div className="flex items-center space-x-3 rtl:space-x-reverse">
+        {/* أزرار تسجيل الدخول والتسجيل */}
+        <div className="flex items-center gap-2">
+          <Link href="/auth">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="hidden md:flex items-center gap-1 text-primary border-primary hover:bg-primary/10 rounded-full px-4"
+            >
+              <LogIn className="h-4 w-4" />
+              <span>تسجيل الدخول</span>
+            </Button>
+          </Link>
+          
+          <Link href="/auth?tab=register">
+            <Button 
+              variant="default" 
+              size="sm" 
+              className="hidden md:flex items-center gap-1 bg-primary hover:bg-primary/90 rounded-full px-4"
+            >
+              <UserPlus className="h-4 w-4" />
+              <span>التسجيل</span>
+            </Button>
+          </Link>
+          
+          {/* لعرض أيقونة فقط على الشاشات الصغيرة */}
+          <Link href="/auth">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="md:hidden p-2 rounded-full"
+            >
+              <LogIn className="h-5 w-5" />
+            </Button>
+          </Link>
+        </div>
+        
+        {/* أيقونة الإشعارات */}
         <button className="p-2 rounded-full text-neutral-600 hover:bg-neutral-100 relative">
           <i className="ri-notification-3-line text-xl"></i>
           <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-primary"></span>
         </button>
-        
-        {/* أزرار تسجيل الدخول والتسجيل */}
-        <Link href="/auth">
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            className="hidden md:flex items-center gap-1 text-neutral-700 hover:text-primary"
-          >
-            <LogIn className="h-4 w-4" />
-            <span>تسجيل الدخول</span>
-          </Button>
-        </Link>
-        
-        <Link href="/auth?tab=register">
-          <Button 
-            variant="default" 
-            size="sm" 
-            className="hidden md:flex items-center gap-1"
-          >
-            <UserPlus className="h-4 w-4" />
-            <span>التسجيل</span>
-          </Button>
-        </Link>
-        
-        {/* لعرض أيقونة فقط على الشاشات الصغيرة */}
-        <Link href="/auth">
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            className="md:hidden"
-          >
-            <LogIn className="h-5 w-5" />
-          </Button>
-        </Link>
         
         <div className="lg:hidden">
           <Avatar 
