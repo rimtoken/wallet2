@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Avatar } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Link } from "wouter";
+import { LogIn, UserPlus } from "lucide-react";
 import rimTokenLogo from "@/assets/logo/rimtoken-logo.png";
 
 interface TopbarProps {
@@ -47,6 +50,41 @@ export function Topbar({ onToggleSidebar }: TopbarProps) {
           <i className="ri-notification-3-line text-xl"></i>
           <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-primary"></span>
         </button>
+        
+        {/* أزرار تسجيل الدخول والتسجيل */}
+        <Link href="/auth">
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className="hidden md:flex items-center gap-1 text-neutral-700 hover:text-primary"
+          >
+            <LogIn className="h-4 w-4" />
+            <span>تسجيل الدخول</span>
+          </Button>
+        </Link>
+        
+        <Link href="/auth?tab=register">
+          <Button 
+            variant="default" 
+            size="sm" 
+            className="hidden md:flex items-center gap-1"
+          >
+            <UserPlus className="h-4 w-4" />
+            <span>التسجيل</span>
+          </Button>
+        </Link>
+        
+        {/* لعرض أيقونة فقط على الشاشات الصغيرة */}
+        <Link href="/auth">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="md:hidden"
+          >
+            <LogIn className="h-5 w-5" />
+          </Button>
+        </Link>
+        
         <div className="lg:hidden">
           <Avatar 
             alt="Alex Morgan" 
