@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useLocation, useSearch } from "wouter";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
+import { FiEye, FiEyeOff, FiCheck, FiX } from "react-icons/fi";
+import { FaGoogle, FaFacebook, FaApple } from "react-icons/fa";
 
 export default function AuthPage() {
   const [, setLocation] = useLocation();
@@ -22,6 +24,8 @@ export default function AuthPage() {
   const [loginPassword, setLoginPassword] = useState("");
   const [loginLoading, setLoginLoading] = useState(false);
   const [loginError, setLoginError] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   
   // التسجيل
   const [registerUsername, setRegisterUsername] = useState("");
@@ -30,6 +34,10 @@ export default function AuthPage() {
   const [registerConfirmPassword, setRegisterConfirmPassword] = useState("");
   const [registerLoading, setRegisterLoading] = useState(false);
   const [registerError, setRegisterError] = useState("");
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [passwordStrength, setPasswordStrength] = useState(0); // 0: ضعيف، 1: متوسط، 2: قوي
+  const [showRegisterPassword, setShowRegisterPassword] = useState(false);
+  const [showRegisterConfirmPassword, setShowRegisterConfirmPassword] = useState(false);
   
   // تعيين عنوان الصفحة
   useEffect(() => {
@@ -97,10 +105,49 @@ export default function AuthPage() {
     }
   };
   
+  // وظيفة لقياس قوة كلمة المرور
+  const checkPasswordStrength = (password: string) => {
+    let strength = 0;
+    
+    // التحقق من طول كلمة المرور
+    if (password.length >= 8) strength += 1;
+    
+    // التحقق من وجود أرقام
+    if (/\d/.test(password)) strength += 1;
+    
+    // التحقق من وجود أحرف خاصة
+    if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) strength += 1;
+    
+    // التحقق من وجود أحرف كبيرة وصغيرة
+    if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength += 1;
+    
+    // تعيين مستوى قوة كلمة المرور (0-3)
+    setPasswordStrength(Math.min(3, Math.floor(strength * 1.5)));
+  };
+  
+  // تنفيذ فحص قوة كلمة المرور عند تغييرها
+  useEffect(() => {
+    if (registerPassword) {
+      checkPasswordStrength(registerPassword);
+    }
+  }, [registerPassword]);
+
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setRegisterLoading(true);
     setRegisterError("");
+    
+    // التحقق من الموافقة على الشروط والأحكام
+    if (!agreedToTerms) {
+      setRegisterError("يجب الموافقة على الشروط والأحكام للمتابعة");
+      setRegisterLoading(false);
+      toast({
+        title: "خطأ في التسجيل",
+        description: "يجب الموافقة على الشروط والأحكام للمتابعة",
+        variant: "destructive",
+      });
+      return;
+    }
     
     // التحقق من تطابق كلمات المرور
     if (registerPassword !== registerConfirmPassword) {
@@ -109,6 +156,18 @@ export default function AuthPage() {
       toast({
         title: "خطأ في التسجيل",
         description: "كلمات المرور غير متطابقة",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    // التحقق من قوة كلمة المرور
+    if (passwordStrength < 1) {
+      setRegisterError("كلمة المرور ضعيفة جدًا. يرجى اختيار كلمة مرور أقوى");
+      setRegisterLoading(false);
+      toast({
+        title: "خطأ في التسجيل",
+        description: "كلمة المرور ضعيفة جدًا. يرجى اختيار كلمة مرور أقوى",
         variant: "destructive",
       });
       return;
@@ -206,15 +265,51 @@ export default function AuthPage() {
                     <label htmlFor="login-password" className="block text-sm font-medium">
                       كلمة المرور
                     </label>
-                    <input
-                      id="login-password"
-                      name="password"
-                      type="password"
-                      required
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
-                      value={loginPassword}
-                      onChange={(e) => setLoginPassword(e.target.value)}
-                    />
+                    <div className="relative">
+                      <input
+                        id="login-password"
+                        name="password"
+                        type={showPassword ? "text" : "password"}
+                        required
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
+                        value={loginPassword}
+                        onChange={(e) => setLoginPassword(e.target.value)}
+                      />
+                      <button
+                        type="button"
+                        className="absolute inset-y-0 left-0 pl-3 flex items-center text-sm leading-5"
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        {showPassword ? <FiEyeOff className="text-gray-500" /> : <FiEye className="text-gray-500" />}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <input
+                        id="remember-me"
+                        name="remember-me"
+                        type="checkbox"
+                        className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
+                        checked={rememberMe}
+                        onChange={(e) => setRememberMe(e.target.checked)}
+                      />
+                      <label htmlFor="remember-me" className="mr-2 block text-sm text-gray-600">
+                        تذكرني
+                      </label>
+                    </div>
+                    <div className="text-sm">
+                      <a href="#" className="font-medium text-primary hover:text-primary/80" onClick={(e) => {
+                        e.preventDefault();
+                        toast({
+                          title: "استعادة كلمة المرور",
+                          description: "سيتم إضافة هذه الميزة قريبًا.",
+                        });
+                      }}>
+                        نسيت كلمة المرور؟
+                      </a>
+                    </div>
                   </div>
                 </div>
 
@@ -224,7 +319,7 @@ export default function AuthPage() {
                   </div>
                 )}
 
-                <div>
+                <div className="space-y-3">
                   <button
                     type="submit"
                     className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary/90 focus:outline-none"
@@ -232,6 +327,56 @@ export default function AuthPage() {
                   >
                     {loginLoading ? "جاري تسجيل الدخول..." : "تسجيل الدخول"}
                   </button>
+                  
+                  <div className="relative">
+                    <div className="absolute inset-0 flex items-center">
+                      <div className="w-full border-t border-gray-300"></div>
+                    </div>
+                    <div className="relative flex justify-center text-sm">
+                      <span className="px-2 bg-white text-gray-500">
+                        أو تسجيل الدخول عبر
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-3 gap-3">
+                    <button
+                      type="button"
+                      className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                      onClick={() => {
+                        toast({
+                          title: "تسجيل الدخول بواسطة Google",
+                          description: "سيتم إضافة هذه الميزة قريبًا.",
+                        });
+                      }}
+                    >
+                      <FaGoogle className="text-lg text-red-500" />
+                    </button>
+                    <button
+                      type="button"
+                      className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                      onClick={() => {
+                        toast({
+                          title: "تسجيل الدخول بواسطة Facebook",
+                          description: "سيتم إضافة هذه الميزة قريبًا.",
+                        });
+                      }}
+                    >
+                      <FaFacebook className="text-lg text-blue-600" />
+                    </button>
+                    <button
+                      type="button"
+                      className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                      onClick={() => {
+                        toast({
+                          title: "تسجيل الدخول بواسطة Apple",
+                          description: "سيتم إضافة هذه الميزة قريبًا.",
+                        });
+                      }}
+                    >
+                      <FaApple className="text-lg" />
+                    </button>
+                  </div>
                 </div>
               </form>
             </TabsContent>
@@ -272,29 +417,131 @@ export default function AuthPage() {
                     <label htmlFor="register-password" className="block text-sm font-medium">
                       كلمة المرور
                     </label>
-                    <input
-                      id="register-password"
-                      name="password"
-                      type="password"
-                      required
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
-                      value={registerPassword}
-                      onChange={(e) => setRegisterPassword(e.target.value)}
-                    />
+                    <div className="relative">
+                      <input
+                        id="register-password"
+                        name="password"
+                        type={showRegisterPassword ? "text" : "password"}
+                        required
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
+                        value={registerPassword}
+                        onChange={(e) => setRegisterPassword(e.target.value)}
+                      />
+                      <button
+                        type="button"
+                        className="absolute inset-y-0 left-0 pl-3 flex items-center text-sm leading-5"
+                        onClick={() => setShowRegisterPassword(!showRegisterPassword)}
+                      >
+                        {showRegisterPassword ? <FiEyeOff className="text-gray-500" /> : <FiEye className="text-gray-500" />}
+                      </button>
+                    </div>
+                    
+                    {/* مؤشر قوة كلمة المرور */}
+                    {registerPassword && (
+                      <div className="mt-2">
+                        <div className="flex justify-between items-center mb-1">
+                          <span className="text-xs text-gray-500">قوة كلمة المرور:</span>
+                          <span className="text-xs font-medium">
+                            {passwordStrength === 0 && <span className="text-red-500">ضعيفة جدًا</span>}
+                            {passwordStrength === 1 && <span className="text-orange-500">ضعيفة</span>}
+                            {passwordStrength === 2 && <span className="text-yellow-500">متوسطة</span>}
+                            {passwordStrength === 3 && <span className="text-green-500">قوية</span>}
+                          </span>
+                        </div>
+                        <div className="h-1 w-full bg-gray-200 rounded-full overflow-hidden">
+                          <div 
+                            className={`h-full ${
+                              passwordStrength === 0 ? 'bg-red-500 w-1/4' : 
+                              passwordStrength === 1 ? 'bg-orange-500 w-2/4' : 
+                              passwordStrength === 2 ? 'bg-yellow-500 w-3/4' : 
+                              'bg-green-500 w-full'
+                            }`}
+                          ></div>
+                        </div>
+                        <ul className="mt-1 text-xs text-gray-500 grid grid-cols-2 gap-1">
+                          <li className={`flex items-center ${registerPassword.length >= 8 ? 'text-green-500' : ''}`}>
+                            <span className="inline-block ml-1 mr-1">
+                              {registerPassword.length >= 8 ? <FiCheck /> : <FiX />}
+                            </span>
+                            8 أحرف على الأقل
+                          </li>
+                          <li className={`flex items-center ${/\d/.test(registerPassword) ? 'text-green-500' : ''}`}>
+                            <span className="inline-block ml-1 mr-1">
+                              {/\d/.test(registerPassword) ? <FiCheck /> : <FiX />}
+                            </span>
+                            تحتوي على أرقام
+                          </li>
+                          <li className={`flex items-center ${/[a-z]/.test(registerPassword) && /[A-Z]/.test(registerPassword) ? 'text-green-500' : ''}`}>
+                            <span className="inline-block ml-1 mr-1">
+                              {/[a-z]/.test(registerPassword) && /[A-Z]/.test(registerPassword) ? <FiCheck /> : <FiX />}
+                            </span>
+                            أحرف كبيرة وصغيرة
+                          </li>
+                          <li className={`flex items-center ${/[!@#$%^&*(),.?":{}|<>]/.test(registerPassword) ? 'text-green-500' : ''}`}>
+                            <span className="inline-block ml-1 mr-1">
+                              {/[!@#$%^&*(),.?":{}|<>]/.test(registerPassword) ? <FiCheck /> : <FiX />}
+                            </span>
+                            رموز خاصة
+                          </li>
+                        </ul>
+                      </div>
+                    )}
                   </div>
+                  
                   <div>
                     <label htmlFor="register-confirm-password" className="block text-sm font-medium">
                       تأكيد كلمة المرور
                     </label>
+                    <div className="relative">
+                      <input
+                        id="register-confirm-password"
+                        name="confirm-password"
+                        type={showRegisterConfirmPassword ? "text" : "password"}
+                        required
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
+                        value={registerConfirmPassword}
+                        onChange={(e) => setRegisterConfirmPassword(e.target.value)}
+                      />
+                      <button
+                        type="button"
+                        className="absolute inset-y-0 left-0 pl-3 flex items-center text-sm leading-5"
+                        onClick={() => setShowRegisterConfirmPassword(!showRegisterConfirmPassword)}
+                      >
+                        {showRegisterConfirmPassword ? <FiEyeOff className="text-gray-500" /> : <FiEye className="text-gray-500" />}
+                      </button>
+                    </div>
+                    
+                    {/* التحقق من تطابق كلمة المرور */}
+                    {registerPassword && registerConfirmPassword && (
+                      <div className={`mt-1 text-xs ${registerPassword === registerConfirmPassword ? 'text-green-500' : 'text-red-500'}`}>
+                        {registerPassword === registerConfirmPassword ? (
+                          <span className="flex items-center">
+                            <FiCheck className="mr-1" />
+                            كلمات المرور متطابقة
+                          </span>
+                        ) : (
+                          <span className="flex items-center">
+                            <FiX className="mr-1" />
+                            كلمات المرور غير متطابقة
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                  
+                  {/* خانة الموافقة على الشروط والأحكام */}
+                  <div className="flex items-start mt-4">
                     <input
-                      id="register-confirm-password"
-                      name="confirm-password"
-                      type="password"
-                      required
-                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
-                      value={registerConfirmPassword}
-                      onChange={(e) => setRegisterConfirmPassword(e.target.value)}
+                      id="terms"
+                      name="terms"
+                      type="checkbox"
+                      className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded mt-1"
+                      checked={agreedToTerms}
+                      onChange={(e) => setAgreedToTerms(e.target.checked)}
                     />
+                    <label htmlFor="terms" className="mr-2 block text-sm text-gray-600">
+                      أوافق على <a href="#" className="text-primary hover:text-primary/80">شروط الاستخدام</a> و <a href="#" className="text-primary hover:text-primary/80">سياسة الخصوصية</a>
+                    </label>
                   </div>
                 </div>
 
@@ -304,7 +551,7 @@ export default function AuthPage() {
                   </div>
                 )}
 
-                <div>
+                <div className="space-y-3">
                   <button
                     type="submit"
                     className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-primary/90 focus:outline-none"
