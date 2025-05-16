@@ -43,6 +43,11 @@ export function Sidebar({ className }: SidebarProps) {
       icon: "ri-swap-line" 
     },
     { 
+      path: "/profile", 
+      label: "الملف الشخصي", 
+      icon: "ri-user-line" 
+    },
+    { 
       path: "/settings", 
       label: "Settings", 
       icon: "ri-settings-3-line" 
@@ -84,17 +89,19 @@ export function Sidebar({ className }: SidebarProps) {
       </div>
       
       <div className="absolute bottom-0 w-full p-4 border-t border-neutral-200">
-        <div className="flex items-center">
-          <Avatar 
-            alt="Alex Morgan" 
-            fallback="AM"
-            size="md"
-          />
-          <div className="ml-3">
-            <p className="text-sm font-medium">Alex Morgan</p>
-            <p className="text-xs text-neutral-500">alex@example.com</p>
-          </div>
-        </div>
+        <Link href="/profile">
+          <a className="flex items-center hover:bg-neutral-100 p-2 rounded-lg transition-colors">
+            <Avatar 
+              alt="Alex Morgan" 
+              fallback="AM"
+              size="md"
+            />
+            <div className="ml-3">
+              <p className="text-sm font-medium">Alex Morgan</p>
+              <p className="text-xs text-neutral-500">alex@example.com</p>
+            </div>
+          </a>
+        </Link>
       </div>
     </aside>
   );

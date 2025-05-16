@@ -1,10 +1,6 @@
-import { Pool, neonConfig } from '@neondatabase/serverless';
-import { drizzle } from 'drizzle-orm/neon-serverless';
-import ws from "ws";
+import { Pool } from 'pg';
+import { drizzle } from 'drizzle-orm/node-postgres';
 import * as schema from "@shared/schema";
-
-// للاتصال بقاعدة البيانات في بيئة الويب، نحتاج إلى إعداد طريقة الاتصال
-neonConfig.webSocketConstructor = ws;
 
 // التحقق من وجود رابط لقاعدة البيانات
 if (!process.env.DATABASE_URL) {
@@ -13,8 +9,10 @@ if (!process.env.DATABASE_URL) {
   );
 }
 
-// إنشاء تجمع اتصالات بقاعدة البيانات
-export const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+// إنشاء تجمع اتصالات بقاعدة البيانات باستخدام متغيرات البيئة
+export const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+});
 
 // إنشاء عميل Drizzle مع الاتصال بقاعدة البيانات والمخطط
-export const db = drizzle({ client: pool, schema });
+export const db = drizzle(pool, { schema });

@@ -11,6 +11,7 @@ import Settings from "@/pages/settings";
 import Web3WalletPage from "@/pages/web3-wallet";
 import PosPage from "@/pages/point-of-sale/pos-page";
 import AuthPage from "@/pages/auth-page";
+import ProfilePage from "@/pages/profile-page";
 import { useState, useEffect } from "react";
 // سنضيف مزود المصادقة لاحقاً
 
@@ -45,6 +46,7 @@ function Router() {
       <Route path="/web3-wallet" component={() => <Web3WalletPage userId={userId} />} />
       <Route path="/pos" component={PosPage} />
       <Route path="/auth" component={AuthPage} />
+      <Route path="/profile" component={ProfilePage} />
       <Route component={NotFound} />
     </Switch>
   );

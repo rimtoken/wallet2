@@ -4,16 +4,12 @@ import { Express, Request, Response, NextFunction } from "express";
 import session from "express-session";
 import { scrypt, randomBytes, timingSafeEqual } from "crypto";
 import { promisify } from "util";
-import { User } from "@shared/schema";
+import { users, type User } from "@shared/schema";
 import createMemoryStore from "memorystore";
-import { MemStorage } from "./storage";
+import { storage } from "./storage";
 
 // إنشاء كائن التخزين المؤقت في الذاكرة للجلسات
 const MemoryStore = createMemoryStore(session);
-
-// استخدام كائن التخزين المؤقت في الذاكرة للمستخدمين
-// هذا للعرض فقط ولن يكون مناسبًا للإنتاج - في بيئة الإنتاج ستستخدم قاعدة بيانات
-const memStorage = new MemStorage();
 
 // تهيئة دالة تشفير كلمة المرور
 const scryptAsync = promisify(scrypt);
@@ -59,7 +55,7 @@ export function setupAuth(app: Express) {
   passport.use(
     new LocalStrategy(async (username, password, done) => {
       try {
-        const user = await memStorage.getUserByUsername(username);
+        const user = await storage.getUserByUsername(username);
 
         if (!user) {
           return done(null, false, { message: "اسم المستخدم غير موجود" });
@@ -79,14 +75,14 @@ export function setupAuth(app: Express) {
   );
 
   // تسلسل المستخدم (للتخزين في الجلسة)
-  passport.serializeUser((user: User, done) => {
+  passport.serializeUser((user: any, done) => {
     done(null, user.id);
   });
 
   // فك تسلسل المستخدم (للاسترجاع من الجلسة)
   passport.deserializeUser(async (id: number, done) => {
     try {
-      const user = await memStorage.getUser(id);
+      const user = await storage.getUser(id);
       
       if (!user) {
         return done(null, false);
@@ -105,7 +101,7 @@ export function setupAuth(app: Express) {
   app.post("/api/register", async (req: Request, res: Response) => {
     try {
       // التحقق من أن المستخدم ليس موجوداً بالفعل
-      const existingUser = await memStorage.getUserByUsername(req.body.username);
+      const existingUser = await storage.getUserByUsername(req.body.username);
 
       if (existingUser) {
         return res.status(400).json({ message: "اسم المستخدم مستخدم بالفعل" });
@@ -114,7 +110,7 @@ export function setupAuth(app: Express) {
       // إنشاء مستخدم جديد مع تشفير كلمة المرور
       const hashedPassword = await hashPassword(req.body.password);
       
-      const newUser = await memStorage.createUser({
+      const newUser = await storage.createUser({
         username: req.body.username,
         email: req.body.email,
         password: hashedPassword,

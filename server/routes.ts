@@ -1,6 +1,6 @@
 import type { Express, Request, Response } from "express";
 import { createServer, type Server } from "http";
-import { dbStorage as storage } from "./storage-db";
+import { storage } from "./storage"; // استخدام MemStorage
 import axios from "axios";
 import { z } from "zod";
 import { insertTransactionSchema, insertUserSchema } from "@shared/schema";
