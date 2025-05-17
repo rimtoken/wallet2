@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 import { FloatingActionMenu } from "@/components/ui/floating-action-menu";
+import { Header } from "@/components/layout/header";
 import {
   Home,
   Wallet,
@@ -45,26 +46,27 @@ export function MainLayout({ children }: MainLayoutProps) {
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
       {/* الشريط العلوي */}
-      <header className="bg-white dark:bg-gray-800 border-b h-16 flex items-center px-4 sticky top-0 z-10">
-        <div className="container mx-auto flex items-center justify-between">
-          <div className="flex items-center">
-            <Link href="/">
-              <a className="flex items-center">
-                <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold text-xl">
-                  R
-                </div>
-                <span className="ml-2 text-xl font-bold">RimToken</span>
-              </a>
-            </Link>
-          </div>
-          <div className="flex items-center">
-            {/* يمكن إضافة عناصر إضافية هنا مثل إشعارات أو رسائل أو بحث */}
+      <Header className="sticky top-0" />
+
+      {/* الغلاف العلوي مع الشعار */}
+      {location === "/" && (
+        <div className="bg-gradient-to-r from-amber-50 to-amber-100 py-8 text-center">
+          <div className="container mx-auto px-4">
+            <img 
+              src="/src/assets/rimtoken-logo.jpg" 
+              alt="RimToken" 
+              className="h-28 mx-auto mb-4"
+            />
+            <h1 className="text-3xl font-bold text-amber-800 mb-2">RIM TOKEN</h1>
+            <p className="text-lg text-amber-700 max-w-xl mx-auto">
+              محفظة العملات المشفرة الأكثر بساطة وأمانًا للتخزين والتبادل
+            </p>
           </div>
         </div>
-      </header>
+      )}
 
       {/* المحتوى الرئيسي */}
-      <main className="flex-1 container mx-auto py-4">
+      <main className="flex-1 container mx-auto py-6">
         {children}
       </main>
 
