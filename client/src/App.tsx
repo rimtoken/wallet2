@@ -13,6 +13,7 @@ import Web3WalletPage from "@/pages/web3-wallet";
 import PosPage from "@/pages/point-of-sale/pos-page";
 import AuthPage from "@/pages/auth-page";
 import ProfilePage from "@/pages/profile";
+import AboutPage from "@/pages/about";
 import { useState, useEffect } from "react";
 import { MainLayout } from "@/components/layout/main-layout";
 import WalletPage from "@/pages/wallet";
@@ -55,6 +56,7 @@ function Router() {
         <Route path="/web3-wallet" component={() => <Web3WalletPage userId={userId} />} />
         <Route path="/pos" component={PosPage} />
         <Route path="/profile" component={ProfilePage} />
+        <Route path="/about" component={AboutPage} />
         <Route component={NotFound} />
       </Switch>
     </MainLayout>
