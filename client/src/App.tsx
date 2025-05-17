@@ -13,6 +13,9 @@ import PosPage from "@/pages/point-of-sale/pos-page";
 import AuthPage from "@/pages/auth-page";
 import ProfilePage from "@/pages/profile-page";
 import { useState, useEffect } from "react";
+import { MainLayout } from "@/components/layout/main-layout";
+import WalletPage from "@/pages/wallet";
+import SwapPage from "@/pages/swap";
 // سنضيف مزود المصادقة لاحقاً
 
 function Router() {
@@ -37,19 +40,34 @@ function Router() {
     fetchInitialData();
   }, [userId]);
 
-  return (
+  // Protected routes (requiring authentication)
+  const protectedRoutes = (
+    <MainLayout>
+      <Switch>
+        <Route path="/" component={() => <Dashboard userId={userId} />} />
+        <Route path="/transactions" component={() => <Transactions userId={userId} />} />
+        <Route path="/markets" component={() => <Markets userId={userId} />} />
+        <Route path="/settings" component={() => <Settings userId={userId} />} />
+        <Route path="/wallet" component={() => <WalletPage userId={userId} />} />
+        <Route path="/swap" component={() => <SwapPage userId={userId} />} />
+        <Route path="/web3-wallet" component={() => <Web3WalletPage userId={userId} />} />
+        <Route path="/pos" component={PosPage} />
+        <Route path="/profile" component={ProfilePage} />
+        <Route component={NotFound} />
+      </Switch>
+    </MainLayout>
+  );
+
+  // Non-protected routes (no authentication required)
+  const publicRoutes = (
     <Switch>
-      <Route path="/" component={() => <Dashboard userId={userId} />} />
-      <Route path="/transactions" component={() => <Transactions userId={userId} />} />
-      <Route path="/markets" component={() => <Markets userId={userId} />} />
-      <Route path="/settings" component={() => <Settings userId={userId} />} />
-      <Route path="/web3-wallet" component={() => <Web3WalletPage userId={userId} />} />
-      <Route path="/pos" component={PosPage} />
       <Route path="/auth" component={AuthPage} />
-      <Route path="/profile" component={ProfilePage} />
-      <Route component={NotFound} />
     </Switch>
   );
+
+  // For demo purposes, always show the protected routes
+  // In a real application, this would depend on authentication state
+  return protectedRoutes;
 }
 
 function App() {
