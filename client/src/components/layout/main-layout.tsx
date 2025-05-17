@@ -66,16 +66,17 @@ export function MainLayout({ children }: MainLayoutProps) {
           
           <div className="container mx-auto px-4 relative z-10">
             <div className="bg-white/60 backdrop-blur-sm py-8 px-4 rounded-2xl shadow-lg max-w-3xl mx-auto">
-              <img 
-                src="/rimtoken-logo.jpg" 
-                alt="RimToken" 
-                className="h-28 mx-auto mb-4"
-              />
+              <div className="flex flex-col items-center justify-center">
+                <div className="w-28 h-28 flex items-center justify-center rounded-full bg-gradient-to-br from-amber-300 to-amber-500 shadow-lg mb-4">
+                  <span className="text-white text-5xl font-bold">R</span>
+                </div>
+              </div>
+              
               <h1 className="text-3xl md:text-4xl font-bold text-amber-800 mb-3 bg-gradient-to-r from-amber-600 to-amber-800 bg-clip-text text-transparent">RIM TOKEN</h1>
               <p className="text-lg text-amber-700 max-w-xl mx-auto mb-4">
                 محفظة العملات المشفرة الأكثر بساطة وأمانًا للتخزين والتبادل
               </p>
-              <div className="flex justify-center gap-4 mt-6">
+              <div className="flex flex-col sm:flex-row justify-center gap-4 mt-6">
                 <Link href="/wallet">
                   <a className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white py-2 px-6 rounded-full shadow-md transition-all font-medium">
                     ابدأ الآن
@@ -86,6 +87,32 @@ export function MainLayout({ children }: MainLayoutProps) {
                     استكشف الميزات
                   </a>
                 </Link>
+              </div>
+              
+              <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-white/80 p-4 rounded-lg shadow">
+                  <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mb-3 mx-auto">
+                    <Shield className="h-6 w-6 text-amber-600" />
+                  </div>
+                  <h3 className="font-medium text-amber-800 mb-2">محفظة آمنة</h3>
+                  <p className="text-sm text-gray-600">تخزين العملات المشفرة بأمان تام مع تحكم كامل في مفاتيحك الخاصة</p>
+                </div>
+                
+                <div className="bg-white/80 p-4 rounded-lg shadow">
+                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-3 mx-auto">
+                    <ArrowUpDown className="h-6 w-6 text-blue-600" />
+                  </div>
+                  <h3 className="font-medium text-amber-800 mb-2">تبادل سريع</h3>
+                  <p className="text-sm text-gray-600">تبادل العملات المشفرة بسهولة وسرعة مع أقل رسوم ممكنة</p>
+                </div>
+                
+                <div className="bg-white/80 p-4 rounded-lg shadow">
+                  <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-3 mx-auto">
+                    <LineChart className="h-6 w-6 text-green-600" />
+                  </div>
+                  <h3 className="font-medium text-amber-800 mb-2">تحليلات متقدمة</h3>
+                  <p className="text-sm text-gray-600">متابعة أداء محفظتك وتحليل بيانات السوق في الوقت الحقيقي</p>
+                </div>
               </div>
             </div>
           </div>
