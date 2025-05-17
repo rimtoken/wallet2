@@ -15,6 +15,7 @@ import {
   CheckCircle
 } from "lucide-react";
 import { motion } from "framer-motion";
+import { FeatureCards, ValueProposition } from "@/components/home/feature-cards";
 
 export default function HomePage() {
   const features = [
@@ -90,6 +91,12 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      
+      {/* قسم الميزات مع العبارات الجديدة */}
+      <FeatureCards />
+      
+      {/* قسم القيمة المميزة مع الميزات الرئيسية */}
+      <ValueProposition />
 
       {/* قسم إحصائيات */}
       <section className="py-16 bg-gradient-to-r from-amber-50 to-amber-100">
