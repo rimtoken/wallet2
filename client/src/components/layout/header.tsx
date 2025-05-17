@@ -105,6 +105,9 @@ export function Header({ className }: HeaderProps) {
                   <Link href="/markets">
                     <span className="text-lg font-medium transition-colors hover:text-primary">السوق</span>
                   </Link>
+                  <Link href="/about">
+                    <span className="text-lg font-medium transition-colors hover:text-primary">حول</span>
+                  </Link>
                   <Link href="/profile">
                     <span className="text-lg font-medium transition-colors hover:text-primary">الملف الشخصي</span>
                   </Link>
