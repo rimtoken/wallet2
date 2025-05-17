@@ -2,7 +2,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { formatDistance } from "date-fns";
-import { ArTn } from "date-fns/locale";
+// لم يتم استخدام دعم اللغة العربية حاليًا - يمكن إضافته لاحقًا
+// import { arTN } from "date-fns/locale";
 
 export interface NewsItem {
   id: string;
