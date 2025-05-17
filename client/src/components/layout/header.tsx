@@ -49,6 +49,42 @@ export function Header({ className }: HeaderProps) {
         </div>
         
         <div className="flex items-center gap-3">
+          {/* سكريبت تداول العملات + تحميل التطبيق */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="sm" className="md:flex hidden items-center gap-1 border-amber-500 text-amber-600">
+                <span>أدوات إضافية</span>
+                <ChevronDown className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-64">
+              <DropdownMenuLabel>أدوات التداول والمحفظة</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild className="flex flex-col items-start">
+                <Link href="/trading">
+                  <span className="font-semibold">مؤشر تداول العملات</span>
+                  <span className="text-xs text-gray-500">تابع أسعار العملات المشفرة مباشرة</span>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuLabel>تطبيق RimToken للجوال</DropdownMenuLabel>
+              <DropdownMenuItem className="flex items-center gap-2">
+                <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M17.5 3H6.5C5.67157 3 5 3.67157 5 4.5V19.5C5 20.3284 5.67157 21 6.5 21H17.5C18.3284 21 19 20.3284 19 19.5V4.5C19 3.67157 18.3284 3 17.5 3Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M12 18H12.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <span>تحميل لأجهزة Android</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex items-center gap-2">
+                <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16 2H8C7.44772 2 7 2.44772 7 3V21C7 21.5523 7.44772 22 8 22H16C16.5523 22 17 21.5523 17 21V3C17 2.44772 16.5523 2 16 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M12 18H12.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <span>تحميل لأجهزة iPhone</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          
           {/* قائمة تغيير اللغة */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

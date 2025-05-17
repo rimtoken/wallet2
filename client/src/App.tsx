@@ -14,6 +14,7 @@ import PosPage from "@/pages/point-of-sale/pos-page";
 import AuthPage from "@/pages/auth-page";
 import ProfilePage from "@/pages/profile";
 import AboutPage from "@/pages/about-simple";
+import TradingViewPage from "@/pages/trading-view";
 import { useState, useEffect } from "react";
 import { MainLayout } from "@/components/layout/main-layout";
 import WalletPage from "@/pages/wallet";
@@ -57,6 +58,7 @@ function Router() {
         <Route path="/pos" component={PosPage} />
         <Route path="/profile" component={ProfilePage} />
         <Route path="/about-simple" component={() => <AboutPage />} />
+        <Route path="/trading" component={TradingViewPage} />
         <Route component={NotFound} />
       </Switch>
     </MainLayout>
