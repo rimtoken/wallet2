@@ -1,7 +1,6 @@
 import { MainLayout } from "@/components/layout/main-layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
 import { Coins, LineChart, Shield, Users } from "lucide-react";
 
 export default function AboutPage() {
@@ -9,30 +8,17 @@ export default function AboutPage() {
     <MainLayout>
       <div className="container mx-auto px-4 py-12">
         <div className="text-center mb-12">
-          <motion.h1 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-amber-500 to-yellow-500 text-transparent bg-clip-text mb-4"
-          >
+          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-amber-500 to-yellow-500 text-transparent bg-clip-text mb-4">
             RIM توكن
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-xl text-gray-600 max-w-3xl mx-auto"
-          >
+          </h1>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             عملة RIM الرقمية المشفرة - أساس نظام بيئي متكامل للتمويل اللامركزي
-          </motion.p>
+          </p>
         </div>
 
         {/* قسم معلومات العملة */}
         <div className="grid md:grid-cols-2 gap-12 mb-16">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 }}
-          >
+          <div>
             <Card className="h-full shadow-lg border-amber-100">
               <CardHeader>
                 <CardTitle className="text-2xl font-bold">نبذة تاريخية عن عملة RIM</CardTitle>
@@ -52,13 +38,9 @@ export default function AboutPage() {
                 </div>
               </CardContent>
             </Card>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.4 }}
-          >
+          <div>
             <Card className="h-full shadow-lg border-amber-100">
               <CardHeader>
                 <CardTitle className="text-2xl font-bold">مميزات وقدرات RIM</CardTitle>
@@ -98,16 +80,11 @@ export default function AboutPage() {
                 </div>
               </CardContent>
             </Card>
-          </motion.div>
+          </div>
         </div>
 
         {/* قسم إحصائيات العملة */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="mb-16"
-        >
+        <div className="mb-16">
           <h2 className="text-3xl font-bold text-center mb-10">إحصائيات RIM الحالية</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <Card className="text-center p-6 shadow-md hover:shadow-lg transition-shadow border-amber-100">
@@ -134,14 +111,10 @@ export default function AboutPage() {
               <p className="text-gray-500 mt-2">من أصل 500M</p>
             </Card>
           </div>
-        </motion.div>
+        </div>
 
         {/* قسم خريطة الطريق */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-        >
+        <div>
           <Card className="shadow-lg border-amber-100">
             <CardHeader>
               <CardTitle className="text-3xl font-bold text-center">خريطة طريق RIM</CardTitle>
@@ -175,7 +148,7 @@ export default function AboutPage() {
               </div>
             </CardContent>
           </Card>
-        </motion.div>
+        </div>
 
         {/* قسم الشراء والتداول */}
         <div className="mt-16 text-center">
