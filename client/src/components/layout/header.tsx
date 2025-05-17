@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Bell, ChevronDown, Menu } from "lucide-react";
+import { Bell, ChevronDown, Menu, Globe, LogIn, UserPlus } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -42,18 +42,48 @@ export function Header({ className }: HeaderProps) {
             <Link href="/markets">
               <span className="text-sm font-medium transition-colors hover:text-primary">السوق</span>
             </Link>
-            <Link href="/about">
+            <Link href="/about-simple">
               <span className="text-sm font-medium transition-colors hover:text-primary">حول</span>
             </Link>
           </nav>
         </div>
         
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
+          {/* قائمة تغيير اللغة */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" className="md:flex hidden">
+                <Globe className="h-5 w-5" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>اختر اللغة</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>العربية</DropdownMenuItem>
+              <DropdownMenuItem>English</DropdownMenuItem>
+              <DropdownMenuItem>Français</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          
+          {/* أزرار تسجيل الدخول/التسجيل (للزوار) */}
+          <div className="hidden md:flex items-center gap-2">
+            <Button variant="ghost" size="sm" className="flex items-center gap-1">
+              <LogIn className="h-4 w-4" />
+              <span>تسجيل الدخول</span>
+            </Button>
+            <Button variant="default" size="sm" className="bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 flex items-center gap-1">
+              <UserPlus className="h-4 w-4" />
+              <span>التسجيل</span>
+            </Button>
+          </div>
+          
+          {/* إشعارات (للمستخدمين المسجّلين) */}
           <Button variant="ghost" size="icon" className="relative md:flex hidden">
             <Bell className="h-5 w-5" />
             <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-red-500"></span>
           </Button>
           
+          {/* قائمة المستخدم (للمستخدمين المسجّلين) - يمكن إخفاؤها عندما يكون الزائر غير مسجّل */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="hidden md:flex gap-2">
