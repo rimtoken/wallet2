@@ -135,7 +135,7 @@ export function Header({ className }: HeaderProps) {
                   <Link href="/markets">
                     <span className="text-lg font-medium transition-colors hover:text-primary">السوق</span>
                   </Link>
-                  <Link href="/about">
+                  <Link href="/about-simple">
                     <span className="text-lg font-medium transition-colors hover:text-primary">حول</span>
                   </Link>
                   <Link href="/profile">
@@ -144,6 +144,31 @@ export function Header({ className }: HeaderProps) {
                   <Link href="/settings">
                     <span className="text-lg font-medium transition-colors hover:text-primary">الإعدادات</span>
                   </Link>
+                  
+                  <div className="border-t border-gray-100 my-2 pt-2">
+                    <div className="flex items-center">
+                      <Globe className="h-5 w-5 mr-2 text-gray-500" />
+                      <span className="text-lg font-medium">اللغة</span>
+                    </div>
+                    <div className="grid grid-cols-1 gap-2 mt-2 ml-7">
+                      <button className="text-md text-gray-600 hover:text-primary text-right">العربية</button>
+                      <button className="text-md text-gray-600 hover:text-primary text-right">English</button>
+                      <button className="text-md text-gray-600 hover:text-primary text-right">Français</button>
+                    </div>
+                  </div>
+                  
+                  <div className="border-t border-gray-100 my-2 pt-2">
+                    <div className="flex gap-2 mt-2">
+                      <Button className="flex-1 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600">
+                        <UserPlus className="h-4 w-4 mr-1" />
+                        التسجيل
+                      </Button>
+                      <Button variant="outline" className="flex-1 border-amber-500 text-amber-500">
+                        <LogIn className="h-4 w-4 mr-1" />
+                        تسجيل الدخول
+                      </Button>
+                    </div>
+                  </div>
                 </nav>
               </div>
             </SheetContent>
