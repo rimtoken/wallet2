@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import rimTokenLogo from "@/assets/rimtoken-logo.jpg";
+import { Logo } from "@/components/ui/logo";
 import { cn } from "@/lib/utils";
 
 interface HeaderProps {
@@ -25,11 +25,7 @@ export function Header({ className }: HeaderProps) {
         <div className="flex items-center gap-6 lg:gap-10">
           <Link href="/">
             <div className="flex items-center space-x-2">
-              <img 
-                src={rimTokenLogo} 
-                alt="RimToken" 
-                className="h-10 w-auto"
-              />
+              <Logo size="md" />
             </div>
           </Link>
           
@@ -91,11 +87,7 @@ export function Header({ className }: HeaderProps) {
             <SheetContent side="right">
               <div className="grid gap-6 py-6">
                 <div className="flex items-center gap-2">
-                  <img 
-                    src={rimTokenLogo} 
-                    alt="RimToken" 
-                    className="h-12 w-auto"
-                  />
+                  <Logo size="lg" />
                 </div>
                 <nav className="grid gap-3">
                   <Link href="/">

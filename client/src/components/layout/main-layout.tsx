@@ -3,6 +3,7 @@ import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 import { FloatingActionMenu } from "@/components/ui/floating-action-menu";
 import { Header } from "@/components/layout/header";
+import { Logo } from "@/components/ui/logo";
 import {
   Home,
   Wallet,
@@ -10,6 +11,9 @@ import {
   ArrowUpDown,
   Settings,
   User,
+  Coins,
+  Shield,
+  LineChart,
   LucideIcon
 } from "lucide-react";
 
@@ -63,7 +67,7 @@ export function MainLayout({ children }: MainLayoutProps) {
           <div className="container mx-auto px-4 relative z-10">
             <div className="bg-white/60 backdrop-blur-sm py-8 px-4 rounded-2xl shadow-lg max-w-3xl mx-auto">
               <img 
-                src={rimTokenLogo} 
+                src="/rimtoken-logo.jpg" 
                 alt="RimToken" 
                 className="h-28 mx-auto mb-4"
               />
