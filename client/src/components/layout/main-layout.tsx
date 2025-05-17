@@ -50,17 +50,40 @@ export function MainLayout({ children }: MainLayoutProps) {
 
       {/* الغلاف العلوي مع الشعار */}
       {location === "/" && (
-        <div className="bg-gradient-to-r from-amber-50 to-amber-100 py-8 text-center">
-          <div className="container mx-auto px-4">
-            <img 
-              src="/src/assets/rimtoken-logo.jpg" 
-              alt="RimToken" 
-              className="h-28 mx-auto mb-4"
-            />
-            <h1 className="text-3xl font-bold text-amber-800 mb-2">RIM TOKEN</h1>
-            <p className="text-lg text-amber-700 max-w-xl mx-auto">
-              محفظة العملات المشفرة الأكثر بساطة وأمانًا للتخزين والتبادل
-            </p>
+        <div className="bg-gradient-to-r from-amber-50 via-amber-100 to-amber-50 py-12 text-center relative overflow-hidden">
+          {/* زخارف الخلفية */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute top-10 left-10 w-32 h-32 rounded-full bg-amber-300"></div>
+            <div className="absolute bottom-10 right-10 w-40 h-40 rounded-full bg-amber-400"></div>
+            <div className="absolute top-1/4 right-1/4 w-24 h-24 rounded-full bg-blue-300"></div>
+            <div className="absolute bottom-1/4 left-1/4 w-20 h-20 rounded-full bg-blue-400"></div>
+            <div className="hidden md:block absolute top-20 right-1/3 w-16 h-16 rounded-full bg-amber-500"></div>
+          </div>
+          
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="bg-white/60 backdrop-blur-sm py-8 px-4 rounded-2xl shadow-lg max-w-3xl mx-auto">
+              <img 
+                src={rimTokenLogo} 
+                alt="RimToken" 
+                className="h-28 mx-auto mb-4"
+              />
+              <h1 className="text-3xl md:text-4xl font-bold text-amber-800 mb-3 bg-gradient-to-r from-amber-600 to-amber-800 bg-clip-text text-transparent">RIM TOKEN</h1>
+              <p className="text-lg text-amber-700 max-w-xl mx-auto mb-4">
+                محفظة العملات المشفرة الأكثر بساطة وأمانًا للتخزين والتبادل
+              </p>
+              <div className="flex justify-center gap-4 mt-6">
+                <Link href="/wallet">
+                  <a className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white py-2 px-6 rounded-full shadow-md transition-all font-medium">
+                    ابدأ الآن
+                  </a>
+                </Link>
+                <Link href="/swap">
+                  <a className="bg-white text-amber-700 border border-amber-500 py-2 px-6 rounded-full shadow-md hover:bg-amber-50 transition-all font-medium">
+                    استكشف الميزات
+                  </a>
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       )}
