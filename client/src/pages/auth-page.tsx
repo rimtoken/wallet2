@@ -1,15 +1,27 @@
 import { useState, useEffect } from "react";
-import { useLocation, useSearch } from "wouter";
+import { useLocation, useSearch, Link } from "wouter";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { FiEye, FiEyeOff, FiCheck, FiX } from "react-icons/fi";
+import { FiEye, FiEyeOff, FiCheck, FiX, FiRefreshCw } from "react-icons/fi";
 import { FaGoogle, FaFacebook, FaApple } from "react-icons/fa";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { 
+  Select, 
+  SelectContent, 
+  SelectItem, 
+  SelectTrigger, 
+  SelectValue 
+} from "@/components/ui/select";
+import { useLanguage } from "@/contexts/language-context";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default function AuthPage() {
   const [, setLocation] = useLocation();
   const searchParams = useSearch();
   const tab = new URLSearchParams(searchParams).get('tab') || 'login';
   const { toast } = useToast();
+  const { translate } = useLanguage();
   
   // تحقق مما إذا كان المستخدم مسجل الدخول بالفعل (باستخدام localStorage)
   useEffect(() => {
@@ -27,13 +39,27 @@ export default function AuthPage() {
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   
-  // التسجيل
+  // التسجيل - معلومات شخصية
   const [registerFirstName, setRegisterFirstName] = useState("");
   const [registerLastName, setRegisterLastName] = useState("");
-  const [registerUsername, setRegisterUsername] = useState("");
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPhone, setRegisterPhone] = useState("");
-  const [registerCountry, setRegisterCountry] = useState("");
+  const [registerPhoneCountry, setRegisterPhoneCountry] = useState("+222");
+  
+  // التسجيل - عنوان الفواتير
+  const [registerCompanyName, setRegisterCompanyName] = useState("");
+  const [registerStreetAddress, setRegisterStreetAddress] = useState("");
+  const [registerStreetAddress2, setRegisterStreetAddress2] = useState("");
+  const [registerCity, setRegisterCity] = useState("");
+  const [registerCountry, setRegisterCountry] = useState("Libya");
+  const [registerState, setRegisterState] = useState("");
+  const [registerPostcode, setRegisterPostcode] = useState("");
+  
+  // التسجيل - معلومات إضافية
+  const [registerCurrency, setRegisterCurrency] = useState("LYD");
+  
+  // التسجيل - أمان الحساب
+  const [registerUsername, setRegisterUsername] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
   const [registerConfirmPassword, setRegisterConfirmPassword] = useState("");
   const [registerLoading, setRegisterLoading] = useState(false);
@@ -42,6 +68,7 @@ export default function AuthPage() {
   const [passwordStrength, setPasswordStrength] = useState(0); // 0: ضعيف، 1: متوسط، 2: قوي
   const [showRegisterPassword, setShowRegisterPassword] = useState(false);
   const [showRegisterConfirmPassword, setShowRegisterConfirmPassword] = useState(false);
+  const [receiveEmails, setReceiveEmails] = useState(true);
   
   // تعيين عنوان الصفحة
   useEffect(() => {
@@ -391,7 +418,7 @@ export default function AuthPage() {
             
             {/* نموذج التسجيل */}
             <TabsContent value="register">
-              <form className="space-y-6" onSubmit={handleRegister}>
+              <form className="space-y-8" onSubmit={handleRegister}>
                 <div className="space-y-4 rounded-md shadow-sm">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
