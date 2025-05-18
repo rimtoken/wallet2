@@ -28,8 +28,12 @@ export default function AuthPage() {
   const [showPassword, setShowPassword] = useState(false);
   
   // التسجيل
+  const [registerFirstName, setRegisterFirstName] = useState("");
+  const [registerLastName, setRegisterLastName] = useState("");
   const [registerUsername, setRegisterUsername] = useState("");
   const [registerEmail, setRegisterEmail] = useState("");
+  const [registerPhone, setRegisterPhone] = useState("");
+  const [registerCountry, setRegisterCountry] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
   const [registerConfirmPassword, setRegisterConfirmPassword] = useState("");
   const [registerLoading, setRegisterLoading] = useState(false);
@@ -385,6 +389,36 @@ export default function AuthPage() {
             <TabsContent value="register">
               <form className="space-y-6" onSubmit={handleRegister}>
                 <div className="space-y-4 rounded-md shadow-sm">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label htmlFor="register-first-name" className="block text-sm font-medium">
+                        الاسم الأول
+                      </label>
+                      <input
+                        id="register-first-name"
+                        name="firstName"
+                        type="text"
+                        required
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
+                        value={registerFirstName}
+                        onChange={(e) => setRegisterFirstName(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="register-last-name" className="block text-sm font-medium">
+                        الاسم الأخير
+                      </label>
+                      <input
+                        id="register-last-name"
+                        name="lastName"
+                        type="text"
+                        required
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
+                        value={registerLastName}
+                        onChange={(e) => setRegisterLastName(e.target.value)}
+                      />
+                    </div>
+                  </div>
                   <div>
                     <label htmlFor="register-username" className="block text-sm font-medium">
                       اسم المستخدم
@@ -412,6 +446,47 @@ export default function AuthPage() {
                       value={registerEmail}
                       onChange={(e) => setRegisterEmail(e.target.value)}
                     />
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label htmlFor="register-phone" className="block text-sm font-medium">
+                        رقم الهاتف
+                      </label>
+                      <input
+                        id="register-phone"
+                        name="phone"
+                        type="tel"
+                        required
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
+                        value={registerPhone}
+                        onChange={(e) => setRegisterPhone(e.target.value)}
+                        placeholder="مثال: +222XXXXXXXX"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="register-country" className="block text-sm font-medium">
+                        الدولة
+                      </label>
+                      <select
+                        id="register-country"
+                        name="country"
+                        required
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
+                        value={registerCountry}
+                        onChange={(e) => setRegisterCountry(e.target.value)}
+                      >
+                        <option value="" disabled>اختر الدولة</option>
+                        <option value="mauritania">موريتانيا</option>
+                        <option value="morocco">المغرب</option>
+                        <option value="algeria">الجزائر</option>
+                        <option value="tunisia">تونس</option>
+                        <option value="libya">ليبيا</option>
+                        <option value="egypt">مصر</option>
+                        <option value="saudi_arabia">السعودية</option>
+                        <option value="uae">الإمارات</option>
+                        <option value="other">أخرى</option>
+                      </select>
+                    </div>
                   </div>
                   <div>
                     <label htmlFor="register-password" className="block text-sm font-medium">
