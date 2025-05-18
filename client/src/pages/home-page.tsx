@@ -139,7 +139,7 @@ export default function HomePage() {
                 className="rounded-xl overflow-hidden shadow-xl"
               >
                 <img 
-                  src="/assets/rim-token-ecosystem.jpg" 
+                  src="/assets/rimtoken-logo.jpg" 
                   alt="نظام RimToken البيئي" 
                   className="w-full h-auto"
                 />
