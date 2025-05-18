@@ -33,58 +33,81 @@ function Router() {
   // Active user ID for demo purposes
   const [userId] = useState(1);
   
-  // Prefetch market data and portfolio data on app start
+  // Prefetch market data
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
-        await Promise.all([
-          queryClient.prefetchQuery({ queryKey: ['/api/market'] }),
-          queryClient.prefetchQuery({ queryKey: [`/api/portfolio/${userId}`] }),
-          queryClient.prefetchQuery({ queryKey: [`/api/wallets/${userId}`] }),
-          queryClient.prefetchQuery({ queryKey: [`/api/transactions/${userId}?limit=5`] }),
-        ]);
+        await queryClient.prefetchQuery({ queryKey: ['/api/market'] });
       } catch (error) {
-        console.error("Failed to prefetch initial data:", error);
+        console.error("Failed to prefetch market data:", error);
       }
     };
     
     fetchInitialData();
-  }, [userId]);
+  }, []);
 
-  // Protected routes (requiring authentication)
-  const protectedRoutes = (
-    <MainLayout>
-      <Switch>
-        <Route path="/" component={HomePage} />
-        <Route path="/dashboard" component={() => <Dashboard userId={userId} />} />
-        <Route path="/transactions" component={() => <Transactions userId={userId} />} />
-        <Route path="/markets" component={() => <Markets userId={userId} />} />
-        <Route path="/settings" component={() => <SettingsPage />} />
-        <Route path="/wallet" component={() => <WalletPage userId={userId} />} />
-        <Route path="/swap" component={() => <SwapPage userId={userId} />} />
-        <Route path="/web3-wallet" component={() => <Web3WalletPage userId={userId} />} />
-        <Route path="/pos" component={PosPage} />
-        <Route path="/profile" component={ProfilePage} />
-        <Route path="/about-simple" component={() => <AboutPage />} />
-        <Route path="/trading" component={TradingViewPage} />
-        <Route path="/news" component={NewsPage} />
-        <Route path="/price-alerts" component={PriceAlertsPage} />
-        <Route path="/team" component={TeamPage} />
-        <Route component={NotFound} />
-      </Switch>
-    </MainLayout>
-  );
-
-  // Non-protected routes (no authentication required)
-  const publicRoutes = (
+  return (
     <Switch>
-      <Route path="/auth" component={AuthPage} />
-      <Route path="/register" component={EnhancedRegisterPage} />
+      {/* صفحة التسجيل وتسجيل الدخول */}
+      <Route path="/auth">
+        <AuthPage />
+      </Route>
+      
+      {/* باقي المسارات العادية */}
+      <Route path="/">
+        <MainLayout>
+          <Switch>
+            <Route path="/" component={HomePage} />
+            <Route path="/dashboard">
+              <Dashboard userId={userId} />
+            </Route>
+            <Route path="/transactions">
+              <Transactions userId={userId} />
+            </Route>
+            <Route path="/markets">
+              <Markets userId={userId} />
+            </Route>
+            <Route path="/settings">
+              <SettingsPage />
+            </Route>
+            <Route path="/wallet">
+              <WalletPage userId={userId} />
+            </Route>
+            <Route path="/swap">
+              <SwapPage userId={userId} />
+            </Route>
+            <Route path="/web3-wallet">
+              <Web3WalletPage userId={userId} />
+            </Route>
+            <Route path="/pos">
+              <PosPage />
+            </Route>
+            <Route path="/profile">
+              <ProfilePage />
+            </Route>
+            <Route path="/about-simple">
+              <AboutPage />
+            </Route>
+            <Route path="/trading">
+              <TradingViewPage />
+            </Route>
+            <Route path="/news">
+              <NewsPage />
+            </Route>
+            <Route path="/price-alerts">
+              <PriceAlertsPage />
+            </Route>
+            <Route path="/team">
+              <TeamPage />
+            </Route>
+            <Route>
+              <NotFound />
+            </Route>
+          </Switch>
+        </MainLayout>
+      </Route>
     </Switch>
   );
-
-  // عرض المسارات المحمية فقط في هذه المرحلة من التطوير
-  return protectedRoutes;
 }
 
 function App() {
