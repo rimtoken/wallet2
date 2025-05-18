@@ -129,6 +129,53 @@ export default function HomePage() {
             </p>
           </div>
 
+          <div className="flex flex-col md:flex-row gap-8 items-center justify-center mb-10">
+            <div className="w-full md:w-1/2 max-w-md">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+                viewport={{ once: true }}
+                className="rounded-xl overflow-hidden shadow-xl"
+              >
+                <img 
+                  src="/assets/rim-token-ecosystem.jpg" 
+                  alt="نظام RimToken البيئي" 
+                  className="w-full h-auto"
+                />
+              </motion.div>
+            </div>
+            
+            <div className="w-full md:w-1/2">
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5 }}
+                viewport={{ once: true }}
+                className="space-y-4"
+              >
+                <h3 className="text-2xl font-bold text-amber-700">نظام بيئي شامل للعملات المشفرة</h3>
+                <p className="text-gray-700">
+                  تتكامل محفظة RimToken مع جميع العملات المشفرة الرئيسية في السوق، مما يوفر لك منظومة متكاملة للتعامل مع الأصول الرقمية بكل سهولة وأمان.
+                </p>
+                <ul className="space-y-2">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="h-5 w-5 text-green-500" />
+                    <span>دعم لأكثر من 35 عملة مشفرة رئيسية</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="h-5 w-5 text-green-500" />
+                    <span>توافق مع محافظ Web3 الشائعة</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="h-5 w-5 text-green-500" />
+                    <span>تبادل فوري بين العملات المختلفة</span>
+                  </li>
+                </ul>
+              </motion.div>
+            </div>
+          </div>
+
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
             {supportedCoins.map((coin, index) => (
               <motion.div

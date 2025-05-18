@@ -48,6 +48,9 @@ export function Header({ className }: HeaderProps) {
             <Link href="/price-alerts">
               <span className="text-sm font-medium transition-colors hover:text-primary">تنبيهات الأسعار</span>
             </Link>
+            <Link href="/team">
+              <span className="text-sm font-medium transition-colors hover:text-primary">فريقنا</span>
+            </Link>
             <Link href="/about-simple">
               <span className="text-sm font-medium transition-colors hover:text-primary">حول</span>
             </Link>

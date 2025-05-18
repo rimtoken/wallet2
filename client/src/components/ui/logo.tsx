@@ -8,20 +8,18 @@ interface LogoProps {
 
 export function Logo({ className, showText = true, size = "md" }: LogoProps) {
   const sizeClasses = {
-    sm: "h-8",
-    md: "h-10",
-    lg: "h-14"
+    sm: "h-8 w-8",
+    md: "h-10 w-10",
+    lg: "h-14 w-14"
   };
 
   return (
     <div className={cn("flex items-center", className)}>
-      <div className={cn("flex items-center justify-center overflow-hidden rounded-full bg-amber-500 text-white font-bold", sizeClasses[size], sizeClasses[size])}>
-        <span className={cn(
-          "text-xl md:text-2xl",
-          size === "sm" && "text-lg",
-          size === "lg" && "text-3xl"
-        )}>R</span>
-      </div>
+      <img 
+        src="/assets/rim-token-logo.png" 
+        alt="RIM TOKEN Logo" 
+        className={cn("object-contain", sizeClasses[size])}
+      />
       
       {showText && (
         <div className="mr-2 flex flex-col items-start">

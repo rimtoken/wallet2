@@ -17,6 +17,7 @@ import AboutPage from "@/pages/about-simple";
 import TradingViewPage from "@/pages/trading-view";
 import NewsPage from "@/pages/news";
 import PriceAlertsPage from "@/pages/price-alerts";
+import TeamPage from "@/pages/team";
 import { useState, useEffect } from "react";
 import { MainLayout } from "@/components/layout/main-layout";
 import WalletPage from "@/pages/wallet";
@@ -63,6 +64,7 @@ function Router() {
         <Route path="/trading" component={TradingViewPage} />
         <Route path="/news" component={NewsPage} />
         <Route path="/price-alerts" component={PriceAlertsPage} />
+        <Route path="/team" component={TeamPage} />
         <Route component={NotFound} />
       </Switch>
     </MainLayout>
