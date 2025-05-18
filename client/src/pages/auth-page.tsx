@@ -19,12 +19,15 @@ import { Checkbox } from "@/components/ui/checkbox";
 export default function AuthPage() {
   const [location, setLocation] = useLocation();
   const searchParams = useSearch();
-  const tab = new URLSearchParams(searchParams).get('tab') || 'login';
+  const [activeTab, setActiveTab] = useState('login');
   
+  // تحديد التبويب النشط من URL عند تحميل الصفحة
   useEffect(() => {
-    console.log("Current location:", location);
-    console.log("Tab parameter:", tab);
-  }, [location, tab]);
+    const tabParam = new URLSearchParams(searchParams).get('tab');
+    if (tabParam && (tabParam === 'login' || tabParam === 'register')) {
+      setActiveTab(tabParam);
+    }
+  }, [searchParams]);
   const { toast } = useToast();
   const { translate } = useLanguage();
   
@@ -77,8 +80,8 @@ export default function AuthPage() {
   
   // تعيين عنوان الصفحة
   useEffect(() => {
-    document.title = tab === 'register' ? 'التسجيل - RimToken' : 'تسجيل الدخول - RimToken';
-  }, [tab]);
+    document.title = activeTab === 'register' ? 'التسجيل - RimToken' : 'تسجيل الدخول - RimToken';
+  }, [activeTab]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -266,17 +269,18 @@ export default function AuthPage() {
           <div className="text-center">
             <h1 className="text-4xl font-bold tracking-tight text-primary">RimToken</h1>
             <h2 className="mt-6 text-3xl font-bold tracking-tight">
-              {tab === 'register' ? 'إنشاء حساب جديد' : 'مرحبًا بعودتك'}
+              {activeTab === 'register' ? 'إنشاء حساب جديد' : 'مرحبًا بعودتك'}
             </h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              {tab === 'register' 
+              {activeTab === 'register' 
                 ? 'قم بإنشاء حساب للوصول إلى خدمات محفظة ريم توكن الرقمية' 
                 : 'تسجيل الدخول إلى حسابك لإدارة محفظتك الرقمية'}
             </p>
           </div>
           
-          <Tabs value={tab || 'login'} className="w-full" onValueChange={(value) => {
-            setLocation(`/auth?tab=${value}`);
+          <Tabs value={activeTab} className="w-full" onValueChange={(value) => {
+            setActiveTab(value);
+            window.history.pushState({}, '', `/auth?tab=${value}`);
           }}>
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="login">تسجيل الدخول</TabsTrigger>

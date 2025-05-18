@@ -46,11 +46,17 @@ function Router() {
     fetchInitialData();
   }, []);
 
+  // نظام التوجيه البسيط
   return (
     <Switch>
+      {/* صفحة تسجيل الدخول */}
       <Route path="/auth">
-        <AuthPage />
+        <div className="bg-background text-foreground min-h-screen">
+          <AuthPage />
+        </div>
       </Route>
+      
+      {/* الصفحة الرئيسية والصفحات الأخرى */}
       <Route path="/">
         <MainLayout>
           <HomePage />
@@ -84,46 +90,6 @@ function Router() {
       <Route path="/swap">
         <MainLayout>
           <SwapPage userId={userId} />
-        </MainLayout>
-      </Route>
-      <Route path="/web3-wallet">
-        <MainLayout>
-          <Web3WalletPage userId={userId} />
-        </MainLayout>
-      </Route>
-      <Route path="/pos">
-        <MainLayout>
-          <PosPage />
-        </MainLayout>
-      </Route>
-      <Route path="/profile">
-        <MainLayout>
-          <ProfilePage />
-        </MainLayout>
-      </Route>
-      <Route path="/about-simple">
-        <MainLayout>
-          <AboutPage />
-        </MainLayout>
-      </Route>
-      <Route path="/trading">
-        <MainLayout>
-          <TradingViewPage />
-        </MainLayout>
-      </Route>
-      <Route path="/news">
-        <MainLayout>
-          <NewsPage />
-        </MainLayout>
-      </Route>
-      <Route path="/price-alerts">
-        <MainLayout>
-          <PriceAlertsPage />
-        </MainLayout>
-      </Route>
-      <Route path="/team">
-        <MainLayout>
-          <TeamPage />
         </MainLayout>
       </Route>
       <Route>
