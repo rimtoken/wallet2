@@ -83,13 +83,12 @@ function Router() {
     </Switch>
   );
 
-  // نتحقق ما إذا كان المستخدم مسجل دخوله
-  const isLoggedIn = localStorage.getItem('user') !== null;
-  
-  // تحديد المسارات المناسبة بناءً على حالة تسجيل الدخول
+  // للتطوير، سنقوم بعرض المسارات المحمية والعامة
+  // سيتم تنفيذ التحقق من تسجيل الدخول لاحقًا
   return (
     <>
-      {isLoggedIn ? protectedRoutes : publicRoutes}
+      {publicRoutes}
+      {protectedRoutes}
     </>
   );
 }

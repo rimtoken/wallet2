@@ -184,7 +184,7 @@ export function Header({ className }: HeaderProps) {
                 <span className="font-medium">{translate('user.login')}</span>
               </Button>
             </Link>
-            <Link href="/auth?tab=register">
+            <Link href="/register">
               <Button variant="default" size="default" className="bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 flex items-center gap-2 px-5 shadow-sm">
                 <UserPlus className="h-4 w-4" />
                 <span className="font-medium">{translate('user.register')}</span>
