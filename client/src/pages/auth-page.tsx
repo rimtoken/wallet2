@@ -190,8 +190,12 @@ export default function AuthPage() {
       // إنشاء مستخدم جديد
       const newUser = {
         id: Date.now(),
+        firstName: registerFirstName,
+        lastName: registerLastName,
         username: registerUsername,
         email: registerEmail,
+        phone: registerPhone,
+        country: registerCountry,
         // في البيئة الحقيقية، سنقوم بتشفير كلمة المرور
       };
       
