@@ -1,8 +1,9 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Bell, ChevronDown, Menu, Globe, LogIn, UserPlus } from "lucide-react";
+import { Bell, ChevronDown, Menu, Globe, LogIn, UserPlus, Moon, Sun, Palette } from "lucide-react";
 import { useLanguage, Language, LANGUAGES } from "@/contexts/language-context";
+import { useTheme } from "@/contexts/theme-context";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,6 +22,7 @@ interface HeaderProps {
 
 export function Header({ className }: HeaderProps) {
   const { language, setLanguage, translate } = useLanguage();
+  const { theme, setTheme } = useTheme();
   return (
     <header className={cn("w-full border-b bg-white z-50 sticky top-0 shadow-md", className)} style={{height: "100px", minHeight: "100px"}}>
       <div className="w-full flex h-full items-center justify-between px-6 max-w-[1440px] mx-auto">
@@ -92,6 +94,52 @@ export function Header({ className }: HeaderProps) {
                   <path d="M12 18H12.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
                 <span>تحميل لأجهزة iPhone</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          
+          {/* قائمة تغيير المظهر (الثيمات) */}
+          <DropdownMenu modal={true}>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" className="md:flex hidden">
+                {theme === 'dark' ? (
+                  <Moon className="h-5 w-5" />
+                ) : theme === 'spooky' ? (
+                  <Palette className="h-5 w-5" />
+                ) : (
+                  <Sun className="h-5 w-5" />
+                )}
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>اختر المظهر</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem 
+                onClick={() => setTheme('light')} 
+                className={theme === 'light' ? 'bg-amber-50 font-medium' : ''}
+              >
+                <Sun className="h-4 w-4 mr-2" />
+                <span>فاتح</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem 
+                onClick={() => setTheme('dark')} 
+                className={theme === 'dark' ? 'bg-amber-50 font-medium' : ''}
+              >
+                <Moon className="h-4 w-4 mr-2" />
+                <span>داكن</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem 
+                onClick={() => setTheme('spooky')} 
+                className={theme === 'spooky' ? 'bg-amber-50 font-medium' : ''}
+              >
+                <Palette className="h-4 w-4 mr-2" />
+                <span>مخيف</span>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <Link href="/settings" className="flex w-full cursor-pointer">
+                  <span>المزيد من الإعدادات</span>
+                </Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

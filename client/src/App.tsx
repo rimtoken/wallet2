@@ -4,12 +4,14 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { LanguageProvider } from '@/contexts/language-context';
+import { ThemeProvider } from '@/contexts/theme-context';
 import NotFound from "@/pages/not-found";
 import Dashboard from "@/pages/dashboard";
 import HomePage from "@/pages/home-page";
 import Transactions from "@/pages/transactions";
 import Markets from "@/pages/markets";
 import Settings from "@/pages/settings";
+import SettingsPage from "@/pages/settings-page";
 import Web3WalletPage from "@/pages/web3-wallet";
 import PosPage from "@/pages/point-of-sale/pos-page";
 import AuthPage from "@/pages/auth-page";
@@ -23,6 +25,7 @@ import { useState, useEffect } from "react";
 import { MainLayout } from "@/components/layout/main-layout";
 import WalletPage from "@/pages/wallet";
 import SwapPage from "@/pages/swap";
+import "@/styles/themes.css";
 // سنضيف مزود المصادقة لاحقاً
 
 function Router() {
@@ -55,7 +58,7 @@ function Router() {
         <Route path="/dashboard" component={() => <Dashboard userId={userId} />} />
         <Route path="/transactions" component={() => <Transactions userId={userId} />} />
         <Route path="/markets" component={() => <Markets userId={userId} />} />
-        <Route path="/settings" component={() => <Settings userId={userId} />} />
+        <Route path="/settings" component={() => <SettingsPage />} />
         <Route path="/wallet" component={() => <WalletPage userId={userId} />} />
         <Route path="/swap" component={() => <SwapPage userId={userId} />} />
         <Route path="/web3-wallet" component={() => <Web3WalletPage userId={userId} />} />
@@ -86,12 +89,14 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <LanguageProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Router />
-        </TooltipProvider>
-      </LanguageProvider>
+      <ThemeProvider>
+        <LanguageProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Router />
+          </TooltipProvider>
+        </LanguageProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }
