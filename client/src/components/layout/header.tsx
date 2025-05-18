@@ -22,8 +22,8 @@ interface HeaderProps {
 export function Header({ className }: HeaderProps) {
   const { language, setLanguage, translate } = useLanguage();
   return (
-    <header className={cn("w-full border-b bg-white z-10 sticky top-0", className)}>
-      <div className="container flex h-20 items-center justify-between px-4">
+    <header className={cn("w-full border-b bg-white z-50 sticky top-0 shadow-sm", className)}>
+      <div className="container flex h-24 items-center justify-between px-6">
         <div className="flex items-center gap-6 lg:gap-10">
           <Link href="/">
             <div className="flex items-center space-x-2">
@@ -97,7 +97,7 @@ export function Header({ className }: HeaderProps) {
           </DropdownMenu>
           
           {/* قائمة تغيير اللغة */}
-          <DropdownMenu>
+          <DropdownMenu modal={true}>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" className="md:flex hidden">
                 <Globe className="h-5 w-5" />
@@ -129,17 +129,17 @@ export function Header({ className }: HeaderProps) {
           </DropdownMenu>
           
           {/* أزرار تسجيل الدخول/التسجيل (للزوار) */}
-          <div className="hidden md:flex items-center gap-2">
+          <div className="hidden md:flex items-center gap-3">
             <Link href="/auth">
-              <Button variant="ghost" size="sm" className="flex items-center gap-1">
+              <Button variant="outline" size="default" className="flex items-center gap-2 px-5 border-amber-500 text-amber-600 hover:text-amber-700 hover:bg-amber-50">
                 <LogIn className="h-4 w-4" />
-                <span>{translate('user.login')}</span>
+                <span className="font-medium">{translate('user.login')}</span>
               </Button>
             </Link>
-            <Link href="/auth">
-              <Button variant="default" size="sm" className="bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 flex items-center gap-1">
+            <Link href="/auth?tab=register">
+              <Button variant="default" size="default" className="bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 flex items-center gap-2 px-5 shadow-sm">
                 <UserPlus className="h-4 w-4" />
-                <span>{translate('user.register')}</span>
+                <span className="font-medium">{translate('user.register')}</span>
               </Button>
             </Link>
           </div>
@@ -151,14 +151,14 @@ export function Header({ className }: HeaderProps) {
           </Button>
           
           {/* قائمة المستخدم (للمستخدمين المسجّلين) - يمكن إخفاؤها عندما يكون الزائر غير مسجّل */}
-          <DropdownMenu>
+          <DropdownMenu modal={true}>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="hidden md:flex gap-2">
-                <Avatar className="h-8 w-8">
+              <Button variant="ghost" size="lg" className="hidden md:flex gap-2 hover:bg-gray-100 transition-colors">
+                <Avatar className="h-9 w-9">
                   <AvatarImage src="" />
-                  <AvatarFallback className="bg-primary text-white">مس</AvatarFallback>
+                  <AvatarFallback className="bg-primary text-white text-sm">مس</AvatarFallback>
                 </Avatar>
-                <span className="text-sm font-medium">مستخدم</span>
+                <span className="text-base font-medium">مستخدم</span>
                 <ChevronDown className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
@@ -240,14 +240,14 @@ export function Header({ className }: HeaderProps) {
                   </div>
                   
                   <div className="border-t border-gray-100 my-2 pt-2">
-                    <div className="flex gap-2 mt-2">
-                      <Button className="flex-1 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600">
-                        <UserPlus className="h-4 w-4 mr-1" />
-                        {translate('user.register')}
+                    <div className="flex gap-3 mt-3">
+                      <Button className="flex-1 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 py-6">
+                        <UserPlus className="h-5 w-5 mr-2" />
+                        <span className="font-medium">{translate('user.register')}</span>
                       </Button>
-                      <Button variant="outline" className="flex-1 border-amber-500 text-amber-500">
-                        <LogIn className="h-4 w-4 mr-1" />
-                        {translate('user.login')}
+                      <Button variant="outline" className="flex-1 border-amber-500 text-amber-600 py-6">
+                        <LogIn className="h-5 w-5 mr-2" />
+                        <span className="font-medium">{translate('user.login')}</span>
                       </Button>
                     </div>
                   </div>
