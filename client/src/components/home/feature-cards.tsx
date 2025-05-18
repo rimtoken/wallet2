@@ -128,8 +128,12 @@ export function ValueProposition() {
 
         <div className="grid md:grid-cols-3 gap-8 mt-12">
           <div className="bg-white rounded-xl shadow p-6 text-center">
-            <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Download className="h-8 w-8 text-amber-600" />
+            <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 overflow-hidden border-2 border-amber-500">
+              <img 
+                src="/assets/rim-circle-logo.jpg" 
+                alt="RIM Token Logo" 
+                className="w-full h-full object-cover"
+              />
             </div>
             <h3 className="text-xl font-bold mb-3">إيداع محكم</h3>
             <p className="text-gray-600">
