@@ -105,9 +105,14 @@ const translations: Record<Language, Record<string, string>> = {
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   // استرجاع اللغة المخزنة سابقًا في localStorage أو استخدام العربية كلغة افتراضية
   const [language, setLanguage] = useState<Language>(() => {
-    const savedLanguage = localStorage.getItem('language') as Language;
-    // التحقق من أن اللغة المحفوظة مدعومة
-    return savedLanguage && LANGUAGES[savedLanguage] ? savedLanguage : 'ar';
+    try {
+      const savedLanguage = localStorage.getItem('language') as Language;
+      // التحقق من أن اللغة المحفوظة مدعومة
+      return savedLanguage && LANGUAGES[savedLanguage] ? savedLanguage : 'ar';
+    } catch (e) {
+      // في حالة عدم إمكانية الوصول إلى localStorage (مثل في بيئة SSR)
+      return 'ar';
+    }
   });
 
   const [languageInfo, setLanguageInfo] = useState<LanguageInfo>(LANGUAGES[language]);
@@ -116,7 +121,11 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
   useEffect(() => {
     document.documentElement.dir = languageInfo.direction;
     document.documentElement.lang = language;
-    localStorage.setItem('language', language);
+    try {
+      localStorage.setItem('language', language);
+    } catch (e) {
+      console.error('Failed to save language preference to localStorage:', e);
+    }
     setLanguageInfo(LANGUAGES[language]);
   }, [language, languageInfo.direction]);
 
