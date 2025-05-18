@@ -15,6 +15,7 @@ import SettingsPage from "@/pages/settings-page";
 import Web3WalletPage from "@/pages/web3-wallet";
 import PosPage from "@/pages/point-of-sale/pos-page";
 import AuthPage from "@/pages/auth-page";
+import EnhancedRegisterPage from "@/pages/enhanced-register-page";
 import ProfilePage from "@/pages/profile";
 import AboutPage from "@/pages/about-simple";
 import TradingViewPage from "@/pages/trading-view";
@@ -78,12 +79,19 @@ function Router() {
   const publicRoutes = (
     <Switch>
       <Route path="/auth" component={AuthPage} />
+      <Route path="/register" component={EnhancedRegisterPage} />
     </Switch>
   );
 
-  // For demo purposes, always show the protected routes
-  // In a real application, this would depend on authentication state
-  return protectedRoutes;
+  // نتحقق ما إذا كان المستخدم مسجل دخوله
+  const isLoggedIn = localStorage.getItem('user') !== null;
+  
+  // تحديد المسارات المناسبة بناءً على حالة تسجيل الدخول
+  return (
+    <>
+      {isLoggedIn ? protectedRoutes : publicRoutes}
+    </>
+  );
 }
 
 function App() {
