@@ -22,8 +22,8 @@ interface HeaderProps {
 export function Header({ className }: HeaderProps) {
   const { language, setLanguage, translate } = useLanguage();
   return (
-    <header className={cn("w-full border-b bg-white z-10", className)}>
-      <div className="container flex h-16 items-center justify-between px-4">
+    <header className={cn("w-full border-b bg-white z-10 sticky top-0", className)}>
+      <div className="container flex h-20 items-center justify-between px-4">
         <div className="flex items-center gap-6 lg:gap-10">
           <Link href="/">
             <div className="flex items-center space-x-2">
