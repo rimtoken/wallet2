@@ -33,7 +33,13 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     root.classList.remove('light-theme', 'dark-theme', 'system-theme', 'spooky-theme');
     
     // تطبيق الثيم الجديد
-    root.classList.add(`${newTheme}-theme`);
+    if (newTheme === 'light') {
+      root.classList.remove('dark-theme', 'spooky-theme');
+      document.body.classList.remove('dark-theme', 'spooky-theme');
+    } else {
+      root.classList.add(`${newTheme}-theme`);
+      document.body.classList.add(`${newTheme}-theme`);
+    }
     
     // حفظ الثيم في التخزين المحلي
     localStorage.setItem('theme', newTheme);

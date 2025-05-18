@@ -1,7 +1,7 @@
 /* الثيمات الأساسية */
 
 /* الثيم الفاتح - الافتراضي */
-:root {
+:root, body {
   --background: 0 0% 100%;
   --foreground: 222.2 84% 4.9%;
   
@@ -36,6 +36,10 @@
   --rim-gold: 47 100% 50%;
   --rim-black: 0 0% 0%;
   --rim-accent: 45 100% 50%;
+  
+  /* تطبيق الألوان مباشرة */
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
 }
 
 /* الثيم الداكن */
@@ -67,6 +71,10 @@
   --border: 217.2 32.6% 17.5%;
   --input: 217.2 32.6% 17.5%;
   --ring: 212.7 26.8% 83.9%;
+  
+  /* تطبيق الألوان مباشرة */
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
 }
 
 /* الثيم المخيف */
@@ -98,6 +106,10 @@
   --border: 240 3.7% 15.9%;
   --input: 240 3.7% 15.9%;
   --ring: 24 75% 50%;
+  
+  /* تطبيق الألوان مباشرة */
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
 }
 
 /* انتقالات سلسة */
