@@ -48,62 +48,87 @@ function Router() {
 
   return (
     <Switch>
-      {/* صفحة التسجيل وتسجيل الدخول */}
       <Route path="/auth">
         <AuthPage />
       </Route>
-      
-      {/* باقي المسارات العادية */}
       <Route path="/">
         <MainLayout>
-          <Switch>
-            <Route path="/" component={HomePage} />
-            <Route path="/dashboard">
-              <Dashboard userId={userId} />
-            </Route>
-            <Route path="/transactions">
-              <Transactions userId={userId} />
-            </Route>
-            <Route path="/markets">
-              <Markets userId={userId} />
-            </Route>
-            <Route path="/settings">
-              <SettingsPage />
-            </Route>
-            <Route path="/wallet">
-              <WalletPage userId={userId} />
-            </Route>
-            <Route path="/swap">
-              <SwapPage userId={userId} />
-            </Route>
-            <Route path="/web3-wallet">
-              <Web3WalletPage userId={userId} />
-            </Route>
-            <Route path="/pos">
-              <PosPage />
-            </Route>
-            <Route path="/profile">
-              <ProfilePage />
-            </Route>
-            <Route path="/about-simple">
-              <AboutPage />
-            </Route>
-            <Route path="/trading">
-              <TradingViewPage />
-            </Route>
-            <Route path="/news">
-              <NewsPage />
-            </Route>
-            <Route path="/price-alerts">
-              <PriceAlertsPage />
-            </Route>
-            <Route path="/team">
-              <TeamPage />
-            </Route>
-            <Route>
-              <NotFound />
-            </Route>
-          </Switch>
+          <HomePage />
+        </MainLayout>
+      </Route>
+      <Route path="/dashboard">
+        <MainLayout>
+          <Dashboard userId={userId} />
+        </MainLayout>
+      </Route>
+      <Route path="/transactions">
+        <MainLayout>
+          <Transactions userId={userId} />
+        </MainLayout>
+      </Route>
+      <Route path="/markets">
+        <MainLayout>
+          <Markets userId={userId} />
+        </MainLayout>
+      </Route>
+      <Route path="/settings">
+        <MainLayout>
+          <SettingsPage />
+        </MainLayout>
+      </Route>
+      <Route path="/wallet">
+        <MainLayout>
+          <WalletPage userId={userId} />
+        </MainLayout>
+      </Route>
+      <Route path="/swap">
+        <MainLayout>
+          <SwapPage userId={userId} />
+        </MainLayout>
+      </Route>
+      <Route path="/web3-wallet">
+        <MainLayout>
+          <Web3WalletPage userId={userId} />
+        </MainLayout>
+      </Route>
+      <Route path="/pos">
+        <MainLayout>
+          <PosPage />
+        </MainLayout>
+      </Route>
+      <Route path="/profile">
+        <MainLayout>
+          <ProfilePage />
+        </MainLayout>
+      </Route>
+      <Route path="/about-simple">
+        <MainLayout>
+          <AboutPage />
+        </MainLayout>
+      </Route>
+      <Route path="/trading">
+        <MainLayout>
+          <TradingViewPage />
+        </MainLayout>
+      </Route>
+      <Route path="/news">
+        <MainLayout>
+          <NewsPage />
+        </MainLayout>
+      </Route>
+      <Route path="/price-alerts">
+        <MainLayout>
+          <PriceAlertsPage />
+        </MainLayout>
+      </Route>
+      <Route path="/team">
+        <MainLayout>
+          <TeamPage />
+        </MainLayout>
+      </Route>
+      <Route>
+        <MainLayout>
+          <NotFound />
         </MainLayout>
       </Route>
     </Switch>

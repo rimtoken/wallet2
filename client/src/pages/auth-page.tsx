@@ -17,9 +17,14 @@ import { useLanguage } from "@/contexts/language-context";
 import { Checkbox } from "@/components/ui/checkbox";
 
 export default function AuthPage() {
-  const [, setLocation] = useLocation();
+  const [location, setLocation] = useLocation();
   const searchParams = useSearch();
   const tab = new URLSearchParams(searchParams).get('tab') || 'login';
+  
+  useEffect(() => {
+    console.log("Current location:", location);
+    console.log("Tab parameter:", tab);
+  }, [location, tab]);
   const { toast } = useToast();
   const { translate } = useLanguage();
   
@@ -270,7 +275,7 @@ export default function AuthPage() {
             </p>
           </div>
           
-          <Tabs value={tab} className="w-full" onValueChange={(value) => {
+          <Tabs value={tab || 'login'} className="w-full" onValueChange={(value) => {
             setLocation(`/auth?tab=${value}`);
           }}>
             <TabsList className="grid w-full grid-cols-2">
