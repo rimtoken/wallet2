@@ -22,8 +22,8 @@ interface HeaderProps {
 export function Header({ className }: HeaderProps) {
   const { language, setLanguage, translate } = useLanguage();
   return (
-    <header className={cn("w-full border-b bg-white z-50 sticky top-0 shadow-md", className)}>
-      <div className="container flex h-28 items-center justify-between px-8">
+    <header className={cn("w-full border-b bg-white z-50 sticky top-0 shadow-sm", className)}>
+      <div className="w-full flex h-24 items-center justify-between px-6 max-w-[1440px] mx-auto">
         <div className="flex items-center gap-6 lg:gap-10">
           <Link href="/">
             <div className="flex items-center space-x-2">
@@ -151,32 +151,34 @@ export function Header({ className }: HeaderProps) {
           </Button>
           
           {/* قائمة المستخدم (للمستخدمين المسجّلين) - يمكن إخفاؤها عندما يكون الزائر غير مسجّل */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="hidden md:flex gap-2 hover:bg-gray-100 transition-colors h-12 px-3">
-                <Avatar className="h-9 w-9">
-                  <AvatarImage src="" />
-                  <AvatarFallback className="bg-primary text-white text-sm">مس</AvatarFallback>
-                </Avatar>
-                <span className="text-base font-medium">مستخدم</span>
-                <ChevronDown className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>حسابي</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>
-                <Link href="/profile">الملف الشخصي</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="/settings">الإعدادات</Link>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>
-                <Link href="/auth">تسجيل الخروج</Link>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <div className="hidden md:block">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="flex gap-2 hover:bg-gray-100 transition-colors h-12 px-3">
+                  <Avatar className="h-9 w-9">
+                    <AvatarImage src="" />
+                    <AvatarFallback className="bg-primary text-white text-sm">مس</AvatarFallback>
+                  </Avatar>
+                  <span className="text-base font-medium">مستخدم</span>
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>حسابي</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link href="/profile">الملف الشخصي</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/settings">الإعدادات</Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link href="/auth">تسجيل الخروج</Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
           
           <Sheet>
             <SheetTrigger asChild>
