@@ -243,11 +243,11 @@ export function Header({ className }: HeaderProps) {
                     <div className="flex gap-2 mt-2">
                       <Button className="flex-1 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600">
                         <UserPlus className="h-4 w-4 mr-1" />
-                        التسجيل
+                        {translate('user.register')}
                       </Button>
                       <Button variant="outline" className="flex-1 border-amber-500 text-amber-500">
                         <LogIn className="h-4 w-4 mr-1" />
-                        تسجيل الدخول
+                        {translate('user.login')}
                       </Button>
                     </div>
                   </div>
