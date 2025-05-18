@@ -16,7 +16,7 @@ export function Logo({ className, showText = true, size = "md" }: LogoProps) {
   return (
     <div className={cn("flex items-center", className)}>
       <img 
-        src="/assets/new-rim-token-logo.jpg" 
+        src="/assets/rimtoken-logo.jpg" 
         alt="RIM TOKEN Logo" 
         className={cn("object-contain", sizeClasses[size])}
       />
