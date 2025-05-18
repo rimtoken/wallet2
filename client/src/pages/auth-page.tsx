@@ -451,6 +451,48 @@ export default function AuthPage() {
                       onChange={(e) => setRegisterEmail(e.target.value)}
                     />
                   </div>
+                  
+                  <div className="bg-amber-50 p-4 rounded-md border border-amber-200">
+                    <h3 className="font-medium text-amber-800 mb-2">خيارات التداول</h3>
+                    <div className="grid grid-cols-1 gap-3">
+                      <div className="flex items-center">
+                        <input
+                          id="trading-enabled"
+                          name="tradingEnabled"
+                          type="checkbox"
+                          className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
+                          defaultChecked={true}
+                        />
+                        <label htmlFor="trading-enabled" className="mr-2 block text-sm text-gray-700">
+                          تمكين التداول في العملات الرقمية
+                        </label>
+                      </div>
+                      <div className="flex items-center">
+                        <input
+                          id="buying-enabled"
+                          name="buyingEnabled"
+                          type="checkbox"
+                          className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
+                          defaultChecked={true}
+                        />
+                        <label htmlFor="buying-enabled" className="mr-2 block text-sm text-gray-700">
+                          تمكين شراء العملات الرقمية
+                        </label>
+                      </div>
+                      <div className="flex items-center">
+                        <input
+                          id="selling-enabled"
+                          name="sellingEnabled"
+                          type="checkbox"
+                          className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
+                          defaultChecked={true}
+                        />
+                        <label htmlFor="selling-enabled" className="mr-2 block text-sm text-gray-700">
+                          تمكين بيع العملات الرقمية
+                        </label>
+                      </div>
+                    </div>
+                  </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label htmlFor="register-phone" className="block text-sm font-medium">

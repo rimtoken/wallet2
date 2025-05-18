@@ -22,7 +22,7 @@ interface HeaderProps {
 export function Header({ className }: HeaderProps) {
   const { language, setLanguage, translate } = useLanguage();
   return (
-    <header className={cn("w-full border-b bg-white z-50 sticky top-0 shadow-sm", className)} style={{height: "90px"}}>
+    <header className={cn("w-full border-b bg-white z-50 sticky top-0 shadow-md", className)} style={{height: "100px", minHeight: "100px"}}>
       <div className="w-full flex h-full items-center justify-between px-6 max-w-[1440px] mx-auto">
         <div className="flex items-center gap-6 lg:gap-10">
           <Link href="/">
