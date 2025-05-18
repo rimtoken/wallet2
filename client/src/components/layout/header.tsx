@@ -2,6 +2,7 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Bell, ChevronDown, Menu, Globe, LogIn, UserPlus } from "lucide-react";
+import { useLanguage, Language, LANGUAGES } from "@/contexts/language-context";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,6 +20,7 @@ interface HeaderProps {
 }
 
 export function Header({ className }: HeaderProps) {
+  const { language, setLanguage, translate } = useLanguage();
   return (
     <header className={cn("w-full border-b bg-white z-10", className)}>
       <div className="container flex h-16 items-center justify-between px-4">
@@ -99,14 +101,30 @@ export function Header({ className }: HeaderProps) {
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" className="md:flex hidden">
                 <Globe className="h-5 w-5" />
+                <span className="ml-1 sr-only">{LANGUAGES[language].name}</span>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>اختر اللغة</DropdownMenuLabel>
+              <DropdownMenuLabel>{translate('general.chooseLanguage')}</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>العربية</DropdownMenuItem>
-              <DropdownMenuItem>English</DropdownMenuItem>
-              <DropdownMenuItem>Français</DropdownMenuItem>
+              <DropdownMenuItem 
+                onClick={() => setLanguage('ar')} 
+                className={language === 'ar' ? 'bg-amber-50 font-medium' : ''}
+              >
+                العربية
+              </DropdownMenuItem>
+              <DropdownMenuItem 
+                onClick={() => setLanguage('en')} 
+                className={language === 'en' ? 'bg-amber-50 font-medium' : ''}
+              >
+                English
+              </DropdownMenuItem>
+              <DropdownMenuItem 
+                onClick={() => setLanguage('fr')} 
+                className={language === 'fr' ? 'bg-amber-50 font-medium' : ''}
+              >
+                Français
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
           
