@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Link, useLocation } from "wouter";
 import { Avatar } from "@/components/ui/avatar";
-import rimTokenLogo from "@/assets/logo/rimtoken-logo.png";
+import rimTokenLogo from "@/assets/logo/rimtoken-logo.jpg";
 
 interface SidebarProps {
   className?: string;
