@@ -419,18 +419,21 @@ export default function AuthPage() {
             {/* نموذج التسجيل */}
             <TabsContent value="register">
               <form className="space-y-8" onSubmit={handleRegister}>
-                <div className="space-y-4 rounded-md shadow-sm">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* قسم المعلومات الشخصية */}
+                <div className="space-y-5">
+                  <h3 className="text-lg font-medium">Personal Information</h3>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div>
-                      <label htmlFor="register-first-name" className="block text-sm font-medium">
-                        الاسم الأول
+                      <label htmlFor="register-first-name" className="block text-sm font-medium mb-1">
+                        First Name <span className="text-red-500">*</span>
                       </label>
                       <input
                         id="register-first-name"
                         name="firstName"
                         type="text"
                         required
-                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
+                        className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary"
                         value={registerFirstName}
                         onChange={(e) => setRegisterFirstName(e.target.value)}
                       />
