@@ -254,7 +254,7 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex bg-background text-foreground">
       {/* نموذج تسجيل الدخول والتسجيل */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
         <div className="w-full max-w-md space-y-8">
@@ -368,7 +368,7 @@ export default function AuthPage() {
                       <div className="w-full border-t border-gray-300"></div>
                     </div>
                     <div className="relative flex justify-center text-sm">
-                      <span className="px-2 bg-white text-gray-500">
+                      <span className="px-2 bg-background text-muted-foreground">
                         أو تسجيل الدخول عبر
                       </span>
                     </div>
@@ -377,7 +377,7 @@ export default function AuthPage() {
                   <div className="grid grid-cols-3 gap-3">
                     <button
                       type="button"
-                      className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                      className="w-full inline-flex justify-center py-2 px-4 border border-input rounded-md shadow-sm bg-background text-sm font-medium text-muted-foreground hover:bg-accent"
                       onClick={() => {
                         toast({
                           title: "تسجيل الدخول بواسطة Google",
@@ -389,7 +389,7 @@ export default function AuthPage() {
                     </button>
                     <button
                       type="button"
-                      className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                      className="w-full inline-flex justify-center py-2 px-4 border border-input rounded-md shadow-sm bg-background text-sm font-medium text-muted-foreground hover:bg-accent"
                       onClick={() => {
                         toast({
                           title: "تسجيل الدخول بواسطة Facebook",
@@ -401,7 +401,7 @@ export default function AuthPage() {
                     </button>
                     <button
                       type="button"
-                      className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                      className="w-full inline-flex justify-center py-2 px-4 border border-input rounded-md shadow-sm bg-background text-sm font-medium text-muted-foreground hover:bg-accent"
                       onClick={() => {
                         toast({
                           title: "تسجيل الدخول بواسطة Apple",
