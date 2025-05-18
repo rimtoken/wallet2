@@ -262,13 +262,26 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen flex bg-background text-foreground">
-      {/* نموذج تسجيل الدخول والتسجيل */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
-        <div className="w-full max-w-md space-y-8">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-primary">RimToken</h1>
-            <h2 className="mt-6 text-3xl font-bold tracking-tight">
+    <div className="min-h-screen flex flex-col bg-background text-foreground">
+      {/* شريط علوي بسيط للصفحة */}
+      <header className="w-full border-b py-4">
+        <div className="container mx-auto">
+          <div className="flex justify-center">
+            <a href="/" className="flex items-center">
+              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-amber-300 to-amber-500 shadow-md">
+                <span className="text-white text-xl font-bold">R</span>
+              </div>
+              <span className="ml-2 text-2xl font-bold text-primary">RimToken</span>
+            </a>
+          </div>
+        </div>
+      </header>
+      
+      {/* محتوى صفحة التسجيل */}
+      <div className="flex-1 flex justify-center items-center py-8">
+        <div className="w-full max-w-md mx-auto px-4">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold">
               {activeTab === 'register' ? 'إنشاء حساب جديد' : 'مرحبًا بعودتك'}
             </h2>
             <p className="mt-2 text-sm text-muted-foreground">
