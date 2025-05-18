@@ -83,14 +83,8 @@ function Router() {
     </Switch>
   );
 
-  // للتطوير، سنقوم بعرض المسارات المحمية والعامة
-  // سيتم تنفيذ التحقق من تسجيل الدخول لاحقًا
-  return (
-    <>
-      {publicRoutes}
-      {protectedRoutes}
-    </>
-  );
+  // عرض المسارات المحمية فقط في هذه المرحلة من التطوير
+  return protectedRoutes;
 }
 
 function App() {
