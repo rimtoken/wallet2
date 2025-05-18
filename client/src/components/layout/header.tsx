@@ -22,8 +22,8 @@ interface HeaderProps {
 export function Header({ className }: HeaderProps) {
   const { language, setLanguage, translate } = useLanguage();
   return (
-    <header className={cn("w-full border-b bg-white z-50 sticky top-0 shadow-sm", className)}>
-      <div className="container flex h-24 items-center justify-between px-6">
+    <header className={cn("w-full border-b bg-white z-50 sticky top-0 shadow-md", className)}>
+      <div className="container flex h-28 items-center justify-between px-8">
         <div className="flex items-center gap-6 lg:gap-10">
           <Link href="/">
             <div className="flex items-center space-x-2">
@@ -151,9 +151,9 @@ export function Header({ className }: HeaderProps) {
           </Button>
           
           {/* قائمة المستخدم (للمستخدمين المسجّلين) - يمكن إخفاؤها عندما يكون الزائر غير مسجّل */}
-          <DropdownMenu modal={true}>
+          <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="lg" className="hidden md:flex gap-2 hover:bg-gray-100 transition-colors">
+              <Button variant="ghost" className="hidden md:flex gap-2 hover:bg-gray-100 transition-colors h-12 px-3">
                 <Avatar className="h-9 w-9">
                   <AvatarImage src="" />
                   <AvatarFallback className="bg-primary text-white text-sm">مس</AvatarFallback>
