@@ -262,26 +262,15 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground">
-      {/* شريط علوي بسيط للصفحة */}
-      <header className="w-full border-b py-4">
-        <div className="container mx-auto">
-          <div className="flex justify-center">
-            <a href="/" className="flex items-center">
-              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-amber-300 to-amber-500 shadow-md">
-                <span className="text-white text-xl font-bold">R</span>
-              </div>
-              <span className="ml-2 text-2xl font-bold text-primary">RimToken</span>
-            </a>
-          </div>
-        </div>
-      </header>
-      
-      {/* محتوى صفحة التسجيل */}
-      <div className="flex-1 flex justify-center items-center py-8">
-        <div className="w-full max-w-md mx-auto px-4">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold">
+    <div className="min-h-screen flex bg-background text-foreground">
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
+        <div className="w-full max-w-md space-y-6">
+          <div className="text-center">
+            <div className="w-20 h-20 flex items-center justify-center rounded-full bg-gradient-to-br from-amber-300 to-amber-500 shadow-lg mb-4 mx-auto">
+              <span className="text-white text-2xl font-bold">R</span>
+            </div>
+            <h1 className="text-3xl font-bold text-primary">RimToken</h1>
+            <h2 className="mt-4 text-2xl font-bold">
               {activeTab === 'register' ? 'إنشاء حساب جديد' : 'مرحبًا بعودتك'}
             </h2>
             <p className="mt-2 text-sm text-muted-foreground">
@@ -739,16 +728,30 @@ export default function AuthPage() {
         </div>
       </div>
 
-      {/* صورة الخلفية */}
+      {/* صورة الخلفية والمعلومات */}
       <div className="hidden lg:block lg:w-1/2 bg-cover bg-center" style={{
-        backgroundImage: "linear-gradient(to bottom right, rgba(79, 70, 229, 0.8), rgba(138, 43, 226, 0.8)), url('https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=1000')"
+        backgroundImage: "linear-gradient(to bottom right, rgba(245, 158, 11, 0.8), rgba(217, 119, 6, 0.8)), url('https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=1000')"
       }}>
-        <div className="flex items-center justify-center h-full px-20 bg-black bg-opacity-40">
+        <div className="flex items-center justify-center h-full px-20">
           <div className="text-center">
+            <div className="w-28 h-28 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-md shadow-lg mb-8 mx-auto">
+              <span className="text-white text-5xl font-bold">R</span>
+            </div>
             <h2 className="text-4xl font-bold text-white">أهلًا بك في ريم توكن</h2>
             <p className="max-w-xl mx-auto mt-3 text-lg text-white">
               المنصة الأكثر أمانًا وسهولة لإدارة عملاتك المشفرة والتعامل مع Web3.
             </p>
+            
+            <div className="grid grid-cols-2 gap-6 mt-12">
+              <div className="bg-white/10 backdrop-blur-sm p-6 rounded-lg text-white text-right">
+                <h3 className="text-xl font-bold mb-2">محفظة آمنة</h3>
+                <p>تخزين وإدارة العملات المشفرة بأمان تام مع التحكم الكامل في مفاتيحك الخاصة</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm p-6 rounded-lg text-white text-right">
+                <h3 className="text-xl font-bold mb-2">تبادل سهل</h3>
+                <p>تبادل العملات المشفرة بسهولة وبأقل الرسوم الممكنة عبر عدة سلاسل كتل</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
