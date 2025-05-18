@@ -125,7 +125,7 @@ export function MainLayout({ children }: MainLayoutProps) {
       </main>
 
       {/* القائمة السفلية للهاتف المحمول */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t z-10">
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-background border-t z-10">
         <div className="grid grid-cols-5 h-16">
           {navItems.slice(0, 5).map((item) => (
             <Link key={item.href} href={item.href}>
@@ -146,7 +146,7 @@ export function MainLayout({ children }: MainLayoutProps) {
       </nav>
 
       {/* الشريط الجانبي للشاشات الكبيرة */}
-      <div className="hidden lg:block fixed inset-y-0 right-0 w-64 bg-white dark:bg-gray-800 border-l pt-16">
+      <div className="hidden lg:block fixed inset-y-0 right-0 w-64 bg-background border-l pt-16">
         <div className="p-4">
           <h2 className="text-xl font-bold mb-6">القائمة</h2>
           <ul className="space-y-2">

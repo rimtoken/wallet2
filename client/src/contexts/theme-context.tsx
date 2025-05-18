@@ -30,15 +30,25 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     const root = document.documentElement;
     
     // إزالة كل الثيمات السابقة
-    root.classList.remove('light-theme', 'dark-theme', 'system-theme', 'spooky-theme');
+    root.classList.remove('dark-theme', 'light-theme', 'system-theme', 'spooky-theme', 'dark');
+    document.body.classList.remove('dark-theme', 'light-theme', 'system-theme', 'spooky-theme', 'dark');
     
     // تطبيق الثيم الجديد
-    if (newTheme === 'light') {
-      root.classList.remove('dark-theme', 'spooky-theme');
-      document.body.classList.remove('dark-theme', 'spooky-theme');
-    } else {
-      root.classList.add(`${newTheme}-theme`);
-      document.body.classList.add(`${newTheme}-theme`);
+    if (newTheme === 'dark') {
+      root.classList.add('dark');
+      document.body.classList.add('dark');
+      root.classList.add('dark-theme');
+      document.body.classList.add('dark-theme');
+    } else if (newTheme === 'spooky') {
+      root.classList.add('spooky-theme');
+      document.body.classList.add('spooky-theme');
+    } else if (newTheme === 'system') {
+      // التحقق من تفضيلات النظام
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (prefersDark) {
+        root.classList.add('dark');
+        document.body.classList.add('dark');
+      }
     }
     
     // حفظ الثيم في التخزين المحلي

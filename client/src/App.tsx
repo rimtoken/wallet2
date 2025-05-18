@@ -26,7 +26,7 @@ import { useState, useEffect } from "react";
 import { MainLayout } from "@/components/layout/main-layout";
 import WalletPage from "@/pages/wallet";
 import SwapPage from "@/pages/swap";
-import "@/styles/themes.css";
+// Theme CSS is already imported in index.css
 // سنضيف مزود المصادقة لاحقاً
 
 function Router() {
