@@ -112,14 +112,18 @@ export function Header({ className }: HeaderProps) {
           
           {/* أزرار تسجيل الدخول/التسجيل (للزوار) */}
           <div className="hidden md:flex items-center gap-2">
-            <Button variant="ghost" size="sm" className="flex items-center gap-1">
-              <LogIn className="h-4 w-4" />
-              <span>تسجيل الدخول</span>
-            </Button>
-            <Button variant="default" size="sm" className="bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 flex items-center gap-1">
-              <UserPlus className="h-4 w-4" />
-              <span>التسجيل</span>
-            </Button>
+            <Link href="/auth">
+              <Button variant="ghost" size="sm" className="flex items-center gap-1">
+                <LogIn className="h-4 w-4" />
+                <span>تسجيل الدخول</span>
+              </Button>
+            </Link>
+            <Link href="/auth">
+              <Button variant="default" size="sm" className="bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 flex items-center gap-1">
+                <UserPlus className="h-4 w-4" />
+                <span>التسجيل</span>
+              </Button>
+            </Link>
           </div>
           
           {/* إشعارات (للمستخدمين المسجّلين) */}
