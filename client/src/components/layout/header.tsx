@@ -33,28 +33,28 @@ export function Header({ className }: HeaderProps) {
           
           <nav className="hidden md:flex gap-6">
             <Link href="/">
-              <span className="text-sm font-medium transition-colors hover:text-primary">الرئيسية</span>
+              <span className="text-sm font-medium transition-colors hover:text-primary">{translate('nav.home')}</span>
             </Link>
             <Link href="/wallet">
-              <span className="text-sm font-medium transition-colors hover:text-primary">المحفظة</span>
+              <span className="text-sm font-medium transition-colors hover:text-primary">{translate('nav.wallet')}</span>
             </Link>
             <Link href="/swap">
-              <span className="text-sm font-medium transition-colors hover:text-primary">تبادل</span>
+              <span className="text-sm font-medium transition-colors hover:text-primary">{translate('nav.swap')}</span>
             </Link>
             <Link href="/markets">
-              <span className="text-sm font-medium transition-colors hover:text-primary">السوق</span>
+              <span className="text-sm font-medium transition-colors hover:text-primary">{translate('nav.market')}</span>
             </Link>
             <Link href="/news">
-              <span className="text-sm font-medium transition-colors hover:text-primary">الأخبار</span>
+              <span className="text-sm font-medium transition-colors hover:text-primary">{translate('nav.news')}</span>
             </Link>
             <Link href="/price-alerts">
-              <span className="text-sm font-medium transition-colors hover:text-primary">تنبيهات الأسعار</span>
+              <span className="text-sm font-medium transition-colors hover:text-primary">{translate('nav.priceAlerts')}</span>
             </Link>
             <Link href="/team">
-              <span className="text-sm font-medium transition-colors hover:text-primary">فريقنا</span>
+              <span className="text-sm font-medium transition-colors hover:text-primary">{translate('nav.team')}</span>
             </Link>
             <Link href="/about-simple">
-              <span className="text-sm font-medium transition-colors hover:text-primary">حول</span>
+              <span className="text-sm font-medium transition-colors hover:text-primary">{translate('nav.about')}</span>
             </Link>
           </nav>
         </div>
@@ -133,13 +133,13 @@ export function Header({ className }: HeaderProps) {
             <Link href="/auth">
               <Button variant="ghost" size="sm" className="flex items-center gap-1">
                 <LogIn className="h-4 w-4" />
-                <span>تسجيل الدخول</span>
+                <span>{translate('user.login')}</span>
               </Button>
             </Link>
             <Link href="/auth">
               <Button variant="default" size="sm" className="bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 flex items-center gap-1">
                 <UserPlus className="h-4 w-4" />
-                <span>التسجيل</span>
+                <span>{translate('user.register')}</span>
               </Button>
             </Link>
           </div>
@@ -191,36 +191,51 @@ export function Header({ className }: HeaderProps) {
                 </div>
                 <nav className="grid gap-3">
                   <Link href="/">
-                    <span className="text-lg font-medium transition-colors hover:text-primary">الرئيسية</span>
+                    <span className="text-lg font-medium transition-colors hover:text-primary">{translate('nav.home')}</span>
                   </Link>
                   <Link href="/wallet">
-                    <span className="text-lg font-medium transition-colors hover:text-primary">المحفظة</span>
+                    <span className="text-lg font-medium transition-colors hover:text-primary">{translate('nav.wallet')}</span>
                   </Link>
                   <Link href="/swap">
-                    <span className="text-lg font-medium transition-colors hover:text-primary">تبادل</span>
+                    <span className="text-lg font-medium transition-colors hover:text-primary">{translate('nav.swap')}</span>
                   </Link>
                   <Link href="/markets">
-                    <span className="text-lg font-medium transition-colors hover:text-primary">السوق</span>
+                    <span className="text-lg font-medium transition-colors hover:text-primary">{translate('nav.market')}</span>
                   </Link>
                   <Link href="/about-simple">
-                    <span className="text-lg font-medium transition-colors hover:text-primary">حول</span>
+                    <span className="text-lg font-medium transition-colors hover:text-primary">{translate('nav.about')}</span>
                   </Link>
                   <Link href="/profile">
-                    <span className="text-lg font-medium transition-colors hover:text-primary">الملف الشخصي</span>
+                    <span className="text-lg font-medium transition-colors hover:text-primary">{translate('user.profile')}</span>
                   </Link>
                   <Link href="/settings">
-                    <span className="text-lg font-medium transition-colors hover:text-primary">الإعدادات</span>
+                    <span className="text-lg font-medium transition-colors hover:text-primary">{translate('user.settings')}</span>
                   </Link>
                   
                   <div className="border-t border-gray-100 my-2 pt-2">
                     <div className="flex items-center">
                       <Globe className="h-5 w-5 mr-2 text-gray-500" />
-                      <span className="text-lg font-medium">اللغة</span>
+                      <span className="text-lg font-medium">{translate('general.chooseLanguage')}</span>
                     </div>
                     <div className="grid grid-cols-1 gap-2 mt-2 ml-7">
-                      <button className="text-md text-gray-600 hover:text-primary text-right">العربية</button>
-                      <button className="text-md text-gray-600 hover:text-primary text-right">English</button>
-                      <button className="text-md text-gray-600 hover:text-primary text-right">Français</button>
+                      <button 
+                        onClick={() => setLanguage('ar')} 
+                        className={`text-md text-gray-600 hover:text-primary text-right ${language === 'ar' ? 'font-semibold text-primary' : ''}`}
+                      >
+                        العربية
+                      </button>
+                      <button 
+                        onClick={() => setLanguage('en')} 
+                        className={`text-md text-gray-600 hover:text-primary text-right ${language === 'en' ? 'font-semibold text-primary' : ''}`}
+                      >
+                        English
+                      </button>
+                      <button 
+                        onClick={() => setLanguage('fr')} 
+                        className={`text-md text-gray-600 hover:text-primary text-right ${language === 'fr' ? 'font-semibold text-primary' : ''}`}
+                      >
+                        Français
+                      </button>
                     </div>
                   </div>
                   
