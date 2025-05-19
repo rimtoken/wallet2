@@ -129,35 +129,38 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="flex flex-col md:flex-row gap-8 items-center justify-center mb-10">
-            <div className="w-full md:w-1/2 max-w-md">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+            {supportedCoins.map((coin, index) => (
               <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
+                key={coin.symbol}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="rounded-xl overflow-hidden shadow-xl"
+                className="bg-white rounded-xl shadow-md p-6 flex items-center space-x-4 rtl:space-x-reverse hover:shadow-lg transition-shadow"
               >
-                <img 
-                  src="/assets/rimtoken-logo.jpg" 
-                  alt="نظام RimToken البيئي" 
-                  className="w-full h-auto"
-                />
+                <div className={`w-12 h-12 rounded-full ${coin.color} flex items-center justify-center text-white font-bold`}>
+                  {coin.symbol.substring(0, 1)}
+                </div>
+                <div>
+                  <h3 className="font-bold text-gray-800">{coin.name}</h3>
+                  <p className="text-gray-500 text-sm">{coin.symbol}</p>
+                </div>
               </motion.div>
-            </div>
+            ))}
             
-            <div className="w-full md:w-1/2">
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5 }}
-                viewport={{ once: true }}
-                className="space-y-4"
-              >
-                <h3 className="text-2xl font-bold text-amber-700">نظام بيئي شامل للعملات المشفرة</h3>
-                <p className="text-gray-700">
-                  تتكامل محفظة RimToken مع جميع العملات المشفرة الرئيسية في السوق، مما يوفر لك منظومة متكاملة للتعامل مع الأصول الرقمية بكل سهولة وأمان.
-                </p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.6 }}
+              viewport={{ once: true }}
+              className="bg-gradient-to-r from-amber-50 to-amber-100 rounded-xl shadow-md p-6 md:col-span-2 lg:col-span-3"
+            >
+              <h3 className="text-xl font-bold text-amber-700 mb-2">ندعم العديد من العملات الأخرى</h3>
+              <p className="text-gray-700">
+                بالإضافة إلى العملات الأساسية، توفر محفظة RimToken دعماً لأكثر من 150 عملة مشفرة متنوعة.
+              </p>
+            </motion.div>
                 <ul className="space-y-2">
                   <li className="flex items-center gap-2">
                     <CheckCircle className="h-5 w-5 text-green-500" />
