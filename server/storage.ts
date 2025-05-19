@@ -527,7 +527,9 @@ export class MemStorage implements IStorage {
 
 // استخدام التخزين المعتمد على قاعدة البيانات
 import { dbStorage } from "./storage-db";
-export const storage = dbStorage;
+// استخدام التخزين المؤقت في الذاكرة بدلاً من قاعدة البيانات
+// لحل مشكلة توقف السيرفر مؤقتًا
+export const storage = new MemStorage();
 
-// تعطيل استخدام التخزين المؤقت في الذاكرة
-// export const storage = new MemStorage();
+// لاحقًا يمكننا العودة لاستخدام قاعدة البيانات
+// export const storage = dbStorage;

@@ -30,12 +30,18 @@ async function comparePasswords(supplied: string, stored: string) {
 }
 
 export function setupAuth(app: Express) {
-  // إعدادات الجلسة
+  // إنشاء مخزن الجلسات MemoryStore بدلاً من استخدام storage.sessionStore
+  const MemoryStore = createMemoryStore(session);
+  const sessionStore = new MemoryStore({
+    checkPeriod: 86400000 // يوم واحد
+  });
+  
+  // إعدادات الجلسة باستخدام مخزن الذاكرة المؤقتة
   const sessionSettings: session.SessionOptions = {
     secret: process.env.SESSION_SECRET || "rimtoken-secret-key-change-in-production",
     resave: false,
     saveUninitialized: false,
-    store: storage.sessionStore,
+    store: sessionStore, // استخدام المخزن المؤقت
     cookie: {
       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
       httpOnly: true,
