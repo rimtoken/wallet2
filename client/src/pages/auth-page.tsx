@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/select";
 import { useLanguage } from "@/contexts/language-context";
 import { Checkbox } from "@/components/ui/checkbox";
+import rimLogo from "@assets/rim.png";
+import rimTokenLogo from "@assets/469063470_586302450756454_5997633519251771466_n.jpg";
 
 export default function AuthPage() {
   const [location, setLocation] = useLocation();
@@ -266,8 +268,12 @@ export default function AuthPage() {
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
         <div className="w-full max-w-md space-y-6">
           <div className="text-center">
-            <div className="w-20 h-20 flex items-center justify-center rounded-full bg-gradient-to-br from-amber-300 to-amber-500 shadow-lg mb-4 mx-auto">
-              <span className="text-white text-2xl font-bold">R</span>
+            <div className="w-24 h-24 mb-4 mx-auto overflow-hidden relative">
+              <img 
+                src={rimTokenLogo} 
+                alt="RimToken" 
+                className="w-full h-full object-contain rounded-full border-2 border-amber-500 shadow-lg p-1" 
+              />
             </div>
             <h1 className="text-3xl font-bold text-primary">RimToken</h1>
             <h2 className="mt-4 text-2xl font-bold">
