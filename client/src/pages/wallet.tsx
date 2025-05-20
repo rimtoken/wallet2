@@ -2,11 +2,12 @@ import { Container } from "@/components/ui/container";
 import { WalletActions } from "@/components/wallet/wallet-actions";
 import { TransactionHistory } from "@/components/transactions/transaction-history";
 import { PortfolioSummary } from "@/components/portfolio/portfolio-summary";
+import { AssetDetailsDialog } from "@/components/assets/asset-details-dialog";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ArrowDownRight, ArrowUpRight, BarChart3, Filter, Wallet as WalletIcon } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, BarChart3, ExternalLink, Filter, Info, Wallet as WalletIcon } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -125,7 +126,7 @@ export default function WalletPage({ userId }: WalletPageProps) {
                 ) : (
                   <div className="space-y-4">
                     {filteredAssets().map((asset: any) => (
-                      <div key={asset.id} className="flex items-center justify-between p-4 border rounded-lg transition-all hover:shadow-md">
+                      <div key={asset.id} className="flex items-center justify-between p-4 border rounded-lg transition-all hover:shadow-md group">
                         <div className="flex items-center">
                           <div className={`w-10 h-10 rounded-full flex items-center justify-center mr-3 ${
                             asset.priceChangePercentage24h >= 0
@@ -135,7 +136,18 @@ export default function WalletPage({ userId }: WalletPageProps) {
                             <span className="font-medium">{asset.symbol.substring(0, 1)}</span>
                           </div>
                           <div>
-                            <h3 className="font-medium">{asset.name}</h3>
+                            <h3 className="font-medium flex items-center">
+                              {asset.name}
+                              <AssetDetailsDialog assetId={asset.id}>
+                                <Button 
+                                  variant="ghost" 
+                                  size="icon" 
+                                  className="h-6 w-6 ml-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                                >
+                                  <Info className="h-3.5 w-3.5" />
+                                </Button>
+                              </AssetDetailsDialog>
+                            </h3>
                             <div className="flex items-center text-sm text-gray-500">
                               <span>{asset.balance} {asset.symbol}</span>
                               {asset.balance > 0 && (
@@ -146,19 +158,32 @@ export default function WalletPage({ userId }: WalletPageProps) {
                             </div>
                           </div>
                         </div>
-                        <div className="text-right">
-                          <p className="font-medium">${asset.value.toLocaleString()}</p>
-                          <p className={`text-xs flex items-center justify-end ${
-                            asset.priceChangePercentage24h >= 0 ? 'text-green-500' : 'text-red-500'
-                          }`}>
-                            {asset.priceChangePercentage24h >= 0 ? (
-                              <ArrowUpRight className="mr-0.5 h-3 w-3" />
-                            ) : (
-                              <ArrowDownRight className="mr-0.5 h-3 w-3" />
-                            )}
-                            {asset.priceChangePercentage24h >= 0 ? '+' : ''}
-                            {asset.priceChangePercentage24h.toFixed(2)}%
-                          </p>
+                        <div className="flex items-center">
+                          <div className="text-right mr-2">
+                            <p className="font-medium">${asset.value.toLocaleString()}</p>
+                            <p className={`text-xs flex items-center justify-end ${
+                              asset.priceChangePercentage24h >= 0 ? 'text-green-500' : 'text-red-500'
+                            }`}>
+                              {asset.priceChangePercentage24h >= 0 ? (
+                                <ArrowUpRight className="mr-0.5 h-3 w-3" />
+                              ) : (
+                                <ArrowDownRight className="mr-0.5 h-3 w-3" />
+                              )}
+                              {asset.priceChangePercentage24h >= 0 ? '+' : ''}
+                              {asset.priceChangePercentage24h.toFixed(2)}%
+                            </p>
+                          </div>
+                          <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            className="opacity-0 group-hover:opacity-100 transition-opacity"
+                            onClick={() => {
+                              window.location.href = `/swap?asset=${asset.symbol}`;
+                            }}
+                          >
+                            <ArrowUpRight className="h-4 w-4 mr-1" />
+                            تبادل
+                          </Button>
                         </div>
                       </div>
                     ))}
