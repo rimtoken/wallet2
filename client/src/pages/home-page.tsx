@@ -161,24 +161,27 @@ export default function HomePage() {
                 بالإضافة إلى العملات الأساسية، توفر محفظة RimToken دعماً لأكثر من 150 عملة مشفرة متنوعة.
               </p>
             </motion.div>
-                <ul className="space-y-2">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-green-500" />
-                    <span>دعم لأكثر من 35 عملة مشفرة رئيسية</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-green-500" />
-                    <span>توافق مع محافظ Web3 الشائعة</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-green-500" />
-                    <span>تبادل فوري بين العملات المختلفة</span>
-                  </li>
-                </ul>
-              </motion.div>
+            <div>
+              <ul className="space-y-2">
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="h-5 w-5 text-green-500" />
+                  <span>دعم لأكثر من 35 عملة مشفرة رئيسية</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="h-5 w-5 text-green-500" />
+                  <span>توافق مع محافظ Web3 الشائعة</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="h-5 w-5 text-green-500" />
+                  <span>تبادل فوري بين العملات المختلفة</span>
+                </li>
+              </ul>
             </div>
           </div>
+        </div>
 
+      <section className="py-12 bg-gray-50">
+        <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
             {supportedCoins.map((coin, index) => (
               <motion.div
