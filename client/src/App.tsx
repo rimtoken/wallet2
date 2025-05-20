@@ -17,11 +17,8 @@ import PosPage from "@/pages/point-of-sale/pos-page";
 import AuthPage from "@/pages/auth-page";
 import EnhancedRegisterPage from "@/pages/enhanced-register-page";
 import ProfilePage from "@/pages/profile";
-import AboutPage from "@/pages/about-simple";
 import TradingViewPage from "@/pages/trading-view";
-import NewsPage from "@/pages/news";
 import PriceAlertsPage from "@/pages/price-alerts";
-import TeamPage from "@/pages/team";
 import { useState, useEffect } from "react";
 import { MainLayout } from "@/components/layout/main-layout";
 import WalletPage from "@/pages/wallet";
@@ -29,6 +26,12 @@ import SwapPage from "@/pages/swap";
 import MainSimplifiedPage from "@/pages/main-simplified";
 import WalletSimplifiedPage from "@/pages/wallet-simplified";
 import SwapSimplifiedPage from "@/pages/swap-simplified";
+
+// الصفحات الجديدة
+import TeamPage from "@/pages/team-page";
+import NewsPage from "@/pages/news-page";
+import AboutPage from "@/pages/about-page";
+import ContactPage from "@/pages/contact-page";
 // Theme CSS is already imported in index.css
 // سنضيف مزود المصادقة لاحقاً
 
@@ -65,6 +68,20 @@ function Router() {
       </Route>
       <Route path="/swap">
         <SwapSimplifiedPage />
+      </Route>
+      
+      {/* الصفحات الإضافية الجديدة */}
+      <Route path="/team">
+        <TeamPage />
+      </Route>
+      <Route path="/news">
+        <NewsPage />
+      </Route>
+      <Route path="/about">
+        <AboutPage />
+      </Route>
+      <Route path="/contact">
+        <ContactPage />
       </Route>
 
       {/* الصفحات القديمة تحت مسار جديد */}

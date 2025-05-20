@@ -82,7 +82,9 @@ export default function NewsPage() {
   });
   
   // الحصول على جميع الفئات الفريدة
-  const categories = ["all", ...new Set(newsArticles.map(article => article.category))];
+  const uniqueCategories = newsArticles.map(article => article.category)
+    .filter((category, index, array) => array.indexOf(category) === index);
+  const categories = ["all", ...uniqueCategories];
   
   return (
     <div className="container mx-auto py-12 px-4">

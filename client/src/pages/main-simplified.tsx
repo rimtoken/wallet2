@@ -5,7 +5,11 @@ import {
   ArrowRightLeft, 
   Home, 
   LineChart, 
-  LogIn 
+  LogIn,
+  Users,
+  Newspaper,
+  Building2,
+  PhoneCall
 } from "lucide-react";
 import rimLogo from "@assets/rim.png";
 import rimTokenLogo from "@assets/469063470_586302450756454_5997633519251771466_n.jpg";
@@ -46,7 +50,7 @@ export default function MainSimplifiedPage() {
         </div>
         
         {/* بطاقات الميزات */}
-        <div className="grid md:grid-cols-3 gap-8 mb-12">
+        <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-6 mb-12">
           <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100 hover:shadow-lg transition-shadow">
             <div className="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mb-4">
               <Wallet className="h-6 w-6 text-amber-700" />
@@ -87,6 +91,69 @@ export default function MainSimplifiedPage() {
             </p>
             <Button variant="outline" className="w-full" disabled>
               قريباً
+            </Button>
+          </div>
+
+          <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100 hover:shadow-lg transition-shadow">
+            <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center mb-4">
+              <Users className="h-6 w-6 text-purple-700" />
+            </div>
+            <h3 className="text-xl font-bold mb-2">فريق العمل</h3>
+            <p className="text-gray-600 mb-4">
+              تعرف على فريق ريم توكن من الخبراء والمتخصصين
+            </p>
+            <Button variant="outline" className="w-full" asChild>
+              <Link href="/team">
+                تعرف على الفريق
+              </Link>
+            </Button>
+          </div>
+        </div>
+
+        {/* صف إضافي من البطاقات */}
+        <div className="grid md:grid-cols-3 gap-6 mb-12">
+          <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100 hover:shadow-lg transition-shadow">
+            <div className="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center mb-4">
+              <Newspaper className="h-6 w-6 text-yellow-700" />
+            </div>
+            <h3 className="text-xl font-bold mb-2">أخبار RimToken</h3>
+            <p className="text-gray-600 mb-4">
+              تابع آخر الأخبار والتحديثات حول منصة ريم توكن والعملات الرقمية
+            </p>
+            <Button variant="outline" className="w-full" asChild>
+              <Link href="/news">
+                قراءة الأخبار
+              </Link>
+            </Button>
+          </div>
+          
+          <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100 hover:shadow-lg transition-shadow">
+            <div className="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center mb-4">
+              <Building2 className="h-6 w-6 text-indigo-700" />
+            </div>
+            <h3 className="text-xl font-bold mb-2">عن الشركة</h3>
+            <p className="text-gray-600 mb-4">
+              تعرف على قصة RimToken ورؤيتنا ورسالتنا وقيمنا الأساسية
+            </p>
+            <Button variant="outline" className="w-full" asChild>
+              <Link href="/about">
+                المزيد عنا
+              </Link>
+            </Button>
+          </div>
+          
+          <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100 hover:shadow-lg transition-shadow">
+            <div className="w-12 h-12 rounded-full bg-teal-100 flex items-center justify-center mb-4">
+              <PhoneCall className="h-6 w-6 text-teal-700" />
+            </div>
+            <h3 className="text-xl font-bold mb-2">اتصل بنا</h3>
+            <p className="text-gray-600 mb-4">
+              تواصل مع فريق الدعم للإجابة على استفساراتك ومساعدتك
+            </p>
+            <Button variant="outline" className="w-full" asChild>
+              <Link href="/contact">
+                تواصل معنا
+              </Link>
             </Button>
           </div>
         </div>
