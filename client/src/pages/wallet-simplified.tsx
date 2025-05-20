@@ -8,6 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArrowUpRight, ArrowDownRight, Wallet, ArrowDown, Download, ExternalLink, Twitter, MessageCircle, Shield, Github, Instagram } from "lucide-react";
+import { AchievementsSummary } from "@/components/achievements/achievements-summary";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";

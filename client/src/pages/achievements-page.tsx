@@ -6,7 +6,10 @@ import {
   Star, 
   Filter, 
   ArrowUp,
-  Rocket
+  Rocket,
+  Shield,
+  Users,
+  Lightbulb
 } from 'lucide-react';
 import { AchievementBadge } from '@/components/achievements/achievement-badge';
 import { Button } from '@/components/ui/button';

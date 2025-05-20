@@ -73,7 +73,7 @@ export const achievementsList: Achievement[] = [
     id: 'whale',
     title: 'الحوت',
     description: 'امتلاك أكثر من 10,000 دولار في المحفظة',
-    icon: 'Whale',
+    icon: 'Anchor',
     iconColor: 'text-indigo-500',
     bgColor: 'bg-indigo-100',
     condition: 'امتلاك أكثر من 10,000 دولار في المحفظة',
