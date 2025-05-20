@@ -86,27 +86,27 @@ export function PortfolioSummary({ userId }: PortfolioSummaryProps) {
             <div className="flex items-baseline justify-between">
               <h2 className="text-xl font-medium text-gray-700">إجمالي قيمة المحفظة</h2>
               <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
-                portfolioSummary.changePercentage24h >= 0 
+                portfolioSummary?.changePercentage24h >= 0 
                   ? 'bg-green-100 text-green-800' 
                   : 'bg-red-100 text-red-800'
               }`}>
-                {portfolioSummary.changePercentage24h >= 0 ? '+' : ''}
-                {portfolioSummary.changePercentage24h.toFixed(2)}%
+                {portfolioSummary?.changePercentage24h >= 0 ? '+' : ''}
+                {portfolioSummary?.changePercentage24h.toFixed(2)}%
               </span>
             </div>
             <div className="flex items-baseline mt-2">
-              <span className="text-3xl font-bold">${formatCurrency(portfolioSummary.totalValue)}</span>
+              <span className="text-3xl font-bold">${formatCurrency(portfolioSummary?.totalValue || 0)}</span>
               <span className={`ml-2 text-sm ${
-                portfolioSummary.change24h >= 0 
+                portfolioSummary?.change24h >= 0 
                   ? 'text-green-600' 
                   : 'text-red-600'
               }`}>
-                {portfolioSummary.change24h >= 0 ? (
+                {portfolioSummary?.change24h >= 0 ? (
                   <ArrowUp className="inline h-3 w-3 mr-0.5" />
                 ) : (
                   <ArrowDown className="inline h-3 w-3 mr-0.5" />
                 )}
-                ${Math.abs(portfolioSummary.change24h).toFixed(2)}
+                ${Math.abs(portfolioSummary?.change24h || 0).toFixed(2)}
               </span>
             </div>
           </div>
