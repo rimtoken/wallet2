@@ -7,6 +7,8 @@ import {
   LineChart, 
   LogIn 
 } from "lucide-react";
+import rimLogo from "@assets/rim.png";
+import rimTokenLogo from "@assets/469063470_586302450756454_5997633519251771466_n.jpg";
 
 // صفحة رئيسية مبسطة لتسهيل التنقل بين صفحات التطبيق
 export default function MainSimplifiedPage() {
@@ -16,9 +18,7 @@ export default function MainSimplifiedPage() {
       <header className="bg-white border-b shadow-sm p-4">
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex items-center">
-            <div className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center mr-2">
-              <span className="text-amber-700 font-bold">R</span>
-            </div>
+            <img src={rimLogo} alt="RimToken Logo" className="w-10 h-10 mr-2 rounded-full object-cover" />
             <h1 className="text-xl font-bold text-amber-700">RimToken</h1>
           </div>
           
@@ -35,6 +35,9 @@ export default function MainSimplifiedPage() {
       {/* محتوى الصفحة الرئيسية */}
       <div className="container mx-auto py-12 px-4">
         <div className="text-center mb-12">
+          <div className="flex flex-col items-center justify-center mb-6">
+            <img src={rimTokenLogo} alt="RimToken" className="h-40 mb-4 rounded-full object-contain bg-white p-2 shadow-md" />
+          </div>
           <h2 className="text-4xl font-bold text-gray-900 mb-4">محفظة وتبادل RimToken</h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             محفظة لامركزية متعددة السلاسل تتيح لك التحكم الكامل في أصولك الرقمية
