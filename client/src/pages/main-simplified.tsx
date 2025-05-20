@@ -21,17 +21,29 @@ export default function MainSimplifiedPage() {
       {/* رأس الصفحة */}
       <header className="bg-white border-b shadow-sm p-4">
         <div className="container mx-auto flex justify-between items-center">
-          <div className="flex items-center">
-            <img src={rimLogo} alt="RimToken Logo" className="w-10 h-10 mr-2 rounded-full object-cover" />
-            <h1 className="text-xl font-bold text-amber-700">RimToken</h1>
+          <div className="flex items-center space-x-2">
+            <Link href="/auth" className="text-gray-500 hover:text-gray-700 text-sm">تسجيل الدخول -</Link>
+            <Button size="sm" className="bg-yellow-400 hover:bg-yellow-500 text-black rounded-md px-4 py-1">
+              Register
+            </Button>
           </div>
           
-          <div className="flex items-center space-x-2">
-            <Button variant="ghost" size="sm" asChild>
-              <Link href="/auth">
-                <LogIn className="h-4 w-4 mr-1" /> تسجيل الدخول
-              </Link>
-            </Button>
+          <div className="flex items-center space-x-6">
+            <Link href="/" className="text-gray-800 hover:text-gray-900 font-medium">Home</Link>
+            <Link href="/wallet" className="text-gray-800 hover:text-gray-900 font-medium">Wallet</Link>
+            <Link href="/swap" className="text-gray-800 hover:text-gray-900 font-medium">Swap</Link>
+            <Link href="/market" className="text-gray-800 hover:text-gray-900 font-medium">Market</Link>
+            <Link href="/news" className="text-gray-800 hover:text-gray-900 font-medium">News</Link>
+            <Link href="/price" className="text-gray-800 hover:text-gray-900 font-medium">Price</Link>
+            <Link href="/team" className="text-gray-800 hover:text-gray-900 font-medium">Team</Link>
+            <Link href="/about" className="text-gray-800 hover:text-gray-900 font-medium">About</Link>
+          </div>
+          
+          <div className="flex items-center">
+            <div className="flex items-center ml-4">
+              <span className="font-bold text-amber-700 mr-2">RimToken</span>
+              <img src={rimLogo} alt="RimToken Logo" className="w-8 h-8 rounded-full object-cover border-2 border-amber-500" />
+            </div>
           </div>
         </div>
       </header>

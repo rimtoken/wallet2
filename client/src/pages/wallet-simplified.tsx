@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
+import { Link } from "wouter";
 import rimLogo from "@assets/rim.png";
 import rimTokenLogo from "@assets/469063470_586302450756454_5997633519251771466_n.jpg";
 
@@ -98,81 +99,97 @@ export default function WalletSimplifiedPage() {
   };
   
   return (
-    <div className="min-h-screen bg-[#4e53e0]">
-      {/* الشريط العلوي */}
-      <header className="bg-[#4e53e0] py-4 px-6 flex justify-between items-center">
-        <div className="flex items-center">
-          <img src={rimLogo} alt="RimToken Logo" className="w-10 h-10 mr-2 rounded-full bg-white p-1" />
-          <h1 className="text-2xl font-bold text-white">Wallet</h1>
-        </div>
-        <div className="flex items-center space-x-6">
-          <a href="#features" className="text-white hover:text-blue-100">Features</a>
-          <a href="#roadmap" className="text-white hover:text-blue-100">Roadmap</a>
-          <a href="#support" className="text-white hover:text-blue-100">Support</a>
-          <Button className="bg-white text-[#4e53e0] hover:bg-blue-100 font-medium">
-            <Download className="w-4 h-4 mr-2" /> Download wallet
-          </Button>
+    <div className="min-h-screen">
+      {/* شريط التنقل العلوي */}
+      <header className="bg-white py-4 px-6 border-b shadow-sm">
+        <div className="container mx-auto flex justify-between items-center">
+          <div className="flex items-center space-x-2">
+            <Link href="/auth" className="text-gray-500 hover:text-gray-700 text-sm">تسجيل الدخول -</Link>
+            <Button size="sm" className="bg-yellow-400 hover:bg-yellow-500 text-black rounded-md px-4 py-1">
+              Register
+            </Button>
+          </div>
+          
+          <div className="flex items-center space-x-6">
+            <Link href="/" className="text-gray-800 hover:text-gray-900 font-medium">Home</Link>
+            <Link href="/wallet" className="text-gray-800 hover:text-gray-900 font-medium">Wallet</Link>
+            <Link href="/swap" className="text-gray-800 hover:text-gray-900 font-medium">Swap</Link>
+            <Link href="/market" className="text-gray-800 hover:text-gray-900 font-medium">Market</Link>
+            <Link href="/news" className="text-gray-800 hover:text-gray-900 font-medium">News</Link>
+            <Link href="/price" className="text-gray-800 hover:text-gray-900 font-medium">Price</Link>
+            <Link href="/team" className="text-gray-800 hover:text-gray-900 font-medium">Team</Link>
+            <Link href="/about" className="text-gray-800 hover:text-gray-900 font-medium">About</Link>
+          </div>
+          
+          <div className="flex items-center">
+            <div className="flex items-center ml-4">
+              <span className="font-bold text-amber-700 mr-2">RimToken</span>
+              <img src={rimLogo} alt="RimToken Logo" className="w-8 h-8 rounded-full object-cover border-2 border-amber-500" />
+            </div>
+          </div>
         </div>
       </header>
 
+      {/* المحتوى الرئيسي - قسم المحفظة */}
+      <div className="bg-[#4e53e0] py-16">
+        <div className="container mx-auto py-12 px-6 flex flex-col lg:flex-row items-center">
+          <div className="lg:w-1/2 mb-10 lg:mb-0">
+            <div className="text-white">
+              <h2 className="text-5xl font-bold mb-2">rimtoken crypto</h2>
+              <h1 className="text-6xl font-bold mb-6">
+                Wallet:<br />
+                Anonymous<br />
+                Bitcoin Wallet
+              </h1>
+              <p className="text-xl mb-8 max-w-xl">
+                Wallet is the best Crypto Wallet without Verification, ID or
+                KYC. Get the most Secure & Anonymous Non-Custodial Crypto
+                Wallet Now.
+              </p>
+              
+              <div className="flex space-x-4 mb-8">
+                <a href="#" className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-[#4e53e0] hover:bg-blue-100">
+                  <Twitter className="w-5 h-5" />
+                </a>
+                <a href="#" className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-[#4e53e0] hover:bg-blue-100">
+                  <MessageCircle className="w-5 h-5" />
+                </a>
+                <a href="#" className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-[#4e53e0] hover:bg-blue-100">
+                  <Shield className="w-5 h-5" />
+                </a>
+                <a href="#" className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-[#4e53e0] hover:bg-blue-100">
+                  <Github className="w-5 h-5" />
+                </a>
+                <a href="#" className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-[#4e53e0] hover:bg-blue-100">
+                  <Instagram className="w-5 h-5" />
+                </a>
+              </div>
+              
+              <div className="flex space-x-4">
+                <a href="#" className="flex items-center">
+                  <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" className="h-12" />
+                </a>
+                <a href="#" className="flex items-center">
+                  <img src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg" alt="Download on the App Store" className="h-10" />
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <div className="lg:w-1/2">
+            <div className="relative">
+              <img src="https://images.unsplash.com/photo-1614028674026-a65e31bfd27c?ixlib=rb-1.2.1&auto=format&fit=crop&w=668&q=80" alt="Mobile App Mockup" className="rounded-xl shadow-2xl mx-auto max-w-full" />
+            </div>
+          </div>
+        </div>
+      </div>
+      
       {/* شريط العملات */}
       <div className="bg-[#ff7518] text-white p-3 flex justify-center items-center">
         <span className="font-bold ml-2">rimtoken</span>
         <span className="mx-2">Wallet token sale is live! • Go to</span>
         <a href="https://rimtokenwallet.com" className="underline mx-2">rimtokenwallet.com</a>
         <span>to buy $</span>
-      </div>
-      
-      {/* محتوى رئيسي */}
-      <div className="container mx-auto py-12 px-6 flex flex-col lg:flex-row items-center">
-        <div className="lg:w-1/2 mb-10 lg:mb-0">
-          <div className="text-white">
-            <h2 className="text-5xl font-bold mb-2">rimtoken crypto</h2>
-            <h1 className="text-6xl font-bold mb-6">
-              Wallet:<br />
-              Anonymous<br />
-              Bitcoin Wallet
-            </h1>
-            <p className="text-xl mb-8 max-w-xl">
-              Wallet is the best Crypto Wallet without Verification, ID or
-              KYC. Get the most Secure & Anonymous Non-Custodial Crypto
-              Wallet Now.
-            </p>
-            
-            <div className="flex space-x-4 mb-8">
-              <a href="#" className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-[#4e53e0] hover:bg-blue-100">
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a href="#" className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-[#4e53e0] hover:bg-blue-100">
-                <MessageCircle className="w-5 h-5" />
-              </a>
-              <a href="#" className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-[#4e53e0] hover:bg-blue-100">
-                <Shield className="w-5 h-5" />
-              </a>
-              <a href="#" className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-[#4e53e0] hover:bg-blue-100">
-                <Github className="w-5 h-5" />
-              </a>
-              <a href="#" className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-[#4e53e0] hover:bg-blue-100">
-                <Instagram className="w-5 h-5" />
-              </a>
-            </div>
-            
-            <div className="flex space-x-4">
-              <a href="#" className="flex items-center">
-                <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" className="h-12" />
-              </a>
-              <a href="#" className="flex items-center">
-                <img src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg" alt="Download on the App Store" className="h-10" />
-              </a>
-            </div>
-          </div>
-        </div>
-        
-        <div className="lg:w-1/2">
-          <div className="relative">
-            <img src="https://images.unsplash.com/photo-1614028674026-a65e31bfd27c?ixlib=rb-1.2.1&auto=format&fit=crop&w=668&q=80" alt="Mobile App Mockup" className="rounded-xl shadow-2xl mx-auto max-w-full" />
-          </div>
-        </div>
       </div>
       
       {/* قسم مزايا المحفظة */}
