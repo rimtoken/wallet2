@@ -136,12 +136,12 @@ export default function MainSimplifiedPage() {
                     </Link>
                   </li>
                   <li>
-                    <Link href="/wallet-simplified" className="text-gray-400 hover:text-white transition-colors">
+                    <Link href="/wallet" className="text-gray-400 hover:text-white transition-colors">
                       المحفظة
                     </Link>
                   </li>
                   <li>
-                    <Link href="/swap-simplified" className="text-gray-400 hover:text-white transition-colors">
+                    <Link href="/swap" className="text-gray-400 hover:text-white transition-colors">
                       تبادل العملات
                     </Link>
                   </li>
