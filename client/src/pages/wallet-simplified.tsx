@@ -12,6 +12,8 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
+import rimLogo from "@assets/rim.png";
+import rimTokenLogo from "@assets/469063470_586302450756454_5997633519251771466_n.jpg";
 
 // مكون المحفظة المبسط مع التركيز على الوظائف الأساسية
 export default function WalletSimplifiedPage() {
@@ -98,7 +100,7 @@ export default function WalletSimplifiedPage() {
   return (
     <div className="container mx-auto py-6 px-4">
       <h1 className="text-3xl font-bold mb-6 flex items-center">
-        <Wallet className="mr-2 h-8 w-8" />
+        <img src={rimLogo} alt="RimToken Logo" className="w-8 h-8 mr-2 rounded-full object-cover" />
         محفظتي
       </h1>
       

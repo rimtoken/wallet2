@@ -119,9 +119,7 @@ export default function MainSimplifiedPage() {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-6 md:mb-0">
               <div className="flex items-center">
-                <div className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center mr-2">
-                  <span className="text-amber-700 font-bold">R</span>
-                </div>
+                <img src={rimLogo} alt="RimToken Logo" className="w-10 h-10 mr-2 rounded-full object-cover" />
                 <h2 className="text-xl font-bold text-white">RimToken</h2>
               </div>
               <p className="text-gray-400 mt-2">

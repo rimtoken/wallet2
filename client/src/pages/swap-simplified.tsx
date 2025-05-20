@@ -12,6 +12,8 @@ import { ArrowDown, RefreshCw, Settings } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import rimLogo from "@assets/rim.png";
+import rimTokenLogo from "@assets/469063470_586302450756454_5997633519251771466_n.jpg";
 
 // مكون تبادل العملات المبسط مع التركيز على الوظائف الأساسية
 export default function SwapSimplifiedPage() {
@@ -133,7 +135,10 @@ export default function SwapSimplifiedPage() {
   
   return (
     <div className="container mx-auto py-6 px-4">
-      <h1 className="text-3xl font-bold mb-6">تبادل العملات المشفرة</h1>
+      <h1 className="text-3xl font-bold mb-6 flex items-center">
+        <img src={rimLogo} alt="RimToken Logo" className="w-8 h-8 mr-2 rounded-full object-cover" />
+        تبادل العملات المشفرة
+      </h1>
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* مكون التبادل */}
