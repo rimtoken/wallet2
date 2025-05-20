@@ -99,13 +99,40 @@ export function TokenSwap({ userId }: TokenSwapProps) {
       return;
     }
     
+    // التحقق من أن المبلغ أكبر من الصفر
+    if (amount <= 0) {
+      toast({
+        title: "قيمة غير صالحة",
+        description: "يرجى إدخال قيمة أكبر من الصفر",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // الحصول على معلومات العملات المختارة
+    const fromAsset = assets.find((asset: any) => asset.symbol === fromToken);
+    const toAsset = assets.find((asset: any) => asset.symbol === toToken);
+    
     try {
       setIsSwapping(true);
       
-      // في تطبيق حقيقي، هنا ستقوم بإرسال طلب إلى الخادم لتنفيذ التبادل
-      // لأغراض العرض، سنقوم بمحاكاة التبادل بعد فترة زمنية
+      // إنشاء بيانات المعاملة
+      const transactionData = {
+        userId,
+        type: "swap",
+        assetId: fromAsset.id,
+        amount: fromAmount,
+        toAssetId: toAsset.id,
+        toAmount: toAmount,
+        status: "completed",
+        fee: (parseFloat(fromAmount) * 0.001).toString(), // رسوم بنسبة 0.1%
+      };
+
+      // في تطبيق واقعي، هنا ستقوم بإرسال طلب إلى API
+      // لمحاكاة سلوك API في هذا المثال
       
       setTimeout(() => {
+        // محاكاة تأخير الشبكة
         toast({
           title: "تم التبادل بنجاح",
           description: `تم تبديل ${fromAmount} ${fromToken} إلى ${toAmount} ${toToken}`,
@@ -115,8 +142,9 @@ export function TokenSwap({ userId }: TokenSwapProps) {
         setFromAmount("");
         setToAmount("");
         
-        // في تطبيق حقيقي، هنا ستقوم بتحديث بيانات المحفظة
+        // تحديث بيانات المحفظة في تطبيق حقيقي
         // queryClient.invalidateQueries({ queryKey: [`/api/wallets/${userId}`] });
+        // queryClient.invalidateQueries({ queryKey: [`/api/transactions/${userId}`] });
         
         setIsSwapping(false);
       }, 1500);
