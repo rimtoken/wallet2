@@ -53,7 +53,7 @@ export default function MainSimplifiedPage() {
               إدارة أصولك الرقمية بسهولة تامة مع واجهة مستخدم سلسة وآمنة
             </p>
             <Button variant="outline" className="w-full" asChild>
-              <Link href="/wallet-simplified">
+              <Link href="/wallet">
                 استكشاف المحفظة
               </Link>
             </Button>
@@ -68,7 +68,7 @@ export default function MainSimplifiedPage() {
               تبادل العملات المشفرة بسرعة وبدون تعقيدات مع رسوم منخفضة
             </p>
             <Button variant="outline" className="w-full" asChild>
-              <Link href="/swap-simplified">
+              <Link href="/swap">
                 بدء التبادل
               </Link>
             </Button>
@@ -97,12 +97,12 @@ export default function MainSimplifiedPage() {
           
           <div className="flex flex-wrap justify-center gap-4">
             <Button className="bg-amber-500 hover:bg-amber-600 text-lg px-6 py-2" asChild>
-              <Link href="/wallet-simplified">
+              <Link href="/wallet">
                 بدء الاستخدام
               </Link>
             </Button>
             <Button variant="outline" className="text-lg px-6 py-2" asChild>
-              <Link href="/swap-simplified">
+              <Link href="/swap">
                 تجربة التبادل
               </Link>
             </Button>

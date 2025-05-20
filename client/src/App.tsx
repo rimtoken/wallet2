@@ -56,19 +56,19 @@ function Router() {
         <AuthPage />
       </Route>
       
-      {/* الصفحات المبسطة */}
-      <Route path="/simple">
+      {/* الصفحة الرئيسية المبسطة كصفحة افتراضية */}
+      <Route path="/">
         <MainSimplifiedPage />
       </Route>
-      <Route path="/wallet-simplified">
+      <Route path="/wallet">
         <WalletSimplifiedPage />
       </Route>
-      <Route path="/swap-simplified">
+      <Route path="/swap">
         <SwapSimplifiedPage />
       </Route>
-      
-      {/* كل المسارات الأخرى داخل القالب الرئيسي */}
-      <Route path="/">
+
+      {/* الصفحات القديمة تحت مسار جديد */}
+      <Route path="/full">
         <MainLayout>
           <HomePage />
         </MainLayout>
