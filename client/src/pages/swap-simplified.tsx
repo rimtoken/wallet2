@@ -71,7 +71,7 @@ export default function SwapSimplifiedPage() {
   };
   
   // الحصول على الرصيد المتاح للعملة المختارة
-  const getAvailableBalance = (symbol) => {
+  const getAvailableBalance = (symbol: string): number => {
     const asset = assets.find(asset => asset.symbol === symbol);
     return asset ? asset.balance : 0;
   };

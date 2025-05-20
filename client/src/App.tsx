@@ -26,6 +26,9 @@ import { useState, useEffect } from "react";
 import { MainLayout } from "@/components/layout/main-layout";
 import WalletPage from "@/pages/wallet";
 import SwapPage from "@/pages/swap";
+import MainSimplifiedPage from "@/pages/main-simplified";
+import WalletSimplifiedPage from "@/pages/wallet-simplified";
+import SwapSimplifiedPage from "@/pages/swap-simplified";
 // Theme CSS is already imported in index.css
 // سنضيف مزود المصادقة لاحقاً
 
@@ -51,6 +54,17 @@ function Router() {
       {/* صفحة التسجيل خارج القالب الرئيسي */}
       <Route path="/auth">
         <AuthPage />
+      </Route>
+      
+      {/* الصفحات المبسطة */}
+      <Route path="/simple">
+        <MainSimplifiedPage />
+      </Route>
+      <Route path="/wallet-simplified">
+        <WalletSimplifiedPage />
+      </Route>
+      <Route path="/swap-simplified">
+        <SwapSimplifiedPage />
       </Route>
       
       {/* كل المسارات الأخرى داخل القالب الرئيسي */}
