@@ -2,49 +2,49 @@ import { Users } from "lucide-react";
 import rimLogo from "@assets/rim.png";
 
 export default function TeamPage() {
-  // بيانات أعضاء الفريق (يمكن استبدالها ببيانات حقيقية من API)
+  // بيانات أعضاء الفريق 
   const teamMembers = [
     {
       id: 1,
-      name: "أحمد محمد",
+      name: "عثمان قمرة",
       role: "المدير التنفيذي",
-      bio: "خبرة أكثر من 15 عامًا في مجال التكنولوجيا المالية والعملات الرقمية",
-      image: "https://randomuser.me/api/portraits/men/1.jpg"
+      bio: "خبرة أكثر من 10 سنوات في مجال التكنولوجيا المالية والعملات الرقمية",
+      image: "/team-members/othmankamra.jpg"
     },
     {
       id: 2,
-      name: "سارة علي",
+      name: "جوين ماك",
       role: "مدير التكنولوجيا",
-      bio: "متخصصة في تقنية البلوكتشين مع خبرة في تطوير الحلول المالية الآمنة",
-      image: "https://randomuser.me/api/portraits/women/1.jpg"
+      bio: "متخصص في تقنية البلوكتشين مع خبرة في تطوير الحلول المالية الآمنة",
+      image: "/team-members/joen.jpg"
     },
     {
       id: 3,
-      name: "محمد عبدالله",
+      name: "حاتم النجار",
       role: "مدير المنتج",
       bio: "خبير في تطوير منتجات العملات الرقمية وتحسين تجربة المستخدم",
-      image: "https://randomuser.me/api/portraits/men/2.jpg"
+      image: "/team-members/hatan.jpg"
     },
     {
       id: 4,
-      name: "ليلى حسن",
-      role: "مطورة واجهات المستخدم",
-      bio: "مطورة متمرسة مع خبرة في تصميم وبناء واجهات مستخدم سلسة وسهلة الاستخدام",
-      image: "https://randomuser.me/api/portraits/women/2.jpg"
+      name: "حسن الكمالي",
+      role: "مطور واجهات المستخدم",
+      bio: "مطور متمرس مع خبرة في تصميم وبناء واجهات مستخدم سلسة وسهلة الاستخدام",
+      image: "/team-members/hacen.jpg"
     },
     {
       id: 5,
-      name: "فارس خالد",
+      name: "حميدو قاسم",
       role: "مهندس البلوكتشين",
       bio: "متخصص في تطوير وتحسين حلول البلوكتشين وبناء العقود الذكية الآمنة",
-      image: "https://randomuser.me/api/portraits/men/3.jpg"
+      image: "/team-members/hamido.jpg"
     },
     {
       id: 6,
-      name: "نورا سعيد",
-      role: "مسؤولة التسويق",
-      bio: "خبيرة في تسويق منتجات الفنتك والعملات الرقمية مع خبرة دولية",
-      image: "https://randomuser.me/api/portraits/women/3.jpg"
+      name: "عنبرزان محمد",
+      role: "مسؤول العلاقات العامة",
+      bio: "خبير في العلاقات العامة وتسويق منتجات الفنتك والعملات الرقمية مع خبرة دولية",
+      image: "/team-members/anbarzan.jpg"
     }
   ];
   
