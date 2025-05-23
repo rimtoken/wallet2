@@ -114,6 +114,7 @@ export default function WalletSimplifiedPage() {
           <div className="flex items-center space-x-6">
             <Link href="/" className="text-gray-800 hover:text-gray-900 font-medium">Home</Link>
             <Link href="/wallet" className="text-gray-800 hover:text-gray-900 font-medium">Wallet</Link>
+            <Link href="/deposit" className="text-gray-800 hover:text-gray-900 font-medium">Deposit</Link>
             <Link href="/swap" className="text-gray-800 hover:text-gray-900 font-medium">Swap</Link>
             <Link href="/market" className="text-gray-800 hover:text-gray-900 font-medium">Market</Link>
             <Link href="/news" className="text-gray-800 hover:text-gray-900 font-medium">News</Link>
@@ -444,6 +445,8 @@ export default function WalletSimplifiedPage() {
           </Card>
         </TabsContent>
       </Tabs>
+    </div>
+      </div>
     </div>
   );
 }

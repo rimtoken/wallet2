@@ -33,6 +33,7 @@ import NewsPage from "@/pages/news-page";
 import AboutPage from "@/pages/about-page";
 import ContactPage from "@/pages/contact-page";
 import AchievementsPage from "@/pages/achievements-page";
+import DepositPage from "@/pages/deposit-page";
 // Theme CSS is already imported in index.css
 // سنضيف مزود المصادقة لاحقاً
 
@@ -86,6 +87,9 @@ function Router() {
       </Route>
       <Route path="/achievements">
         <AchievementsPage />
+      </Route>
+      <Route path="/deposit">
+        <DepositPage />
       </Route>
 
       {/* الصفحات القديمة تحت مسار جديد */}
