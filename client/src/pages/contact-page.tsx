@@ -40,6 +40,14 @@ export default function ContactPage() {
       phone: "+44 20 1234 5678",
       email: "london@rimtoken.com",
       mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d317715.7119513112!2d-0.38178509316975245!3d51.52873520437193!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8a00baf21de75%3A0x52963a5addd52a99!2sLondon%2C%20UK!5e0!3m2!1sen!2suk!4v1716057156452!5m2!1sen!2suk"
+    },
+    {
+      id: 4,
+      city: "نواكشوط",
+      address: "شارع جمال عبد الناصر، مبنى بي ام سي، الطابق الرابع 04",
+      phone: "+222 37968897",
+      email: "hacentecno@gmail.com",
+      mapUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d122623.66477886391!2d-16.068731221114785!3d18.112270921068143!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xe9645404e8e386f%3A0x5cb561256d5b3aaa!2sNouakchott%2C%20Mauritania!5e0!3m2!1sen!2sus!4v1716396427731!5m2!1sen!2sus"
     }
   ];
   
