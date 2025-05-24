@@ -34,6 +34,9 @@ import AboutPage from "@/pages/about-page";
 import ContactPage from "@/pages/contact-page";
 import AchievementsPage from "@/pages/achievements-page";
 import DepositPage from "@/pages/deposit-page";
+import WithdrawalPage from "@/pages/withdrawal-page";
+import FAQPage from "@/pages/faq-page";
+import AdvancedDashboardPage from "@/pages/advanced-dashboard";
 // Theme CSS is already imported in index.css
 // سنضيف مزود المصادقة لاحقاً
 
@@ -90,6 +93,15 @@ function Router() {
       </Route>
       <Route path="/deposit">
         <DepositPage />
+      </Route>
+      <Route path="/withdrawal">
+        <WithdrawalPage />
+      </Route>
+      <Route path="/faq">
+        <FAQPage />
+      </Route>
+      <Route path="/advanced-dashboard">
+        <AdvancedDashboardPage />
       </Route>
 
       {/* الصفحات القديمة تحت مسار جديد */}
