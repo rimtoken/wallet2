@@ -8,6 +8,8 @@ import {
   CardHeader, 
   CardTitle 
 } from "@/components/ui/card";
+import { Breadcrumbs } from "@/components/navigation/breadcrumbs";
+import { MainNav } from "@/components/navigation/main-nav";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
