@@ -1,5 +1,11 @@
 import { Users } from "lucide-react";
 import rimLogo from "@assets/rim.png";
+import othmankamraImage from "@assets/othmankamra_1747841480672.jpg";
+import joenImage from "@assets/joen.jpg";
+import hatanImage from "@assets/hatan.jpg";
+import hacenImage from "@assets/hacen.jpg";
+import hamidoImage from "@assets/hamido.jpg";
+import anbarzanImage from "@assets/anbarzan.jpg";
 
 export default function TeamPage() {
   // بيانات أعضاء الفريق 
@@ -9,42 +15,42 @@ export default function TeamPage() {
       name: "عثمان قمرة",
       role: "المدير التنفيذي",
       bio: "خبرة أكثر من 10 سنوات في مجال التكنولوجيا المالية والعملات الرقمية",
-      image: "/team-members/othmankamra.jpg"
+      image: othmankamraImage
     },
     {
       id: 2,
       name: "جوين ماك",
       role: "مدير التكنولوجيا",
       bio: "متخصص في تقنية البلوكتشين مع خبرة في تطوير الحلول المالية الآمنة",
-      image: "/team-members/joen.jpg"
+      image: joenImage
     },
     {
       id: 3,
       name: "حاتم النجار",
       role: "مدير المنتج",
       bio: "خبير في تطوير منتجات العملات الرقمية وتحسين تجربة المستخدم",
-      image: "/team-members/hatan.jpg"
+      image: hatanImage
     },
     {
       id: 4,
       name: "حسن الكمالي",
       role: "مطور واجهات المستخدم",
       bio: "مطور متمرس مع خبرة في تصميم وبناء واجهات مستخدم سلسة وسهلة الاستخدام",
-      image: "/team-members/hacen.jpg"
+      image: hacenImage
     },
     {
       id: 5,
       name: "حميدو قاسم",
       role: "مهندس البلوكتشين",
       bio: "متخصص في تطوير وتحسين حلول البلوكتشين وبناء العقود الذكية الآمنة",
-      image: "/team-members/hamido.jpg"
+      image: hamidoImage
     },
     {
       id: 6,
       name: "عنبرزان محمد",
       role: "مسؤول العلاقات العامة",
       bio: "خبير في العلاقات العامة وتسويق منتجات الفنتك والعملات الرقمية مع خبرة دولية",
-      image: "/team-members/anbarzan.jpg"
+      image: anbarzanImage
     }
   ];
   
