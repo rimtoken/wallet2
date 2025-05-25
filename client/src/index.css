@@ -15,3 +15,32 @@
     @apply font-sans antialiased bg-background text-foreground;
   }
 }
+
+/* تعريف التحريك للشريط المتحرك */
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  display: inline-block;
+  white-space: nowrap;
+  animation: marquee 60s linear infinite;
+}
+
+/* تعريف طبقات الألوان المختلفة للثيمات */
+:root {
+  --color-primary: #f59e0b;
+  --color-primary-hover: #d97706;
+  --color-text-on-primary: #ffffff;
+}
+
+[data-theme="dark"] {
+  --color-primary: #fbbf24;
+  --color-primary-hover: #f59e0b;
+  --color-text-on-primary: #000000;
+}
