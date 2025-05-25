@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { BetterThemeToggle } from "@/components/theme/better-theme-toggle";
 import { LanguageToggle } from "@/components/language/language-toggle";
 import { PriceTicker } from "@/components/crypto-ticker/price-ticker";
 import { useLanguage } from "@/contexts/language-context";
@@ -61,7 +61,7 @@ export function MainNav({ currentPage }: MainNavProps) {
           <div className="flex items-center space-x-3 space-x-reverse">
             {/* أزرار تبديل اللغة والثيمات */}
             <div className="hidden md:flex items-center space-x-1 space-x-reverse mr-2">
-              <ThemeToggle />
+              <BetterThemeToggle />
               <LanguageToggle />
             </div>
             
