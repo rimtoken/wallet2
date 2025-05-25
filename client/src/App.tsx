@@ -37,6 +37,7 @@ import DepositPage from "@/pages/deposit-page";
 import WithdrawalPage from "@/pages/withdrawal-page";
 import FAQPage from "@/pages/faq-page";
 import AdvancedDashboardPage from "@/pages/advanced-dashboard";
+import DemoFeaturesPage from "@/pages/demo-features";
 // Theme CSS is already imported in index.css
 // سنضيف مزود المصادقة لاحقاً
 
@@ -102,6 +103,11 @@ function Router() {
       </Route>
       <Route path="/advanced-dashboard">
         <AdvancedDashboardPage />
+      </Route>
+      
+      {/* صفحة عرض المميزات الجديدة */}
+      <Route path="/demo-features">
+        <DemoFeaturesPage />
       </Route>
 
       {/* الصفحات القديمة تحت مسار جديد */}

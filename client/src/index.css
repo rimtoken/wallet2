@@ -22,14 +22,15 @@
     transform: translateX(100%);
   }
   100% {
-    transform: translateX(-100%);
+    transform: translateX(-180%);
   }
 }
 
 .animate-marquee {
   display: inline-block;
   white-space: nowrap;
-  animation: marquee 60s linear infinite;
+  animation: marquee 80s linear infinite;
+  padding-right: 100%;
 }
 
 /* تعريف طبقات الألوان المختلفة للثيمات */

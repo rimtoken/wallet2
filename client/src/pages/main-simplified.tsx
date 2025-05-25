@@ -13,41 +13,14 @@ import {
 } from "lucide-react";
 import rimLogo from "@assets/rim.png";
 import rimTokenLogo from "@assets/469063470_586302450756454_5997633519251771466_n.jpg";
+import { MainNav } from "@/components/navigation/main-nav";
 
 // صفحة رئيسية مبسطة لتسهيل التنقل بين صفحات التطبيق
 export default function MainSimplifiedPage() {
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* رأس الصفحة */}
-      <header className="bg-white border-b shadow-sm p-4">
-        <div className="container mx-auto flex justify-between items-center">
-          <div className="flex items-center space-x-2">
-            <Link href="/auth" className="text-gray-500 hover:text-gray-700 text-sm">تسجيل الدخول -</Link>
-            <Button size="sm" className="bg-yellow-400 hover:bg-yellow-500 text-black rounded-md px-4 py-1">
-              Register
-            </Button>
-          </div>
-          
-          <div className="flex items-center space-x-6">
-            <Link href="/" className="text-gray-800 hover:text-gray-900 font-medium">Home</Link>
-            <Link href="/wallet" className="text-gray-800 hover:text-gray-900 font-medium">Wallet</Link>
-            <Link href="/deposit" className="text-gray-800 hover:text-gray-900 font-medium">Deposit</Link>
-            <Link href="/swap" className="text-gray-800 hover:text-gray-900 font-medium">Swap</Link>
-            <Link href="/market" className="text-gray-800 hover:text-gray-900 font-medium">Market</Link>
-            <Link href="/news" className="text-gray-800 hover:text-gray-900 font-medium">News</Link>
-            <Link href="/price" className="text-gray-800 hover:text-gray-900 font-medium">Price</Link>
-            <Link href="/team" className="text-gray-800 hover:text-gray-900 font-medium">Team</Link>
-            <Link href="/about" className="text-gray-800 hover:text-gray-900 font-medium">About</Link>
-          </div>
-          
-          <div className="flex items-center">
-            <div className="flex items-center ml-4">
-              <span className="font-bold text-amber-700 mr-2">RimToken</span>
-              <img src={rimLogo} alt="RimToken Logo" className="w-8 h-8 rounded-full object-cover border-2 border-amber-500" />
-            </div>
-          </div>
-        </div>
-      </header>
+      {/* استخدام مكون التنقل الرئيسي الذي يحتوي على شريط الأسعار وأزرار تغيير اللغة والثيمات */}
+      <MainNav currentPage="/" />
       
       {/* محتوى الصفحة الرئيسية */}
       <div className="container mx-auto py-12 px-4">
