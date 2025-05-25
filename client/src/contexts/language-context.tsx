@@ -330,7 +330,7 @@ const translations: Record<Language, Record<string, string>> = {
     'failedToFetchUser': 'Failed to fetch user data',
     
     // Wallet translations
-    'connectWallet': 'Connect Wallet',
+    'connectWalletEnglish': 'Connect Wallet',
     'connectWalletDescription': 'Choose the wallet you want to connect to your account',
     'walletConnected': 'Wallet Connected',
     'connectedTo': 'Connected to',
