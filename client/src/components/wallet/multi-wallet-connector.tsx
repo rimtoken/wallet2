@@ -1,16 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/language-context";
-import { Shield, Wallet, AlertCircle, ExternalLink, Check, Copy } from "lucide-react";
+import { Shield, Wallet, ExternalLink, Copy } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Badge } from "@/components/ui/badge";
 
-// بدلاً من استخدام الصور المستوردة، سنستخدم الأيقونات النصية
-// وسنحدد ألوان مختلفة لكل محفظة
-
-interface Web3WalletProviderProps {
+// تعريف أنواع المحافظ المدعومة
+interface WalletProvider {
   name: string;
   description: string;
   type: "ethereum" | "solana" | "binance" | "polygon" | "multi";
@@ -20,7 +19,7 @@ interface Web3WalletProviderProps {
 }
 
 // قائمة محافظ Web3 المدعومة
-const SUPPORTED_WALLETS: Web3WalletProviderProps[] = [
+const SUPPORTED_WALLETS: WalletProvider[] = [
   {
     name: "MetaMask",
     symbol: "MM",
@@ -50,7 +49,7 @@ const SUPPORTED_WALLETS: Web3WalletProviderProps[] = [
     symbol: "PH",
     description: "Connect to your Phantom wallet",
     type: "solana",
-    isPopular: false,
+    isPopular: true,
     color: "#4A46F0"
   },
   {
@@ -71,90 +70,74 @@ const SUPPORTED_WALLETS: Web3WalletProviderProps[] = [
   }
 ];
 
-interface EnhancedWalletConnectorProps {
+// نوع محفظة متصلة
+interface ConnectedWallet {
+  address: string;
+  provider: string;
+  providerColor: string;
+  symbol: string;
+  chainId: string;
+  connectedAt: Date;
+}
+
+// الخصائص المتوقعة للمكون
+interface MultiWalletConnectorProps {
   onWalletConnect?: (address: string, provider: string, chainId: string) => void;
 }
 
-export default function EnhancedWalletConnector({ onWalletConnect }: EnhancedWalletConnectorProps) {
-  const { getText, language } = useLanguage();
+export default function MultiWalletConnector({ onWalletConnect }: MultiWalletConnectorProps) {
+  const { getText } = useLanguage();
   const { toast } = useToast();
-  const [selectedWallet, setSelectedWallet] = useState<Web3WalletProviderProps | null>(null);
-  const [walletAddress, setWalletAddress] = useState<string>("");
-  const [connectingWallet, setConnectingWallet] = useState(false);
-  const [walletChain, setWalletChain] = useState<string>("");
+  
+  // حالة المكون
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [connectingWallet, setConnectingWallet] = useState(false);
+  const [selectedWallet, setSelectedWallet] = useState<WalletProvider | null>(null);
   
-  // محاكاة محافظ متصلة مسبقاً (يمكن استبدالها بتخزين محلي أو قاعدة بيانات)
-  const [connectedWallets, setConnectedWallets] = useState<{ 
-    address: string; 
-    provider: string; 
-    chainId: string;
-    connectedAt: Date;
-  }[]>([]);
+  // محاكاة المحافظ المتصلة
+  const [connectedWallets, setConnectedWallets] = useState<ConnectedWallet[]>([]);
   
-  // استدعاء محاكي اتصال المحفظة
-  const handleConnectWallet = async (wallet: Web3WalletProviderProps) => {
+  // محاكاة اتصال المحفظة
+  const connectWallet = async (wallet: WalletProvider) => {
     setSelectedWallet(wallet);
     setConnectingWallet(true);
     
     try {
-      // محاكاة تأخير الاتصال
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      // محاكاة تأخير اتصال الشبكة
+      await new Promise(resolve => setTimeout(resolve, 1500));
       
-      // محاكاة عنوان المحفظة وسلسلة الكتل
-      let address = "";
-      let chainId = "";
+      // توليد عنوان عشوائي لغرض العرض التوضيحي
+      const address = generateRandomAddress(wallet.type);
+      const chainId = getChainIdByType(wallet.type);
       
-      switch (wallet.type) {
-        case "ethereum":
-          address = "0x" + Array(40).fill(0).map(() => Math.floor(Math.random() * 16).toString(16)).join("");
-          chainId = "1"; // Ethereum Mainnet
-          break;
-        case "solana":
-          address = Array(44).fill(0).map(() => Math.floor(Math.random() * 16).toString(16)).join("");
-          chainId = "solana"; // Solana Mainnet
-          break;
-        case "binance":
-          address = "bnb" + Array(40).fill(0).map(() => Math.floor(Math.random() * 16).toString(16)).join("");
-          chainId = "56"; // BSC Mainnet
-          break;
-        case "polygon":
-          address = "0x" + Array(40).fill(0).map(() => Math.floor(Math.random() * 16).toString(16)).join("");
-          chainId = "137"; // Polygon Mainnet
-          break;
-        case "multi":
-          address = "0x" + Array(40).fill(0).map(() => Math.floor(Math.random() * 16).toString(16)).join("");
-          chainId = "1"; // Default to Ethereum
-          break;
-      }
-      
-      setWalletAddress(address);
-      setWalletChain(chainId);
-      
-      // إضافة المحفظة المتصلة إلى القائمة
-      const newWalletConnection = {
+      // إضافة المحفظة إلى قائمة المحافظ المتصلة
+      const newWallet: ConnectedWallet = {
         address,
         provider: wallet.name,
+        providerColor: wallet.color,
+        symbol: wallet.symbol,
         chainId,
         connectedAt: new Date()
       };
       
-      setConnectedWallets([...connectedWallets, newWalletConnection]);
+      setConnectedWallets(prev => [...prev, newWallet]);
       
-      // إشعار نجاح الاتصال
+      // إظهار إشعار النجاح
       toast({
         title: getText("walletConnectedSuccessfully"),
         description: getText("yourWalletIsNowConnected"),
       });
       
-      // استدعاء معالج الاتصال إذا تم توفيره
+      // استدعاء معالج الاتصال الخارجي إن وجد
       if (onWalletConnect) {
         onWalletConnect(address, wallet.name, chainId);
       }
       
+      // إغلاق نافذة الحوار
       setIsDialogOpen(false);
       
     } catch (error) {
+      // إظهار إشعار الخطأ
       toast({
         title: getText("walletConnectionFailed"),
         description: getText("failedToConnectWallet"),
@@ -165,35 +148,60 @@ export default function EnhancedWalletConnector({ onWalletConnect }: EnhancedWal
     }
   };
   
+  // فصل المحفظة
+  const disconnectWallet = (walletAddress: string) => {
+    setConnectedWallets(prev => prev.filter(wallet => wallet.address !== walletAddress));
+    
+    toast({
+      title: getText("walletDisconnected"),
+      description: getText("walletDisconnectedSuccessfully"),
+    });
+  };
+  
   // نسخ عنوان المحفظة إلى الحافظة
   const copyAddressToClipboard = (address: string) => {
     navigator.clipboard.writeText(address);
+    
     toast({
       title: getText("addressCopied"),
       description: getText("walletAddressCopiedToClipboard"),
     });
   };
   
-  // فصل المحفظة
-  const disconnectWallet = (address: string) => {
-    setConnectedWallets(connectedWallets.filter(wallet => wallet.address !== address));
-    
-    toast({
-      title: getText("walletDisconnected"),
-      description: getText("walletDisconnectedSuccessfully"),
-    });
-    
-    if (walletAddress === address) {
-      setWalletAddress("");
-      setWalletChain("");
-      setSelectedWallet(null);
-    }
-  };
-  
-  // تنسيق عنوان المحفظة للعرض
+  // تنسيق عنوان المحفظة للعرض المختصر
   const formatAddress = (address: string) => {
     if (!address) return "";
     return `${address.substring(0, 6)}...${address.substring(address.length - 4)}`;
+  };
+  
+  // توليد عنوان عشوائي حسب نوع المحفظة
+  const generateRandomAddress = (type: string) => {
+    const randomHex = () => Math.floor(Math.random() * 16).toString(16);
+    
+    switch (type) {
+      case "ethereum":
+      case "polygon":
+        return "0x" + Array(40).fill(0).map(randomHex).join("");
+      case "solana":
+        return Array(44).fill(0).map(randomHex).join("");
+      case "binance":
+        return "bnb" + Array(40).fill(0).map(randomHex).join("");
+      case "multi":
+      default:
+        return "0x" + Array(40).fill(0).map(randomHex).join("");
+    }
+  };
+  
+  // الحصول على معرف السلسلة حسب النوع
+  const getChainIdByType = (type: string) => {
+    switch (type) {
+      case "ethereum": return "1"; // Ethereum Mainnet
+      case "solana": return "solana"; // Solana Mainnet
+      case "binance": return "56"; // BSC Mainnet
+      case "polygon": return "137"; // Polygon Mainnet
+      case "multi": return "1"; // Default to Ethereum
+      default: return "1";
+    }
   };
   
   // تحديد اسم السلسلة من معرف السلسلة
@@ -207,12 +215,23 @@ export default function EnhancedWalletConnector({ onWalletConnect }: EnhancedWal
     }
   };
   
+  // الحصول على رابط المستكشف حسب نوع المحفظة وعنوانها
+  const getExplorerLink = (chainId: string, address: string) => {
+    switch (chainId) {
+      case "1": return `https://etherscan.io/address/${address}`;
+      case "56": return `https://bscscan.com/address/${address}`;
+      case "137": return `https://polygonscan.com/address/${address}`;
+      case "solana": return `https://solscan.io/account/${address}`;
+      default: return `https://etherscan.io/address/${address}`;
+    }
+  };
+  
   return (
     <div className="space-y-6">
       <Card>
         <CardHeader>
           <CardTitle>{getText("connectWallet")}</CardTitle>
-          <CardDescription>{getText("connectYourWeb3Wallet")}</CardDescription>
+          <CardDescription>{getText("connectYourWalletDescription")}</CardDescription>
         </CardHeader>
         <CardContent>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -243,11 +262,14 @@ export default function EnhancedWalletConnector({ onWalletConnect }: EnhancedWal
                         key={wallet.name}
                         variant="outline"
                         className="flex items-center justify-start h-16 px-4"
-                        onClick={() => handleConnectWallet(wallet)}
+                        onClick={() => connectWallet(wallet)}
                         disabled={connectingWallet}
                       >
-                        <div className="h-8 w-8 rounded-full overflow-hidden mr-3">
-                          <img src={wallet.icon} alt={wallet.name} className="h-full w-full object-cover" />
+                        <div 
+                          className="h-8 w-8 rounded-full flex items-center justify-center mr-3"
+                          style={{ backgroundColor: wallet.color }}
+                        >
+                          <span className="text-white font-bold text-xs">{wallet.symbol}</span>
                         </div>
                         <div className="text-left">
                           <div className="font-medium">{wallet.name}</div>
@@ -265,11 +287,14 @@ export default function EnhancedWalletConnector({ onWalletConnect }: EnhancedWal
                         key={wallet.name}
                         variant="outline"
                         className="flex items-center justify-start h-16 px-4"
-                        onClick={() => handleConnectWallet(wallet)}
+                        onClick={() => connectWallet(wallet)}
                         disabled={connectingWallet}
                       >
-                        <div className="h-8 w-8 rounded-full overflow-hidden mr-3">
-                          <img src={wallet.icon} alt={wallet.name} className="h-full w-full object-cover" />
+                        <div 
+                          className="h-8 w-8 rounded-full flex items-center justify-center mr-3"
+                          style={{ backgroundColor: wallet.color }}
+                        >
+                          <span className="text-white font-bold text-xs">{wallet.symbol}</span>
                         </div>
                         <div className="text-left">
                           <div className="font-medium">{wallet.name}</div>
@@ -292,7 +317,7 @@ export default function EnhancedWalletConnector({ onWalletConnect }: EnhancedWal
                 <div className="flex items-start">
                   <Shield className="h-5 w-5 text-muted-foreground mt-0.5 mr-2" />
                   <p className="text-sm text-muted-foreground">
-                    {getText("web3SecurityNote")}
+                    {getText("walletSecurityNote")}
                   </p>
                 </div>
               </div>
@@ -316,12 +341,11 @@ export default function EnhancedWalletConnector({ onWalletConnect }: EnhancedWal
                 >
                   <div className="flex items-center">
                     <div className="mr-3">
-                      <div className="h-10 w-10 rounded-full overflow-hidden">
-                        <img
-                          src={SUPPORTED_WALLETS.find(w => w.name === wallet.provider)?.icon || ""}
-                          alt={wallet.provider}
-                          className="h-full w-full object-cover"
-                        />
+                      <div 
+                        className="h-10 w-10 rounded-full flex items-center justify-center"
+                        style={{ backgroundColor: wallet.providerColor }}
+                      >
+                        <span className="text-white font-bold">{wallet.symbol}</span>
                       </div>
                     </div>
                     <div>
@@ -337,9 +361,9 @@ export default function EnhancedWalletConnector({ onWalletConnect }: EnhancedWal
                           <Copy className="h-3 w-3" />
                         </Button>
                       </div>
-                      <div className="text-xs text-muted-foreground mt-1">
+                      <Badge variant="outline" className="mt-1">
                         {getChainName(wallet.chainId)}
-                      </div>
+                      </Badge>
                     </div>
                   </div>
                   
@@ -348,7 +372,7 @@ export default function EnhancedWalletConnector({ onWalletConnect }: EnhancedWal
                       variant="outline"
                       size="sm"
                       className="flex items-center"
-                      onClick={() => window.open(`https://etherscan.io/address/${wallet.address}`, "_blank")}
+                      onClick={() => window.open(getExplorerLink(wallet.chainId, wallet.address), "_blank")}
                     >
                       <ExternalLink className="h-3 w-3 mr-1" />
                       {getText("explore")}
