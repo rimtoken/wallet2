@@ -119,15 +119,18 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
 
   // تحديث اتجاه الصفحة عند تغيير اللغة
   useEffect(() => {
-    document.documentElement.dir = languageInfo.direction;
+    document.documentElement.dir = LANGUAGES[language].direction;
     document.documentElement.lang = language;
+    document.body.classList.remove('dir-rtl', 'dir-ltr');
+    document.body.classList.add(`dir-${LANGUAGES[language].direction}`);
+    
     try {
       localStorage.setItem('language', language);
     } catch (e) {
       console.error('Failed to save language preference to localStorage:', e);
     }
     setLanguageInfo(LANGUAGES[language]);
-  }, [language, languageInfo.direction]);
+  }, [language]);
 
   // دالة للحصول على الترجمة بواسطة المفتاح
   const translate = (key: string): string => {

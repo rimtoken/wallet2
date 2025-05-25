@@ -40,6 +40,43 @@
   --color-text-on-primary: #ffffff;
 }
 
+/* تنسيقات خاصة باتجاه النص للغات المختلفة */
+.dir-rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+.dir-rtl .space-x-reverse {
+  --tw-space-x-reverse: 1;
+}
+
+.dir-rtl .mr-2 {
+  margin-right: 0;
+  margin-left: 0.5rem;
+}
+
+.dir-rtl .ml-2 {
+  margin-left: 0;
+  margin-right: 0.5rem;
+}
+
+.dir-ltr {
+  direction: ltr;
+  text-align: left;
+}
+
+.dir-ltr .space-x-reverse {
+  --tw-space-x-reverse: 0;
+}
+
+.dir-ltr .animate-marquee {
+  animation-direction: normal;
+}
+
+.dir-rtl .animate-marquee {
+  animation-direction: reverse;
+}
+
 [data-theme="dark"] {
   --color-primary: #fbbf24;
   --color-primary-hover: #f59e0b;
