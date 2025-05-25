@@ -73,26 +73,43 @@ export default function DemoFeaturesPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {/* تنفيذ مباشر لشريط العملات المتحرك */}
-            <div className="bg-gray-900 text-white py-3 px-4 rounded-lg overflow-hidden">
-              <div className="flex space-x-8 animate-marquee whitespace-nowrap">
-                {cryptoPrices.map((crypto) => (
-                  <span key={crypto.id} className="inline-block">
-                    <span className="font-medium">{crypto.name}</span>
-                    <span className="text-gray-400 mx-1">({crypto.symbol})</span>
-                    <span className="font-bold">${crypto.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 8 })}</span>
-                    <span 
-                      className={`ml-2 ${crypto.priceChangePercentage24h >= 0 ? 'text-green-500' : 'text-red-500'} flex items-center inline-flex`}
-                    >
-                      {crypto.priceChangePercentage24h >= 0 ? (
-                        <ArrowUp className="h-3 w-3 mr-1" />
-                      ) : (
-                        <ArrowDown className="h-3 w-3 mr-1" />
-                      )}
-                      {Math.abs(crypto.priceChangePercentage24h).toFixed(2)}%
+            {/* نموذج توضيحي للتسلسل الصحيح للعناصر في الصفحة */}
+            <div className="border rounded-lg overflow-hidden mb-6">
+              {/* شريط التنقل العلوي (محاكاة) */}
+              <div className="bg-white py-3 px-4 border-b flex justify-between items-center">
+                <div className="font-bold text-amber-700">RimToken</div>
+                <div className="flex items-center gap-2">
+                  <Button size="sm" variant="outline">تسجيل الدخول</Button>
+                  <Button size="sm">التسجيل</Button>
+                </div>
+              </div>
+              
+              {/* شريط أسعار العملات المتحرك (أسفل الشريط العلوي) */}
+              <div className="bg-gray-900 text-white py-2 px-4 overflow-hidden">
+                <div className="flex space-x-8 animate-marquee whitespace-nowrap">
+                  {cryptoPrices.map((crypto) => (
+                    <span key={crypto.id} className="inline-block">
+                      <span className="font-medium">{crypto.name}</span>
+                      <span className="text-gray-400 mx-1">({crypto.symbol})</span>
+                      <span className="font-bold">${crypto.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 8 })}</span>
+                      <span 
+                        className={`ml-2 ${crypto.priceChangePercentage24h >= 0 ? 'text-green-500' : 'text-red-500'} flex items-center inline-flex`}
+                      >
+                        {crypto.priceChangePercentage24h >= 0 ? (
+                          <ArrowUp className="h-3 w-3 mr-1" />
+                        ) : (
+                          <ArrowDown className="h-3 w-3 mr-1" />
+                        )}
+                        {Math.abs(crypto.priceChangePercentage24h).toFixed(2)}%
+                      </span>
                     </span>
-                  </span>
-                ))}
+                  ))}
+                </div>
+              </div>
+              
+              {/* محتوى المثال (محاكاة) */}
+              <div className="bg-gray-50 p-4 text-center text-gray-500">
+                محتوى الصفحة يظهر هنا
               </div>
             </div>
           </CardContent>

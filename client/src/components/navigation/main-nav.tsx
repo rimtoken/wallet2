@@ -26,9 +26,6 @@ export function MainNav({ currentPage }: MainNavProps) {
 
   return (
     <>
-      {/* شريط أسعار العملات المتحرك */}
-      <PriceTicker />
-      
       {/* الشريط الرئيسي */}
       <header className="bg-white py-4 px-6 border-b shadow-sm">
         <div className="container mx-auto flex justify-between items-center">
@@ -84,6 +81,9 @@ export function MainNav({ currentPage }: MainNavProps) {
           </button>
         </div>
       </header>
+      
+      {/* شريط أسعار العملات المتحرك (أسفل الشريط العلوي) */}
+      <PriceTicker />
     </>
   );
 }
