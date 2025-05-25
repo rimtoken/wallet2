@@ -32,6 +32,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     // إزالة كل الثيمات السابقة
     root.classList.remove('dark-theme', 'light-theme', 'system-theme', 'spooky-theme', 'dark');
     document.body.classList.remove('dark-theme', 'light-theme', 'system-theme', 'spooky-theme', 'dark');
+    root.setAttribute('data-theme', 'light');
     
     // تطبيق الثيم الجديد
     if (newTheme === 'dark') {
@@ -39,16 +40,24 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       document.body.classList.add('dark');
       root.classList.add('dark-theme');
       document.body.classList.add('dark-theme');
+      root.setAttribute('data-theme', 'dark');
     } else if (newTheme === 'spooky') {
       root.classList.add('spooky-theme');
       document.body.classList.add('spooky-theme');
+      root.setAttribute('data-theme', 'spooky');
     } else if (newTheme === 'system') {
       // التحقق من تفضيلات النظام
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       if (prefersDark) {
         root.classList.add('dark');
         document.body.classList.add('dark');
+        root.setAttribute('data-theme', 'dark');
+      } else {
+        root.setAttribute('data-theme', 'light');
       }
+    } else {
+      // الوضع الفاتح هو الافتراضي
+      root.setAttribute('data-theme', 'light');
     }
     
     // حفظ الثيم في التخزين المحلي

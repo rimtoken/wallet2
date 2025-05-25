@@ -40,6 +40,12 @@ const translations: Record<Language, Record<string, string>> = {
     'nav.priceAlerts': 'تنبيهات الأسعار',
     'nav.team': 'فريقنا',
     'nav.about': 'حول',
+    'nav.deposit': 'إيداع',
+    'nav.withdrawal': 'سحب',
+    'nav.faq': 'الأسئلة الشائعة',
+    'nav.advanced-dashboard': 'لوحة المعلومات',
+    'nav.achievements': 'الإنجازات',
+    'nav.contact': 'اتصل بنا',
     
     // ترجمات أزرار المستخدم
     'user.login': 'تسجيل الدخول',
@@ -52,6 +58,29 @@ const translations: Record<Language, Record<string, string>> = {
     'general.loading': 'جاري التحميل...',
     'general.error': 'حدث خطأ!',
     'general.success': 'تمت العملية بنجاح!',
+    
+    // عنوان التطبيق
+    'app.title': 'محفظة وتبادل RimToken',
+    'app.description': 'محفظة لامركزية متعددة السلاسل تتيح لك التحكم الكامل في أصولك الرقمية مع واجهة مستخدم سهلة وبسيطة',
+    
+    // الميزات
+    'features.wallet': 'إدارة المحفظة',
+    'features.wallet.desc': 'إدارة أصولك الرقمية بسهولة تامة مع واجهة مستخدم سلسة وآمنة',
+    'features.wallet.cta': 'استكشاف المحفظة',
+    'features.swap': 'تبادل العملات',
+    'features.swap.desc': 'تبادل العملات المشفرة بسرعة وبدون تعقيدات مع رسوم منخفضة',
+    'features.swap.cta': 'بدء التبادل',
+    'features.market': 'تتبع الأسواق',
+    'features.market.desc': 'متابعة أسعار العملات واتجاهات السوق في الوقت الحقيقي',
+    'features.market.cta': 'قريباً',
+    'features.team': 'فريق العمل',
+    'features.team.desc': 'تعرف على فريق ريم توكن من الخبراء والمتخصصين',
+    'features.team.cta': 'تعرف على الفريق',
+    
+    // التذييل
+    'footer.quickLinks': 'روابط سريعة',
+    'footer.contact': 'تواصل معنا',
+    'footer.copyright': 'جميع الحقوق محفوظة',
   },
   en: {
     // Main navigation translations
@@ -63,6 +92,12 @@ const translations: Record<Language, Record<string, string>> = {
     'nav.priceAlerts': 'Price Alerts',
     'nav.team': 'Our Team',
     'nav.about': 'About',
+    'nav.deposit': 'Deposit',
+    'nav.withdrawal': 'Withdrawal',
+    'nav.faq': 'FAQ',
+    'nav.advanced-dashboard': 'Dashboard',
+    'nav.achievements': 'Achievements',
+    'nav.contact': 'Contact',
     
     // User button translations
     'user.login': 'Log in',
@@ -75,6 +110,29 @@ const translations: Record<Language, Record<string, string>> = {
     'general.loading': 'Loading...',
     'general.error': 'An error occurred!',
     'general.success': 'Operation completed successfully!',
+    
+    // App title
+    'app.title': 'RimToken Wallet & Exchange',
+    'app.description': 'A multi-chain self-custodial wallet that gives you complete control over your digital assets with a simple user interface',
+    
+    // Features
+    'features.wallet': 'Wallet Management',
+    'features.wallet.desc': 'Easily manage your digital assets with a smooth and secure user interface',
+    'features.wallet.cta': 'Explore Wallet',
+    'features.swap': 'Currency Exchange',
+    'features.swap.desc': 'Exchange cryptocurrencies quickly and without complications with low fees',
+    'features.swap.cta': 'Start Swapping',
+    'features.market': 'Track Markets',
+    'features.market.desc': 'Follow currency prices and market trends in real-time',
+    'features.market.cta': 'Coming Soon',
+    'features.team': 'Our Team',
+    'features.team.desc': 'Meet the RimToken team of experts and specialists',
+    'features.team.cta': 'Meet the Team',
+    
+    // Footer
+    'footer.quickLinks': 'Quick Links',
+    'footer.contact': 'Contact Us',
+    'footer.copyright': 'All Rights Reserved',
   },
   fr: {
     // Traductions de la navigation principale
@@ -86,6 +144,12 @@ const translations: Record<Language, Record<string, string>> = {
     'nav.priceAlerts': 'Alertes de Prix',
     'nav.team': 'Notre Équipe',
     'nav.about': 'À Propos',
+    'nav.deposit': 'Dépôt',
+    'nav.withdrawal': 'Retrait',
+    'nav.faq': 'FAQ',
+    'nav.advanced-dashboard': 'Tableau de Bord',
+    'nav.achievements': 'Réalisations',
+    'nav.contact': 'Contact',
     
     // Traductions des boutons utilisateur
     'user.login': 'Connexion',
@@ -98,6 +162,29 @@ const translations: Record<Language, Record<string, string>> = {
     'general.loading': 'Chargement...',
     'general.error': 'Une erreur est survenue!',
     'general.success': 'Opération réussie!',
+    
+    // Titre de l'application
+    'app.title': 'Portefeuille et Échange RimToken',
+    'app.description': 'Un portefeuille multi-chaîne auto-dépositaire qui vous donne un contrôle total sur vos actifs numériques avec une interface utilisateur simple',
+    
+    // Fonctionnalités
+    'features.wallet': 'Gestion du Portefeuille',
+    'features.wallet.desc': 'Gérez facilement vos actifs numériques avec une interface utilisateur fluide et sécurisée',
+    'features.wallet.cta': 'Explorer le Portefeuille',
+    'features.swap': 'Échange de Devises',
+    'features.swap.desc': 'Échangez des cryptomonnaies rapidement et sans complications avec des frais réduits',
+    'features.swap.cta': 'Commencer l\'Échange',
+    'features.market': 'Suivre les Marchés',
+    'features.market.desc': 'Suivez les prix des devises et les tendances du marché en temps réel',
+    'features.market.cta': 'Bientôt Disponible',
+    'features.team': 'Notre Équipe',
+    'features.team.desc': 'Rencontrez l\'équipe RimToken d\'experts et de spécialistes',
+    'features.team.cta': 'Rencontrer l\'Équipe',
+    
+    // Pied de page
+    'footer.quickLinks': 'Liens Rapides',
+    'footer.contact': 'Contactez-nous',
+    'footer.copyright': 'Tous Droits Réservés',
   },
 };
 

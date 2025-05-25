@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { LanguageToggle } from "@/components/language/language-toggle";
 import { PriceTicker } from "@/components/crypto-ticker/price-ticker";
+import { useLanguage } from "@/contexts/language-context";
 import rimLogo from "@assets/rim.png";
 
 interface MainNavProps {
@@ -10,18 +11,21 @@ interface MainNavProps {
 }
 
 export function MainNav({ currentPage }: MainNavProps) {
+  const { translate, language } = useLanguage();
+  
+  // تعريف عناصر القائمة مع استخدام مفاتيح الترجمة
   const navItems = [
-    { href: "/", label: "الرئيسية" },
-    { href: "/wallet", label: "المحفظة" },
-    { href: "/deposit", label: "إيداع" },
-    { href: "/withdrawal", label: "سحب" },
-    { href: "/swap", label: "تبديل" },
-    { href: "/advanced-dashboard", label: "لوحة المعلومات" },
-    { href: "/market", label: "السوق" },
-    { href: "/achievements", label: "الإنجازات" },
-    { href: "/faq", label: "الأسئلة الشائعة" },
-    { href: "/team", label: "الفريق" },
-    { href: "/about", label: "حول" },
+    { href: "/", labelKey: "nav.home" },
+    { href: "/wallet", labelKey: "nav.wallet" },
+    { href: "/deposit", labelKey: "nav.deposit" },
+    { href: "/withdrawal", labelKey: "nav.withdrawal" },
+    { href: "/swap", labelKey: "nav.swap" },
+    { href: "/advanced-dashboard", labelKey: "nav.advanced-dashboard" },
+    { href: "/market", labelKey: "nav.market" },
+    { href: "/achievements", labelKey: "nav.achievements" },
+    { href: "/faq", labelKey: "nav.faq" },
+    { href: "/team", labelKey: "nav.team" },
+    { href: "/about", labelKey: "nav.about" },
   ];
 
   return (
@@ -48,7 +52,7 @@ export function MainNav({ currentPage }: MainNavProps) {
                 <a className={`text-gray-800 hover:text-gray-900 font-medium ${
                   currentPage === item.href ? "text-amber-600 font-semibold" : ""
                 }`}>
-                  {item.label}
+                  {translate(item.labelKey)}
                 </a>
               </Link>
             ))}
@@ -66,10 +70,10 @@ export function MainNav({ currentPage }: MainNavProps) {
             
             {/* أزرار تسجيل الدخول/التسجيل */}
             <Link href="/auth" className="text-gray-500 hover:text-gray-700 text-sm">
-              تسجيل الدخول
+              {translate('user.login')}
             </Link>
             <Button size="sm" className="bg-yellow-400 hover:bg-yellow-500 text-black rounded-md px-4 py-1">
-              التسجيل
+              {translate('user.register')}
             </Button>
           </div>
           
