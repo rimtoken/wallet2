@@ -5,16 +5,28 @@ const config: CapacitorConfig = {
   appName: 'RimToken',
   webDir: 'dist',
   server: {
-    androidScheme: 'https'
+    androidScheme: 'https',
+    cleartext: true
+  },
+  plugins: {
+    SplashScreen: {
+      launchShowDuration: 2000,
+      backgroundColor: "#ffffffff",
+      androidSplashResourceName: "splash",
+      androidScaleType: "CENTER_CROP"
+    },
+    PushNotifications: {
+      presentationOptions: ["badge", "sound", "alert"]
+    }
   },
   android: {
     buildOptions: {
-      keystorePath: null,
-      keystorePassword: null,
-      keystoreAlias: null,
-      keystoreAliasPassword: null,
+      keystorePath: undefined,
+      keystorePassword: undefined,
+      keystoreAlias: undefined,
+      keystoreAliasPassword: undefined,
       releaseType: 'AAB',
-      signingType: null
+      signingType: undefined
     }
   }
 };
