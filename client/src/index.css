@@ -47,6 +47,61 @@
   --ring: 38 92% 50%;
 }
 
+/* ألوان إضافية مخصصة للثيمات */
+:root {
+  --accent-gold: #f59e0b;
+  --accent-gold-dark: #d97706;
+  --text-primary: #1f2937;
+  --text-secondary: #4b5563;
+  --text-muted: #6b7280;
+  --bg-card: #ffffff;
+  --border-color: #e5e7eb;
+}
+
+.dark {
+  --accent-gold: #fbbf24;
+  --accent-gold-dark: #f59e0b;
+  --text-primary: #f9fafb;
+  --text-secondary: #e5e7eb;
+  --text-muted: #9ca3af;
+  --bg-card: #1f2937;
+  --border-color: #374151;
+}
+
+/* تنسيقات شائعة للعناصر مع دعم الثيمات */
+.text-primary {
+  color: hsl(var(--foreground));
+}
+
+.text-accent {
+  color: var(--accent-gold);
+}
+
+.bg-accent {
+  background-color: var(--accent-gold);
+}
+
+.border-accent {
+  border-color: var(--accent-gold);
+}
+
+.hover-accent:hover {
+  color: var(--accent-gold-dark);
+}
+
+.card-enhanced {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.card-enhanced:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
 /* استيراد ملف التفاعلات الدقيقة */
 @import './components/ui/micro-interactions.css';
 @import './styles/themes.css';
