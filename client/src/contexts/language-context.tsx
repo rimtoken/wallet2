@@ -149,6 +149,11 @@ const translations: Record<Language, Record<string, string>> = {
     'viewAll': 'عرض الكل',
     'walletAccessDenied': 'تم رفض الوصول إلى المحفظة',
     'pleaseLoginToAccessWallet': 'يرجى تسجيل الدخول للوصول إلى محفظتك',
+    'price': 'السعر',
+    'priceChart': 'مخطط السعر',
+    'topAssets': 'أهم الأصول',
+    'marketOverview': 'نظرة عامة على السوق',
+    'portfolioChart': 'مخطط المحفظة',
   },
   en: {
     // Main navigation translations
@@ -268,6 +273,11 @@ const translations: Record<Language, Record<string, string>> = {
     'viewAll': 'View All',
     'walletAccessDenied': 'Wallet Access Denied',
     'pleaseLoginToAccessWallet': 'Please login to access your wallet',
+    'price': 'Price',
+    'priceChart': 'Price Chart',
+    'topAssets': 'Top Assets',
+    'marketOverview': 'Market Overview',
+    'portfolioChart': 'Portfolio Chart',
   },
   fr: {
     // Traductions de la navigation principale
@@ -387,6 +397,11 @@ const translations: Record<Language, Record<string, string>> = {
     'viewAll': 'Voir Tout',
     'walletAccessDenied': 'Accès au Portefeuille Refusé',
     'pleaseLoginToAccessWallet': 'Veuillez vous connecter pour accéder à votre portefeuille',
+    'price': 'Prix',
+    'priceChart': 'Graphique des Prix',
+    'topAssets': 'Actifs Principaux',
+    'marketOverview': 'Aperçu du Marché',
+    'portfolioChart': 'Graphique du Portefeuille',
   },
 };
 

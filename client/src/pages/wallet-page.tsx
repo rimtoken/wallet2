@@ -10,6 +10,7 @@ import { useAuth } from "@/contexts/auth-context";
 import { useLanguage } from "@/contexts/language-context";
 import ConnectWallet from "@/components/wallet/connect-wallet";
 import { Plus, ArrowUpDown, Clock, RefreshCw, Wallet, ExternalLink, ChevronRight } from "lucide-react";
+import PriceChart from "@/components/charts/price-chart";
 
 // مكون نظرة عامة على المحفظة
 const WalletOverview = () => {
@@ -379,6 +380,47 @@ export default function WalletPage({ userId }: WalletPageProps) {
       <h1 className="text-3xl font-bold">{getText("myWallet")}</h1>
       
       <WalletOverview />
+      
+      {/* إضافة مخطط بياني للمحفظة */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="space-y-4">
+          <h2 className="text-xl font-bold">{getText("portfolioChart")}</h2>
+          <PriceChart 
+            assetId={0} 
+            symbol="Portfolio" 
+            name={getText("portfolioChart")} 
+            color="#6366f1"
+          />
+        </div>
+        
+        <div className="space-y-4">
+          <div className="flex justify-between items-center">
+            <h2 className="text-xl font-bold">{getText("topAssets")}</h2>
+            <Button variant="link" size="sm">
+              {getText("viewAll")} <ChevronRight className="ml-1 h-4 w-4" />
+            </Button>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <PriceChart 
+              assetId={1} 
+              symbol="BTC" 
+              name="Bitcoin" 
+              color="#F7931A" 
+              height={180} 
+              showControls={false}
+            />
+            <PriceChart 
+              assetId={2} 
+              symbol="ETH" 
+              name="Ethereum" 
+              color="#627EEA" 
+              height={180} 
+              showControls={false}
+            />
+          </div>
+        </div>
+      </div>
       
       <Separator className="my-6" />
       
