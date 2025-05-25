@@ -117,7 +117,7 @@ export default function PriceChart({
   
   // حساب نسبة التغيير
   const calculateChange = () => {
-    if (data.length < 2) return { value: 0, percentage: 0 };
+    if (data.length < 2) return { value: "0", percentage: "0" };
     
     const firstPrice = data[0].price;
     const lastPrice = data[data.length - 1].price;
@@ -131,7 +131,7 @@ export default function PriceChart({
   };
   
   const change = calculateChange();
-  const positive = parseFloat(change.value) >= 0;
+  const positive = Number(change.value) >= 0;
   
   // تنسيق السعر
   const formatPrice = (price: number) => {
@@ -234,8 +234,8 @@ export default function PriceChart({
               />
               
               <Tooltip
-                formatter={(value: number) => [formatPrice(value), getText("price")]}
-                labelFormatter={(label) => label}
+                formatter={(value: any) => [formatPrice(value), getText("price")]}
+                labelFormatter={(label) => label.toString()}
                 contentStyle={{
                   backgroundColor: "var(--background)",
                   borderColor: "var(--border)",

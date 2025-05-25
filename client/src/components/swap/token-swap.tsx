@@ -1,345 +1,467 @@
-import { useState, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import React, { useState, useEffect } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
-import { ArrowDown, RefreshCw, Settings } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/contexts/language-context";
+import { ArrowDownUp, Info, AlertCircle } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { 
+  Dialog, 
+  DialogContent, 
+  DialogDescription, 
+  DialogHeader, 
+  DialogTitle, 
+  DialogTrigger 
+} from "@/components/ui/dialog";
+import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Progress } from "@/components/ui/progress";
 
-interface TokenSwapProps {
-  userId: number;
+// نوع البيانات للعملة المشفرة
+interface Token {
+  id: number;
+  symbol: string;
+  name: string;
+  icon: string;
+  price: number;
+  balance?: number;
 }
 
-export function TokenSwap({ userId }: TokenSwapProps) {
+// نوع بيانات معلومات التبادل
+interface SwapInfo {
+  exchangeRate: number;
+  networkFee: number;
+  slippage: number;
+  minReceived: number;
+  priceImpact: number;
+}
+
+export default function TokenSwap() {
+  const { getText } = useLanguage();
   const { toast } = useToast();
-  const [fromToken, setFromToken] = useState<string>("");
-  const [toToken, setToToken] = useState<string>("");
-  const [fromAmount, setFromAmount] = useState<string>("");
-  const [toAmount, setToAmount] = useState<string>("");
+  
+  // حالة النموذج
+  const [fromToken, setFromToken] = useState<Token | null>(null);
+  const [toToken, setToToken] = useState<Token | null>(null);
+  const [fromAmount, setFromAmount] = useState<string>("0");
+  const [toAmount, setToAmount] = useState<string>("0");
   const [slippage, setSlippage] = useState<number>(0.5);
+  const [swapInfo, setSwapInfo] = useState<SwapInfo | null>(null);
   const [isSwapping, setIsSwapping] = useState<boolean>(false);
-  const [showSettings, setShowSettings] = useState<boolean>(false);
-
-  // استعلام لجلب بيانات الأصول المتاحة
-  const { data: assets, isLoading: isLoadingAssets } = useQuery({
+  const [showAdvanced, setShowAdvanced] = useState<boolean>(false);
+  
+  // استعلام لجلب قائمة العملات المتاحة
+  const { data: tokens, isLoading: isTokensLoading } = useQuery<Token[]>({
     queryKey: ["/api/assets"],
+    staleTime: 60000, // تحديث كل دقيقة
   });
-
-  // استعلام لجلب بيانات المحفظة
-  const { data: walletAssets, isLoading: isLoadingWallet } = useQuery({
-    queryKey: [`/api/wallets/${userId}`],
+  
+  // استعلام لجلب أرصدة المحفظة
+  const { data: walletAssets, isLoading: isWalletLoading } = useQuery({
+    queryKey: ["/api/wallets/current"],
+    staleTime: 60000,
   });
-
-  // تعيين القيم الافتراضية عند تحميل البيانات
+  
+  // تحديث قيمة العملة المستلمة عند تغيير قيمة العملة المرسلة
   useEffect(() => {
-    if (assets && assets.length > 0 && !fromToken) {
-      setFromToken(assets[0].symbol);
+    if (fromToken && toToken && fromAmount) {
+      const fromValue = parseFloat(fromAmount) || 0;
+      const exchangeRate = fromToken.price / toToken.price;
+      const calculatedToAmount = fromValue * exchangeRate;
+      
+      // تطبيق رسوم الشبكة والانزلاق
+      const networkFee = 0.001; // 0.1% رسوم الشبكة
+      const networkFeeAmount = fromValue * networkFee;
+      const slippageAmount = calculatedToAmount * (slippage / 100);
+      const minReceived = calculatedToAmount - slippageAmount;
+      
+      // حساب تأثير السعر
+      const priceImpact = Math.min(fromValue / 1000, 0.5); // تأثير السعر المحاكى
+      
+      setToAmount(calculatedToAmount.toFixed(6));
+      setSwapInfo({
+        exchangeRate,
+        networkFee: networkFeeAmount,
+        slippage,
+        minReceived,
+        priceImpact,
+      });
+    } else {
+      setToAmount("0");
+      setSwapInfo(null);
     }
-    
-    if (assets && assets.length > 1 && !toToken) {
-      setToToken(assets[1].symbol);
-    }
-  }, [assets, fromToken, toToken]);
-
-  // حساب قيمة العملة المستلمة عند تغيير قيمة العملة المرسلة
-  useEffect(() => {
-    if (!fromAmount || !fromToken || !toToken || !assets) return;
-    
-    const fromAsset = assets.find((asset: any) => asset.symbol === fromToken);
-    const toAsset = assets.find((asset: any) => asset.symbol === toToken);
-    
-    if (!fromAsset || !toAsset) return;
-    
-    const fromPrice = parseFloat(fromAsset.currentPrice);
-    const toPrice = parseFloat(toAsset.currentPrice);
-    
-    if (fromPrice && toPrice) {
-      const amount = parseFloat(fromAmount);
-      const exchangeRate = fromPrice / toPrice;
-      const calculatedAmount = (amount * exchangeRate).toFixed(6);
-      setToAmount(calculatedAmount);
-    }
-  }, [fromAmount, fromToken, toToken, assets]);
-
+  }, [fromToken, toToken, fromAmount, slippage]);
+  
   // تبديل العملات
-  const handleSwitch = () => {
+  const handleSwapTokens = () => {
     const tempToken = fromToken;
     const tempAmount = fromAmount;
     
     setFromToken(toToken);
-    setFromAmount(toAmount);
     setToToken(tempToken);
+    setFromAmount(toAmount);
     setToAmount(tempAmount);
   };
-
-  // الحصول على الرصيد المتاح للعملة المختارة
-  const getAvailableBalance = (symbol: string) => {
-    if (!walletAssets) return 0;
+  
+  // التحقق من صحة المدخلات
+  const validateInputs = (): boolean => {
+    if (!fromToken || !toToken) {
+      toast({
+        title: getText("selectTokens"),
+        description: getText("pleaseSelectBothTokens"),
+        variant: "destructive",
+      });
+      return false;
+    }
     
-    const asset = walletAssets.find((asset: any) => asset.symbol === symbol);
-    return asset ? asset.balance : 0;
+    if (!fromAmount || parseFloat(fromAmount) <= 0) {
+      toast({
+        title: getText("invalidAmount"),
+        description: getText("pleaseEnterValidAmount"),
+        variant: "destructive",
+      });
+      return false;
+    }
+    
+    // التحقق من وجود رصيد كافي
+    const userBalance = fromToken.balance || 0;
+    if (parseFloat(fromAmount) > userBalance) {
+      toast({
+        title: getText("insufficientBalance"),
+        description: getText("youDontHaveEnoughBalance"),
+        variant: "destructive",
+      });
+      return false;
+    }
+    
+    return true;
   };
-
-  // تنفيذ التبادل
+  
+  // تنفيذ عملية التبادل
   const handleSwap = async () => {
-    // التحقق من الرصيد
-    const balance = getAvailableBalance(fromToken);
-    const amount = parseFloat(fromAmount);
+    if (!validateInputs()) return;
     
-    if (amount > balance) {
-      toast({
-        title: "رصيد غير كافٍ",
-        description: `ليس لديك رصيد كافٍ من ${fromToken} لإتمام هذه العملية`,
-        variant: "destructive",
-      });
-      return;
-    }
-    
-    // التحقق من أن المبلغ أكبر من الصفر
-    if (amount <= 0) {
-      toast({
-        title: "قيمة غير صالحة",
-        description: "يرجى إدخال قيمة أكبر من الصفر",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    // الحصول على معلومات العملات المختارة
-    const fromAsset = assets.find((asset: any) => asset.symbol === fromToken);
-    const toAsset = assets.find((asset: any) => asset.symbol === toToken);
+    setIsSwapping(true);
     
     try {
-      setIsSwapping(true);
+      // في الإصدار النهائي، هنا سيتم الاتصال بالـ API لإجراء عملية التبادل
+      // محاكاة الاتصال بالشبكة
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       
-      // إنشاء بيانات المعاملة
-      const transactionData = {
-        userId,
-        type: "swap",
-        assetId: fromAsset.id,
-        amount: fromAmount,
-        toAssetId: toAsset.id,
-        toAmount: toAmount,
-        status: "completed",
-        fee: (parseFloat(fromAmount) * 0.001).toString(), // رسوم بنسبة 0.1%
-      };
-
-      // في تطبيق واقعي، هنا ستقوم بإرسال طلب إلى API
-      // لمحاكاة سلوك API في هذا المثال
+      toast({
+        title: getText("swapSuccessful"),
+        description: `${fromAmount} ${fromToken?.symbol} → ${toAmount} ${toToken?.symbol}`,
+      });
       
-      setTimeout(() => {
-        // محاكاة تأخير الشبكة
-        toast({
-          title: "تم التبادل بنجاح",
-          description: `تم تبديل ${fromAmount} ${fromToken} إلى ${toAmount} ${toToken}`,
-        });
-        
-        // إعادة تعيين قيم الإدخال
-        setFromAmount("");
-        setToAmount("");
-        
-        // تحديث بيانات المحفظة في تطبيق حقيقي
-        // queryClient.invalidateQueries({ queryKey: [`/api/wallets/${userId}`] });
-        // queryClient.invalidateQueries({ queryKey: [`/api/transactions/${userId}`] });
-        
-        setIsSwapping(false);
-      }, 1500);
+      // إعادة تعيين النموذج
+      setFromAmount("0");
+      setToAmount("0");
       
     } catch (error) {
       toast({
-        title: "حدث خطأ",
-        description: "تعذر إتمام عملية التبادل، يرجى المحاولة مرة أخرى",
+        title: getText("swapFailed"),
+        description: getText("anErrorOccurredDuringSwap"),
         variant: "destructive",
       });
+    } finally {
       setIsSwapping(false);
     }
   };
-
-  if (isLoadingAssets || isLoadingWallet) {
-    return (
-      <Card>
-        <CardHeader>
-          <CardTitle>تبادل العملات</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <Skeleton className="h-20 w-full" />
-            <Skeleton className="h-10 w-full" />
-            <Skeleton className="h-20 w-full" />
-            <Skeleton className="h-10 w-full" />
-          </div>
-        </CardContent>
-      </Card>
-    );
-  }
-
+  
+  // حساب نسبة الرصيد المستخدمة
+  const calculatePercentage = (percentage: number) => {
+    if (!fromToken || !fromToken.balance) return;
+    
+    const amount = (fromToken.balance * percentage) / 100;
+    setFromAmount(amount.toString());
+  };
+  
   return (
     <Card className="w-full max-w-md mx-auto">
-      <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle>تبادل العملات</CardTitle>
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => setShowSettings(!showSettings)}
-        >
-          <Settings size={20} />
-        </Button>
+      <CardHeader>
+        <CardTitle>{getText("swapTokens")}</CardTitle>
+        <CardDescription>
+          {getText("swapTokensDescription")}
+        </CardDescription>
       </CardHeader>
-      <CardContent>
-        {showSettings && (
-          <div className="mb-6 p-4 bg-slate-50 rounded-lg">
-            <h3 className="text-sm font-semibold mb-2">إعدادات التبادل</h3>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <Label htmlFor="slippage">نسبة الانزلاق</Label>
-                <Select
-                  value={slippage.toString()}
-                  onValueChange={(value) => setSlippage(parseFloat(value))}
-                >
-                  <SelectTrigger className="w-24">
-                    <SelectValue placeholder="0.5%" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="0.1">0.1%</SelectItem>
-                    <SelectItem value="0.5">0.5%</SelectItem>
-                    <SelectItem value="1">1.0%</SelectItem>
-                    <SelectItem value="2">2.0%</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="flex items-center gap-2">
-                <Label htmlFor="auto-router">التوجيه التلقائي</Label>
-                <Switch id="auto-router" defaultChecked />
-              </div>
-            </div>
-          </div>
-        )}
-
-        <div className="space-y-4">
-          {/* من العملة */}
-          <div className="p-4 bg-slate-100 rounded-lg">
-            <div className="flex justify-between mb-2">
-              <span className="text-sm text-slate-500">من</span>
-              <span className="text-sm text-slate-500">
-                الرصيد: {getAvailableBalance(fromToken).toFixed(6)} {fromToken}
+      
+      <CardContent className="space-y-4">
+        {/* العملة المرسلة */}
+        <div className="space-y-2">
+          <div className="flex justify-between">
+            <label className="text-sm font-medium">
+              {getText("from")}
+            </label>
+            {fromToken && fromToken.balance !== undefined && (
+              <span className="text-sm text-muted-foreground">
+                {getText("balance")}: {fromToken.balance} {fromToken.symbol}
               </span>
-            </div>
-            <div className="flex space-x-2">
-              <Input
-                type="number"
-                value={fromAmount}
-                onChange={(e) => setFromAmount(e.target.value)}
-                placeholder="0.0"
-                className="flex-1 text-xl font-medium bg-transparent border-none outline-none focus-visible:ring-0"
-              />
-              <Select value={fromToken} onValueChange={setFromToken}>
-                <SelectTrigger className="w-32">
-                  <SelectValue placeholder="اختر العملة" />
-                </SelectTrigger>
-                <SelectContent>
-                  {assets && assets.map((asset: any) => (
-                    <SelectItem key={asset.symbol} value={asset.symbol}>
-                      <div className="flex items-center">
-                        <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center mr-2">
-                          <span className="text-xs font-medium">{asset.symbol.substring(0, 1)}</span>
-                        </div>
-                        {asset.symbol}
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+            )}
           </div>
-
-          {/* زر التبديل */}
-          <div className="flex justify-center -my-2">
-            <Button
-              variant="outline"
-              size="icon"
-              className="rounded-full bg-white"
-              onClick={handleSwitch}
+          
+          <div className="flex space-x-2">
+            <Select
+              value={fromToken?.id.toString()}
+              onValueChange={(value) => {
+                const selectedToken = tokens?.find(
+                  (t) => t.id.toString() === value
+                );
+                setFromToken(selectedToken || null);
+              }}
             >
-              <ArrowDown className="h-4 w-4" />
-            </Button>
-          </div>
-
-          {/* إلى العملة */}
-          <div className="p-4 bg-slate-100 rounded-lg">
-            <div className="flex justify-between mb-2">
-              <span className="text-sm text-slate-500">إلى</span>
-              <span className="text-sm text-slate-500">
-                الرصيد: {getAvailableBalance(toToken).toFixed(6)} {toToken}
-              </span>
-            </div>
-            <div className="flex space-x-2">
-              <Input
-                type="number"
-                value={toAmount}
-                readOnly
-                placeholder="0.0"
-                className="flex-1 text-xl font-medium bg-transparent border-none outline-none focus-visible:ring-0"
-              />
-              <Select value={toToken} onValueChange={setToToken}>
-                <SelectTrigger className="w-32">
-                  <SelectValue placeholder="اختر العملة" />
-                </SelectTrigger>
-                <SelectContent>
-                  {assets && assets.map((asset: any) => (
-                    <SelectItem key={asset.symbol} value={asset.symbol}>
-                      <div className="flex items-center">
-                        <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center mr-2">
-                          <span className="text-xs font-medium">{asset.symbol.substring(0, 1)}</span>
-                        </div>
-                        {asset.symbol}
+              <SelectTrigger className="w-[140px]">
+                {isTokensLoading ? (
+                  <Skeleton className="h-5 w-20" />
+                ) : (
+                  <SelectValue placeholder={getText("selectToken")} />
+                )}
+              </SelectTrigger>
+              <SelectContent>
+                {tokens?.map((token) => (
+                  <SelectItem key={token.id} value={token.id.toString()}>
+                    <div className="flex items-center">
+                      <div className="w-5 h-5 mr-2">
+                        <img
+                          src={token.icon}
+                          alt={token.symbol}
+                          className="w-full h-full object-contain"
+                        />
                       </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+                      <span>{token.symbol}</span>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            
+            <Input
+              type="number"
+              value={fromAmount}
+              onChange={(e) => setFromAmount(e.target.value)}
+              placeholder="0.00"
+              className="flex-1"
+            />
           </div>
-
-          {/* معلومات التبادل */}
-          {fromAmount && toAmount && (
-            <div className="p-3 bg-slate-50 rounded-lg text-sm">
-              <div className="flex justify-between mb-1">
-                <span className="text-slate-500">سعر الصرف</span>
-                <span className="font-medium">
-                  1 {fromToken} = {(parseFloat(toAmount) / parseFloat(fromAmount)).toFixed(6)} {toToken}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-500">الانزلاق المسموح</span>
-                <span className="font-medium">{slippage}%</span>
-              </div>
+          
+          {/* أزرار النسبة المئوية */}
+          {fromToken && fromToken.balance && (
+            <div className="flex justify-between mt-2">
+              {[25, 50, 75, 100].map((percent) => (
+                <Button
+                  key={percent}
+                  variant="outline"
+                  size="sm"
+                  onClick={() => calculatePercentage(percent)}
+                  className="text-xs h-7 px-2"
+                >
+                  {percent}%
+                </Button>
+              ))}
             </div>
           )}
-
-          {/* زر التبادل */}
+        </div>
+        
+        {/* زر التبديل */}
+        <div className="flex justify-center my-2">
           <Button
-            className="w-full py-6 text-lg"
-            disabled={!fromAmount || !toAmount || fromToken === toToken || isSwapping}
-            onClick={handleSwap}
+            type="button"
+            size="icon"
+            variant="outline"
+            onClick={handleSwapTokens}
+            className="rounded-full h-8 w-8"
           >
-            {isSwapping ? (
-              <>
-                <RefreshCw className="mr-2 h-5 w-5 animate-spin" /> جارِ التبادل...
-              </>
-            ) : fromToken === toToken ? (
-              "اختر عملات مختلفة"
-            ) : !fromAmount ? (
-              "أدخل قيمة"
-            ) : (
-              "تبادل"
-            )}
+            <ArrowDownUp className="h-4 w-4" />
           </Button>
         </div>
+        
+        {/* العملة المستلمة */}
+        <div className="space-y-2">
+          <label className="text-sm font-medium">
+            {getText("to")}
+          </label>
+          <div className="flex space-x-2">
+            <Select
+              value={toToken?.id.toString()}
+              onValueChange={(value) => {
+                const selectedToken = tokens?.find(
+                  (t) => t.id.toString() === value
+                );
+                setToToken(selectedToken || null);
+              }}
+            >
+              <SelectTrigger className="w-[140px]">
+                {isTokensLoading ? (
+                  <Skeleton className="h-5 w-20" />
+                ) : (
+                  <SelectValue placeholder={getText("selectToken")} />
+                )}
+              </SelectTrigger>
+              <SelectContent>
+                {tokens?.map((token) => (
+                  <SelectItem key={token.id} value={token.id.toString()}>
+                    <div className="flex items-center">
+                      <div className="w-5 h-5 mr-2">
+                        <img
+                          src={token.icon}
+                          alt={token.symbol}
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
+                      <span>{token.symbol}</span>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            
+            <Input
+              type="number"
+              value={toAmount}
+              readOnly
+              placeholder="0.00"
+              className="flex-1 bg-muted"
+            />
+          </div>
+        </div>
+        
+        {/* معلومات التبادل */}
+        {swapInfo && (
+          <div className="mt-4 p-3 bg-muted rounded-lg space-y-2 text-sm">
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">{getText("exchangeRate")}</span>
+              <span>
+                1 {fromToken?.symbol} ≈ {swapInfo.exchangeRate.toFixed(6)} {toToken?.symbol}
+              </span>
+            </div>
+            
+            <div className="flex justify-between">
+              <div className="flex items-center">
+                <span className="text-muted-foreground">{getText("priceImpact")}</span>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Info className="h-3 w-3 ml-1 text-muted-foreground" />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>{getText("priceImpactDescription")}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
+              <span className={swapInfo.priceImpact > 0.1 ? "text-yellow-500" : "text-green-500"}>
+                {(swapInfo.priceImpact * 100).toFixed(2)}%
+              </span>
+            </div>
+            
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">{getText("networkFee")}</span>
+              <span>
+                {swapInfo.networkFee.toFixed(6)} {fromToken?.symbol}
+              </span>
+            </div>
+            
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="ghost" size="sm" className="w-full mt-1 text-xs">
+                  {getText("advancedSettings")}
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>{getText("advancedSettings")}</DialogTitle>
+                  <DialogDescription>
+                    {getText("adjustAdvancedSwapSettings")}
+                  </DialogDescription>
+                </DialogHeader>
+                
+                <div className="space-y-4 py-4">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">
+                      {getText("slippageTolerance")}
+                    </label>
+                    <div className="flex space-x-2">
+                      {[0.1, 0.5, 1, 3].map((value) => (
+                        <Button
+                          key={value}
+                          variant={slippage === value ? "default" : "outline"}
+                          size="sm"
+                          onClick={() => setSlippage(value)}
+                        >
+                          {value}%
+                        </Button>
+                      ))}
+                      <Input
+                        type="number"
+                        value={slippage}
+                        onChange={(e) => setSlippage(parseFloat(e.target.value) || 0.5)}
+                        min="0.1"
+                        max="50"
+                        step="0.1"
+                        className="w-20"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="pt-2">
+                    <div className="flex justify-between text-sm">
+                      <span>{getText("minimumReceived")}</span>
+                      <span>
+                        {swapInfo.minReceived.toFixed(6)} {toToken?.symbol}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
+          </div>
+        )}
       </CardContent>
+      
+      <CardFooter className="flex-col space-y-2">
+        <Button
+          onClick={handleSwap}
+          className="w-full"
+          disabled={isSwapping || !fromToken || !toToken || parseFloat(fromAmount) <= 0}
+        >
+          {isSwapping ? (
+            <>
+              <span className="animate-pulse mr-2">
+                {getText("swapping")}...
+              </span>
+              <Progress value={45} className="h-1 w-10" />
+            </>
+          ) : (
+            getText("swap")
+          )}
+        </Button>
+        
+        {fromToken && toToken && (
+          <span className="text-xs text-muted-foreground text-center">
+            {getText("swapExactAmount")} {fromAmount} {fromToken.symbol} {getText("for")} {toAmount} {toToken.symbol}
+          </span>
+        )}
+      </CardFooter>
     </Card>
   );
 }
