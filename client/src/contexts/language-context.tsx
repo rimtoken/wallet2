@@ -82,6 +82,51 @@ const translations: Record<Language, Record<string, string>> = {
     'footer.quickLinks': 'روابط سريعة',
     'footer.contact': 'تواصل معنا',
     'footer.copyright': 'جميع الحقوق محفوظة',
+    
+    // ترجمات المصادقة
+    'login': 'تسجيل الدخول',
+    'register': 'إنشاء حساب',
+    'loggingIn': 'جاري تسجيل الدخول...',
+    'registering': 'جاري التسجيل...',
+    'username': 'اسم المستخدم',
+    'email': 'البريد الإلكتروني',
+    'password': 'كلمة المرور',
+    'confirmPassword': 'تأكيد كلمة المرور',
+    'usernamePlaceholder': 'أدخل اسم المستخدم',
+    'emailPlaceholder': 'أدخل البريد الإلكتروني',
+    'passwordPlaceholder': 'أدخل كلمة المرور',
+    'confirmPasswordPlaceholder': 'أكد كلمة المرور',
+    'welcomeToRimToken': 'مرحباً بك في RimToken',
+    'rimTokenDescription': 'محفظة العملات المشفرة متعددة السلاسل مع تبادل مدمج',
+    'multiChainSupport': 'دعم متعدد السلاسل',
+    'multiChainSupportDescription': 'تخزين وإدارة العملات المشفرة على مختلف شبكات البلوكتشين',
+    'secureStorage': 'تخزين آمن',
+    'secureStorageDescription': 'تحكم كامل في مفاتيحك الخاصة مع أمان متطور',
+    'welcome': 'مرحباً',
+    'loginSuccessful': 'تم تسجيل الدخول بنجاح',
+    'loginFailed': 'فشل تسجيل الدخول',
+    'registrationSuccessful': 'تم إنشاء الحساب بنجاح',
+    'registrationFailed': 'فشل إنشاء الحساب',
+    'logoutSuccessful': 'تم تسجيل الخروج بنجاح',
+    'logoutFailed': 'فشل تسجيل الخروج',
+    'seeSoonMessage': 'نراك قريباً!',
+    'failedToFetchUser': 'فشل في جلب بيانات المستخدم',
+    
+    // ترجمات المحفظة
+    'connectWallet': 'ربط المحفظة',
+    'connectWalletDescription': 'اختر المحفظة التي ترغب في ربطها بحسابك',
+    'walletConnected': 'تم ربط المحفظة',
+    'connectedTo': 'متصل بـ',
+    'walletAddress': 'عنوان المحفظة',
+    'connectionFailed': 'فشل الاتصال',
+    'unknownError': 'خطأ غير معروف',
+    'connect': 'اتصال',
+    'connecting': 'جاري الاتصال...',
+    'comingSoon': 'قريباً',
+    'walletSecurityNote': 'ملاحظة: RimToken لا يحفظ مفاتيحك الخاصة أبداً. أنت دائماً تتحكم في أموالك.',
+    'connectWalletDialogDescription': 'قم بتوصيل محفظتك الخارجية للوصول إلى أصولك الرقمية',
+    'authRequired': 'يجب تسجيل الدخول',
+    'pleaseLoginFirst': 'يرجى تسجيل الدخول أولاً',
   },
   en: {
     // Main navigation translations
@@ -134,6 +179,51 @@ const translations: Record<Language, Record<string, string>> = {
     'footer.quickLinks': 'Quick Links',
     'footer.contact': 'Contact Us',
     'footer.copyright': 'All Rights Reserved',
+    
+    // Authentication translations
+    'login': 'Login',
+    'register': 'Register',
+    'loggingIn': 'Logging in...',
+    'registering': 'Registering...',
+    'username': 'Username',
+    'email': 'Email',
+    'password': 'Password',
+    'confirmPassword': 'Confirm Password',
+    'usernamePlaceholder': 'Enter your username',
+    'emailPlaceholder': 'Enter your email',
+    'passwordPlaceholder': 'Enter your password',
+    'confirmPasswordPlaceholder': 'Confirm your password',
+    'welcomeToRimToken': 'Welcome to RimToken',
+    'rimTokenDescription': 'Multi-chain cryptocurrency wallet with integrated exchange',
+    'multiChainSupport': 'Multi-Chain Support',
+    'multiChainSupportDescription': 'Store and manage cryptocurrencies across different blockchain networks',
+    'secureStorage': 'Secure Storage',
+    'secureStorageDescription': 'Full control of your private keys with advanced security',
+    'welcome': 'Welcome',
+    'loginSuccessful': 'Logged in successfully',
+    'loginFailed': 'Login failed',
+    'registrationSuccessful': 'Account created successfully',
+    'registrationFailed': 'Registration failed',
+    'logoutSuccessful': 'Logged out successfully',
+    'logoutFailed': 'Logout failed',
+    'seeSoonMessage': 'See you soon!',
+    'failedToFetchUser': 'Failed to fetch user data',
+    
+    // Wallet translations
+    'connectWallet': 'Connect Wallet',
+    'connectWalletDescription': 'Choose the wallet you want to connect to your account',
+    'walletConnected': 'Wallet Connected',
+    'connectedTo': 'Connected to',
+    'walletAddress': 'Wallet address',
+    'connectionFailed': 'Connection Failed',
+    'unknownError': 'Unknown error',
+    'connect': 'Connect',
+    'connecting': 'Connecting...',
+    'comingSoon': 'Coming Soon',
+    'walletSecurityNote': 'Note: RimToken never stores your private keys. You always remain in control of your funds.',
+    'connectWalletDialogDescription': 'Connect your external wallet to access your digital assets',
+    'authRequired': 'Authentication Required',
+    'pleaseLoginFirst': 'Please login first',
   },
   fr: {
     // Traductions de la navigation principale
@@ -227,8 +317,11 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
     return translation || key;
   };
 
+  // إضافة getText كمرادف لـ translate للتوافق مع الكود الجديد
+  const getText = translate;
+
   return (
-    <LanguageContext.Provider value={{ language, languageInfo, setLanguage, translate }}>
+    <LanguageContext.Provider value={{ language, languageInfo, setLanguage, translate, getText }}>
       {children}
     </LanguageContext.Provider>
   );
