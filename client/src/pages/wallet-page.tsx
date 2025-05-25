@@ -147,7 +147,7 @@ const AssetsTab = () => {
       </div>
       
       <div className="space-y-2">
-        {walletAssets.map((asset) => (
+        {walletAssets.map((asset: any) => (
           <div key={asset.id} className="flex items-center justify-between p-4 rounded-lg border bg-card hover:bg-accent/50 transition-colors">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden">
@@ -228,7 +228,7 @@ const TransactionsTab = () => {
       </div>
       
       <div className="space-y-2">
-        {transactions.map((tx) => (
+        {transactions.map((tx: any) => (
           <div key={tx.id} className="flex items-center justify-between p-4 rounded-lg border bg-card hover:bg-accent/50 transition-colors">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
@@ -299,7 +299,7 @@ const ConnectedWalletsTab = () => {
         <div className="space-y-4">
           <h3 className="text-lg font-medium">{getText("connectedWallets")}</h3>
           <div className="space-y-2">
-            {connectedWallets.map((wallet) => (
+            {connectedWallets.map((wallet: any) => (
               <div key={wallet.id} className="flex items-center justify-between p-4 rounded-lg border bg-card hover:bg-accent/50 transition-colors">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">

@@ -70,7 +70,7 @@ function Router() {
         <MainSimplifiedPage />
       </Route>
       <Route path="/wallet">
-        <WalletPage />
+        <WalletPage userId={userId} />
       </Route>
       <Route path="/swap">
         <SwapSimplifiedPage />

@@ -2,9 +2,24 @@
 <html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>RimToken - محفظة العملات المشفرة</title>
     <meta name="description" content="محفظة لامركزية متعددة السلاسل تتيح لك التحكم الكامل في أصولك الرقمية مع واجهة مستخدم سهلة وبسيطة" />
+    
+    <!-- إعدادات PWA -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#6366f1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="RimToken" />
+    
+    <!-- أيقونات التطبيق للأجهزة المختلفة -->
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192x192.png" />
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+    
+    <!-- تسجيل Service Worker -->
+    <script src="/register-sw.js"></script>
+    
     <script type="module">
       // توجيه المستخدم إلى تطبيق React
       window.location.href = "/client/index.html";
@@ -17,5 +32,28 @@
         <p>يرجى تفعيل JavaScript في متصفحك لاستخدام التطبيق.</p>
       </div>
     </noscript>
+    
+    <!-- شاشة البداية للتطبيق -->
+    <div id="splash-screen" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: #6366f1; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999;">
+      <img src="/icons/icon-192x192.png" alt="RimToken Logo" style="width: 120px; height: 120px; margin-bottom: 20px;" />
+      <h1 style="color: white; font-family: system-ui, -apple-system, sans-serif; margin: 0;">RimToken</h1>
+      <p style="color: white; font-family: system-ui, -apple-system, sans-serif;">محفظة العملات المشفرة</p>
+    </div>
+    
+    <script>
+      // إخفاء شاشة البداية بعد تحميل التطبيق
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          var splashScreen = document.getElementById('splash-screen');
+          if (splashScreen) {
+            splashScreen.style.opacity = '0';
+            splashScreen.style.transition = 'opacity 0.5s';
+            setTimeout(function() {
+              splashScreen.style.display = 'none';
+            }, 500);
+          }
+        }, 1000);
+      });
+    </script>
   </body>
 </html>
