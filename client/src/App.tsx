@@ -26,6 +26,7 @@ import SwapPage from "@/pages/swap";
 import MainSimplifiedPage from "@/pages/main-simplified";
 import WalletSimplifiedPage from "@/pages/wallet-simplified";
 import SwapSimplifiedPage from "@/pages/swap-simplified";
+import SwapPageNew from "@/pages/swap-page";
 
 // الصفحات الجديدة
 import TeamPage from "@/pages/team-page";
@@ -73,7 +74,7 @@ function Router() {
         <WalletPage userId={userId} />
       </Route>
       <Route path="/swap">
-        <SwapSimplifiedPage />
+        <SwapPageNew />
       </Route>
       
       {/* الصفحات الإضافية الجديدة */}

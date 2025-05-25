@@ -180,9 +180,18 @@ const translations: Record<Language, Record<string, string>> = {
     'slippageTolerance': 'تحمل الانزلاق',
     'minimumReceived': 'الحد الأدنى المستلم',
     'swapping': 'جاري التبادل',
-    'swap': 'تبادل',
+    'swapButton': 'تبادل',
     'swapExactAmountFor': 'تبادل القيمة',
     'exchangeFor': 'مقابل',
+    
+    // دليل التبادل والتحذيرات
+    'swapGuide': 'دليل التبادل',
+    'swapGuideStep1': 'اختر العملة التي تريد استبدالها وأدخل المبلغ.',
+    'swapGuideStep2': 'اختر العملة التي تريد الحصول عليها.',
+    'swapGuideStep3': 'راجع تفاصيل الصرف والرسوم قبل المتابعة.',
+    'swapGuideStep4': 'اضغط على زر "تبادل" لإتمام المعاملة.',
+    'swapWarningTitle': 'تنبيه المخاطر',
+    'swapWarningText': 'أسعار العملات الرقمية متقلبة. تأكد من فهم المخاطر قبل التبادل. قد تتغير الأسعار بسرعة مما يؤثر على قيمة المعاملة.',
   },
   en: {
     // Main navigation translations
@@ -333,9 +342,18 @@ const translations: Record<Language, Record<string, string>> = {
     'slippageTolerance': 'Slippage Tolerance',
     'minimumReceived': 'Minimum Received',
     'swapping': 'Swapping',
-    'swap': 'Swap',
+    'swapButton': 'Swap',
     'swapExactAmountFor': 'Swap exact amount',
     'exchangeFor': 'for',
+    
+    // Swap guide and warnings
+    'swapGuide': 'Swap Guide',
+    'swapGuideStep1': 'Select the currency you want to exchange and enter the amount.',
+    'swapGuideStep2': 'Choose the currency you want to receive.',
+    'swapGuideStep3': 'Review exchange details and fees before proceeding.',
+    'swapGuideStep4': 'Click the "Swap" button to complete the transaction.',
+    'swapWarningTitle': 'Risk Warning',
+    'swapWarningText': 'Cryptocurrency prices are volatile. Make sure you understand the risks before exchanging. Prices can change rapidly, affecting the value of your transaction.',
   },
   fr: {
     // Traductions de la navigation principale
@@ -460,6 +478,44 @@ const translations: Record<Language, Record<string, string>> = {
     'topAssets': 'Actifs Principaux',
     'marketOverview': 'Aperçu du Marché',
     'portfolioChart': 'Graphique du Portefeuille',
+    
+    // Traductions pour l'échange de jetons
+    'swapTokens': 'Échanger des Jetons',
+    'swapTokensDescription': 'Échangez des monnaies numériques aux taux du marché',
+    'from': 'De',
+    'to': 'À',
+    'selectToken': 'Sélectionner un Jeton',
+    'selectTokens': 'Sélectionner des Jetons',
+    'pleaseSelectBothTokens': 'Veuillez sélectionner les jetons à échanger',
+    'invalidAmount': 'Montant Invalide',
+    'pleaseEnterValidAmount': 'Veuillez entrer un montant valide pour l\'échange',
+    'insufficientBalance': 'Solde Insuffisant',
+    'youDontHaveEnoughBalance': 'Vous n\'avez pas assez de solde pour cet échange',
+    'swapSuccessful': 'Échange Réussi',
+    'swapFailed': 'Échec de l\'Échange',
+    'anErrorOccurredDuringSwap': 'Une erreur s\'est produite pendant l\'échange',
+    'balance': 'Solde',
+    'exchangeRate': 'Taux de Change',
+    'priceImpact': 'Impact sur le Prix',
+    'priceImpactDescription': 'L\'impact de votre transaction sur le taux de change',
+    'networkFee': 'Frais de Réseau',
+    'advancedSettings': 'Paramètres Avancés',
+    'adjustAdvancedSwapSettings': 'Ajuster les paramètres avancés d\'échange',
+    'slippageTolerance': 'Tolérance de Glissement',
+    'minimumReceived': 'Minimum Reçu',
+    'swapping': 'Échange en cours',
+    'swapButton': 'Échanger',
+    'swapExactAmountFor': 'Échanger',
+    'exchangeFor': 'contre',
+    
+    // Guide d'échange et avertissements
+    'swapGuide': 'Guide d\'Échange',
+    'swapGuideStep1': 'Sélectionnez la monnaie que vous souhaitez échanger et entrez le montant.',
+    'swapGuideStep2': 'Choisissez la monnaie que vous souhaitez recevoir.',
+    'swapGuideStep3': 'Examinez les détails de l\'échange et les frais avant de continuer.',
+    'swapGuideStep4': 'Cliquez sur le bouton "Échanger" pour finaliser la transaction.',
+    'swapWarningTitle': 'Avertissement de Risque',
+    'swapWarningText': 'Les prix des cryptomonnaies sont volatils. Assurez-vous de comprendre les risques avant d\'échanger. Les prix peuvent changer rapidement, affectant la valeur de votre transaction.',
   },
 };
 

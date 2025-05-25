@@ -452,13 +452,13 @@ export default function TokenSwap() {
               <Progress value={45} className="h-1 w-10" />
             </>
           ) : (
-            getText("swap")
+            getText("swapButton")
           )}
         </Button>
         
         {fromToken && toToken && (
           <span className="text-xs text-muted-foreground text-center">
-            {getText("swapExactAmount")} {fromAmount} {fromToken.symbol} {getText("for")} {toAmount} {toToken.symbol}
+            {getText("swapExactAmountFor")} {fromAmount} {fromToken.symbol} {getText("exchangeFor")} {toAmount} {toToken.symbol}
           </span>
         )}
       </CardFooter>
