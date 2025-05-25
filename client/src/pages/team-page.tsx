@@ -74,7 +74,7 @@ export default function TeamPage() {
               <img 
                 src={member.image} 
                 alt={member.name} 
-                className="w-full h-full object-cover transition-transform hover:scale-105"
+                className="w-full h-full object-contain bg-gray-50 transition-transform hover:scale-105"
               />
             </div>
             <div className="p-6">
