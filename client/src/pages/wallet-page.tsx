@@ -11,6 +11,7 @@ import { useLanguage } from "@/contexts/language-context";
 import ConnectWallet from "@/components/wallet/connect-wallet";
 import { Plus, ArrowUpDown, Clock, RefreshCw, Wallet, ExternalLink, ChevronRight } from "lucide-react";
 import PriceChart from "@/components/charts/price-chart";
+import PriceAlerts from "@/components/alerts/price-alerts";
 
 // مكون نظرة عامة على المحفظة
 const WalletOverview = () => {
@@ -429,6 +430,7 @@ export default function WalletPage({ userId }: WalletPageProps) {
           <TabsTrigger value="assets">{getText("assets")}</TabsTrigger>
           <TabsTrigger value="transactions">{getText("transactions")}</TabsTrigger>
           <TabsTrigger value="connectedWallets">{getText("connectedWallets")}</TabsTrigger>
+          <TabsTrigger value="priceAlerts">{getText("priceAlerts")}</TabsTrigger>
         </TabsList>
         <TabsContent value="assets">
           <AssetsTab />
@@ -438,6 +440,9 @@ export default function WalletPage({ userId }: WalletPageProps) {
         </TabsContent>
         <TabsContent value="connectedWallets">
           <ConnectedWalletsTab />
+        </TabsContent>
+        <TabsContent value="priceAlerts">
+          <PriceAlerts />
         </TabsContent>
       </Tabs>
     </div>

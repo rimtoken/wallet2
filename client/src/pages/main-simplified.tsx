@@ -244,7 +244,22 @@ export default function MainSimplifiedPage() {
             </div>
           </div>
           
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center">
+          <div className="border-t border-gray-800 mt-8 pt-6 text-center">
+            {/* أيقونة تطبيق أسفل الصفحة */}
+            <div className="flex justify-center mb-6">
+              <a href="#" className="block mx-2">
+                <img 
+                  src="/android-app-badge.png" 
+                  alt="Get RimToken Android App" 
+                  className="h-12"
+                  onError={(e) => {
+                    // إذا فشل تحميل الصورة، نعرض بديلاً
+                    e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgNjAiIGZpbGw9Im5vbmUiPjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iNjAiIHJ4PSI4IiBmaWxsPSIjMzNkMjZhIi8+PHBhdGggZD0iTTUwLjUgMzBsMTAtMTdoLTZsLTYuNSAxMS4ybC02LjYtMTEuMmgtNmwxMCAxNy0xMCAxN2g2bDYuNi0xMS4yIDYuNSAxMS4yaDZsLTEwLTE3eiIgZmlsbD0iI2ZmZiIvPjx0ZXh0IHg9IjgwIiB5PSIzMCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI2ZmZiIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSI+R2V0IGl0IG9uPC90ZXh0Pjx0ZXh0IHg9IjgwIiB5PSI0OCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjIwIiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0iI2ZmZiIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSI+QW5kcm9pZDwvdGV4dD48L3N2Zz4=';
+                  }}
+                />
+              </a>
+            </div>
+            
             <p className="text-gray-500">
               &copy; {new Date().getFullYear()} RimToken - {translate('footer.copyright')}
             </p>
