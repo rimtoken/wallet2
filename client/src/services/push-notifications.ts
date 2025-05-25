@@ -1,6 +1,6 @@
 import { Capacitor } from '@capacitor/core';
 import { PushNotifications } from '@capacitor/push-notifications';
-import { LocalNotifications } from '@capacitor/local-notifications';
+import { LocalNotifications, type Attachment } from '@capacitor/local-notifications';
 
 // تهيئة الإشعارات إذا كنا على منصة جوال
 export async function initPushNotifications() {
@@ -30,7 +30,7 @@ export async function initPushNotifications() {
 // إضافة مستمعي أحداث الإشعارات
 function addPushNotificationListeners() {
   // عند استلام إشعار
-  PushNotifications.addListener('pushNotificationReceived', notification => {
+  PushNotifications.addListener('pushNotificationReceived', (notification: any) => {
     console.log('Push notification received:', notification);
     
     // إظهار إشعار محلي
@@ -42,7 +42,7 @@ function addPushNotificationListeners() {
           id: Math.floor(Math.random() * 100000),
           schedule: { at: new Date(Date.now()) },
           sound: 'default',
-          attachments: null,
+          attachments: [],
           actionTypeId: '',
           extra: notification.data
         }
@@ -51,7 +51,7 @@ function addPushNotificationListeners() {
   });
   
   // عند النقر على إشعار
-  PushNotifications.addListener('pushNotificationActionPerformed', action => {
+  PushNotifications.addListener('pushNotificationActionPerformed', (action: any) => {
     console.log('Push notification action performed:', action);
     
     // يمكنك توجيه المستخدم إلى شاشة معينة حسب بيانات الإشعار
@@ -84,7 +84,7 @@ export async function sendLocalNotification(title: string, body: string, data: a
             id: Math.floor(Math.random() * 100000),
             schedule: { at: new Date(Date.now()) },
             sound: 'default',
-            attachments: null,
+            attachments: [],
             actionTypeId: '',
             extra: data
           }

@@ -1,71 +1,105 @@
-// Service Worker for RimToken
-const CACHE_NAME = 'rimtoken-cache-v1';
+// تكوين Service Worker لتطبيق RimToken
+const CACHE_NAME = 'rimtoken-v1';
+
+// الملفات التي سيتم تخزينها في ذاكرة التخزين المؤقت
 const urlsToCache = [
   '/',
   '/index.html',
   '/manifest.json',
-  '/icons/icon-192x192.png',
-  '/icons/icon-512x512.png'
+  '/assets/index.css',
+  '/assets/index.js',
 ];
 
-// Cache resources during installation
+// تثبيت Service Worker وتخزين الملفات الأساسية
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
-        console.log('Opened cache');
+        console.log('تم فتح ذاكرة التخزين المؤقت');
         return cache.addAll(urlsToCache);
       })
   );
 });
 
-// Intercept fetch requests
+// استراتيجية الشبكة أولاً ثم الرجوع إلى ذاكرة التخزين المؤقت
 self.addEventListener('fetch', (event) => {
   event.respondWith(
-    caches.match(event.request)
+    fetch(event.request)
       .then((response) => {
-        // Cache hit - return response
-        if (response) {
-          return response;
+        // إذا كان الطلب ناجحًا، قم بتخزين النسخة في ذاكرة التخزين المؤقت
+        if (event.request.method === 'GET') {
+          const responseToCache = response.clone();
+          caches.open(CACHE_NAME)
+            .then((cache) => {
+              cache.put(event.request, responseToCache);
+            });
         }
-        return fetch(event.request).then(
-          (response) => {
-            // Check if we received a valid response
-            if (!response || response.status !== 200 || response.type !== 'basic') {
-              return response;
-            }
-
-            // Clone the response
-            const responseToCache = response.clone();
-
-            caches.open(CACHE_NAME)
-              .then((cache) => {
-                // Don't cache API requests
-                if (!event.request.url.includes('/api/')) {
-                  cache.put(event.request, responseToCache);
-                }
-              });
-
-            return response;
-          }
-        );
+        return response;
+      })
+      .catch(() => {
+        // إذا فشل الطلب، حاول العثور عليه في ذاكرة التخزين المؤقت
+        return caches.match(event.request);
       })
   );
 });
 
-// Clean up old caches during activation
+// تحديث ذاكرة التخزين المؤقت عند تثبيت إصدار جديد
 self.addEventListener('activate', (event) => {
-  const cacheAllowlist = [CACHE_NAME];
-
+  const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
-          if (cacheAllowlist.indexOf(cacheName) === -1) {
+          if (cacheWhitelist.indexOf(cacheName) === -1) {
+            // إزالة ذاكرة التخزين المؤقت القديمة
             return caches.delete(cacheName);
           }
         })
       );
     })
+  );
+});
+
+// الاستماع للرسائل من النافذة الرئيسية
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});
+
+// معالجة إشعارات الدفع
+self.addEventListener('push', (event) => {
+  if (event.data) {
+    const data = event.data.json();
+    const options = {
+      body: data.body || 'تم استلام تحديث جديد',
+      icon: '/icons/icon-192x192.png',
+      badge: '/icons/badge-72x72.png',
+      data: data.data || {},
+    };
+
+    event.waitUntil(
+      self.registration.showNotification(data.title || 'RimToken', options)
+    );
+  }
+});
+
+// معالجة النقر على الإشعارات
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  const url = event.notification.data.url || '/';
+  
+  event.waitUntil(
+    clients.matchAll({ type: 'window' })
+      .then((clientList) => {
+        for (const client of clientList) {
+          if (client.url === url && 'focus' in client) {
+            return client.focus();
+          }
+        }
+        if (clients.openWindow) {
+          return clients.openWindow(url);
+        }
+      })
   );
 });
