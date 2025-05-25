@@ -9,7 +9,12 @@ import {
   Users,
   Newspaper,
   Building2,
-  PhoneCall
+  PhoneCall,
+  Facebook,
+  Twitter,
+  Instagram,
+  Youtube,
+  Linkedin
 } from "lucide-react";
 import rimLogo from "@assets/rim.png";
 import rimTokenLogo from "@assets/469063470_586302450756454_5997633519251771466_n.jpg";
@@ -237,9 +242,28 @@ export default function MainSimplifiedPage() {
               <div>
                 <h3 className="text-lg font-semibold mb-4">{translate('footer.contact')}</h3>
                 <ul className="space-y-2">
-                  <li className="text-gray-400">support@rimtoken.com</li>
-                  <li className="text-gray-400">+1 234 567 890</li>
+                  <li className="text-gray-400">INFO@RIMTOKEN.ORG</li>
+                  <li className="text-gray-400">37968897</li>
                 </ul>
+                
+                {/* أيقونات وسائل التواصل الاجتماعي */}
+                <div className="flex space-x-4 mt-4">
+                  <a href="#" className="text-gray-400 hover:text-primary transition-colors">
+                    <Facebook size={20} />
+                  </a>
+                  <a href="#" className="text-gray-400 hover:text-primary transition-colors">
+                    <Twitter size={20} />
+                  </a>
+                  <a href="#" className="text-gray-400 hover:text-primary transition-colors">
+                    <Instagram size={20} />
+                  </a>
+                  <a href="#" className="text-gray-400 hover:text-primary transition-colors">
+                    <Youtube size={20} />
+                  </a>
+                  <a href="#" className="text-gray-400 hover:text-primary transition-colors">
+                    <Linkedin size={20} />
+                  </a>
+                </div>
               </div>
             </div>
           </div>

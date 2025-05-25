@@ -1,5 +1,5 @@
 import { Container } from "@/components/ui/container";
-import { TokenSwap } from "@/components/swap/token-swap";
+import TokenSwap from "@/components/swap/token-swap";
 import { MarketList } from "@/components/market/market-list";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";

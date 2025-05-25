@@ -57,7 +57,11 @@ interface SwapInfo {
   priceImpact: number;
 }
 
-export default function TokenSwap() {
+interface TokenSwapProps {
+  userId?: number;
+}
+
+export default function TokenSwap({ userId }: TokenSwapProps) {
   const { getText } = useLanguage();
   const { toast } = useToast();
   
