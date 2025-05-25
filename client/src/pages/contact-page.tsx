@@ -1,5 +1,17 @@
 import { useState } from "react";
-import { Phone, Mail, MapPin, Send, MessageSquare, Loader2 } from "lucide-react";
+import { 
+  Phone, 
+  Mail, 
+  MapPin, 
+  Send, 
+  MessageSquare, 
+  Loader2, 
+  Linkedin, 
+  Twitter, 
+  Youtube, 
+  Globe,
+  Link
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -272,22 +284,99 @@ export default function ContactPage() {
                 </div>
               </div>
               
-              <div>
-                <h2 className="text-2xl font-bold mb-4">ساعات العمل</h2>
-                <div className="bg-slate-50 rounded-xl p-6 shadow-sm">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <h3 className="font-semibold mb-2">أيام الأسبوع</h3>
-                      <p className="text-gray-600">الاثنين - الجمعة</p>
-                      <p className="font-medium">9:00 ص - 5:00 م</p>
+              <div className="space-y-6">
+                <div>
+                  <h2 className="text-2xl font-bold mb-4">ساعات العمل</h2>
+                  <div className="bg-slate-50 rounded-xl p-6 shadow-sm">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <h3 className="font-semibold mb-2">أيام الأسبوع</h3>
+                        <p className="text-gray-600">الاثنين - الجمعة</p>
+                        <p className="font-medium">9:00 ص - 5:00 م</p>
+                      </div>
+                      <div>
+                        <h3 className="font-semibold mb-2">عطلة نهاية الأسبوع</h3>
+                        <p className="text-gray-600">السبت</p>
+                        <p className="font-medium">10:00 ص - 2:00 م</p>
+                        <p className="text-gray-600 mt-2">الأحد</p>
+                        <p className="font-medium">مغلق</p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="font-semibold mb-2">عطلة نهاية الأسبوع</h3>
-                      <p className="text-gray-600">السبت</p>
-                      <p className="font-medium">10:00 ص - 2:00 م</p>
-                      <p className="text-gray-600 mt-2">الأحد</p>
-                      <p className="font-medium">مغلق</p>
-                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h2 className="text-2xl font-bold mb-4">الحسابات الاجتماعية</h2>
+                  <div className="bg-slate-50 rounded-xl p-6 shadow-sm">
+                    <ul className="space-y-4">
+                      <li className="flex items-center">
+                        <Linkedin className="h-5 w-5 text-blue-600 flex-shrink-0 mr-3" />
+                        <a 
+                          href="https://www.linkedin.com/in/rim-token" 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="text-blue-600 hover:underline"
+                        >
+                          https://www.linkedin.com/in/rim-token
+                        </a>
+                      </li>
+                      <li className="flex items-center">
+                        <Twitter className="h-5 w-5 text-blue-400 flex-shrink-0 mr-3" />
+                        <a 
+                          href="https://x.com/rimtoken" 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="text-gray-700 hover:underline"
+                        >
+                          https://x.com/rimtoken
+                        </a>
+                      </li>
+                      <li className="flex items-center">
+                        <Youtube className="h-5 w-5 text-red-600 flex-shrink-0 mr-3" />
+                        <a 
+                          href="https://www.youtube.com/@Rimtoken" 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="text-gray-700 hover:underline"
+                        >
+                          https://www.youtube.com/@Rimtoken
+                        </a>
+                      </li>
+                      <li className="flex items-center">
+                        <svg 
+                          className="h-5 w-5 text-orange-600 flex-shrink-0 mr-3" 
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                        >
+                          <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.957 0 1.734.81 1.734 1.811 0 .716-.352 1.334-.895 1.669a1.91 1.91 0 0 1 .046.085c0 2.04-2.448 3.7-5.472 3.7-3.027 0-5.471-1.66-5.471-3.7l.003-.087a1.65 1.65 0 0 1-.895-1.67c0-1 .777-1.81 1.734-1.81.48 0 .909.184 1.217.493 1.185-.864 2.845-1.425 4.668-1.492l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12.25a1.25 1.25 0 1 0 2.498 0 1.25 1.25 0 0 0-2.498 0zm3.75 0a1.25 1.25 0 1 0 2.498 0 1.25 1.25 0 0 0-2.498 0z" />
+                        </svg>
+                        <a 
+                          href="https://www.reddit.com/user/rimtoken" 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="text-gray-700 hover:underline"
+                        >
+                          https://www.reddit.com/user/rimtoken
+                        </a>
+                      </li>
+                      <li className="flex items-center mt-4 pt-4 border-t">
+                        <Globe className="h-5 w-5 text-amber-600 flex-shrink-0 mr-3" />
+                        <a 
+                          href="https://www.rimtoken.org" 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="text-amber-600 hover:underline font-medium"
+                        >
+                          www.rimtoken.org
+                        </a>
+                      </li>
+                      <li className="flex items-center">
+                        <Link className="h-5 w-5 text-amber-600 flex-shrink-0 mr-3" />
+                        <span className="text-gray-700">
+                          الشركة: <strong>lmiml.ts</strong>
+                        </span>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
