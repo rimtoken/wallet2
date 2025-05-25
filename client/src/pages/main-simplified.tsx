@@ -14,11 +14,13 @@ import {
 import rimLogo from "@assets/rim.png";
 import rimTokenLogo from "@assets/469063470_586302450756454_5997633519251771466_n.jpg";
 import { MainNav } from "@/components/navigation/main-nav";
+import { useLanguage } from "@/contexts/language-context";
 
-// صفحة رئيسية مبسطة لتسهيل التنقل بين صفحات التطبيق
 export default function MainSimplifiedPage() {
+  const { translate, language } = useLanguage();
+  
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* استخدام مكون التنقل الرئيسي الذي يحتوي على شريط الأسعار وأزرار تغيير اللغة والثيمات */}
       <MainNav currentPage="/" />
       
@@ -28,69 +30,70 @@ export default function MainSimplifiedPage() {
           <div className="flex flex-col items-center justify-center mb-6">
             <img src={rimTokenLogo} alt="RimToken" className="h-40 mb-4 rounded-full object-contain bg-white p-2 shadow-md" />
           </div>
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">محفظة وتبادل RimToken</h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            محفظة لامركزية متعددة السلاسل تتيح لك التحكم الكامل في أصولك الرقمية
-            مع واجهة مستخدم سهلة وبسيطة
+          <h2 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+            {translate('app.title')}
+          </h2>
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            {translate('app.description')}
           </p>
         </div>
         
         {/* بطاقات الميزات */}
         <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-6 mb-12">
-          <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100 hover:shadow-lg transition-shadow">
-            <div className="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mb-4">
-              <Wallet className="h-6 w-6 text-amber-700" />
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700 hover:shadow-lg transition-shadow">
+            <div className="w-12 h-12 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center mb-4">
+              <Wallet className="h-6 w-6 text-amber-700 dark:text-amber-400" />
             </div>
-            <h3 className="text-xl font-bold mb-2">إدارة المحفظة</h3>
-            <p className="text-gray-600 mb-4">
-              إدارة أصولك الرقمية بسهولة تامة مع واجهة مستخدم سلسة وآمنة
+            <h3 className="text-xl font-bold mb-2 dark:text-white">{translate('features.wallet')}</h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
+              {translate('features.wallet.desc')}
             </p>
-            <Button variant="outline" className="w-full" asChild>
+            <Button variant="outline" className="w-full dark:text-gray-200 dark:border-gray-600" asChild>
               <Link href="/wallet">
-                استكشاف المحفظة
+                {translate('features.wallet.cta')}
               </Link>
             </Button>
           </div>
           
-          <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100 hover:shadow-lg transition-shadow">
-            <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mb-4">
-              <ArrowRightLeft className="h-6 w-6 text-blue-700" />
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700 hover:shadow-lg transition-shadow">
+            <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mb-4">
+              <ArrowRightLeft className="h-6 w-6 text-blue-700 dark:text-blue-400" />
             </div>
-            <h3 className="text-xl font-bold mb-2">تبادل العملات</h3>
-            <p className="text-gray-600 mb-4">
-              تبادل العملات المشفرة بسرعة وبدون تعقيدات مع رسوم منخفضة
+            <h3 className="text-xl font-bold mb-2 dark:text-white">{translate('features.swap')}</h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
+              {translate('features.swap.desc')}
             </p>
-            <Button variant="outline" className="w-full" asChild>
+            <Button variant="outline" className="w-full dark:text-gray-200 dark:border-gray-600" asChild>
               <Link href="/swap">
-                بدء التبادل
+                {translate('features.swap.cta')}
               </Link>
             </Button>
           </div>
           
-          <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100 hover:shadow-lg transition-shadow">
-            <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center mb-4">
-              <LineChart className="h-6 w-6 text-green-700" />
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700 hover:shadow-lg transition-shadow">
+            <div className="w-12 h-12 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mb-4">
+              <LineChart className="h-6 w-6 text-green-700 dark:text-green-400" />
             </div>
-            <h3 className="text-xl font-bold mb-2">تتبع الأسواق</h3>
-            <p className="text-gray-600 mb-4">
-              متابعة أسعار العملات واتجاهات السوق في الوقت الحقيقي
+            <h3 className="text-xl font-bold mb-2 dark:text-white">{translate('features.market')}</h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
+              {translate('features.market.desc')}
             </p>
-            <Button variant="outline" className="w-full" disabled>
-              قريباً
+            <Button variant="outline" className="w-full dark:text-gray-200 dark:border-gray-600" disabled>
+              {translate('features.market.cta')}
             </Button>
           </div>
 
-          <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100 hover:shadow-lg transition-shadow">
-            <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center mb-4">
-              <Users className="h-6 w-6 text-purple-700" />
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700 hover:shadow-lg transition-shadow">
+            <div className="w-12 h-12 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center mb-4">
+              <Users className="h-6 w-6 text-purple-700 dark:text-purple-400" />
             </div>
-            <h3 className="text-xl font-bold mb-2">فريق العمل</h3>
-            <p className="text-gray-600 mb-4">
-              تعرف على فريق ريم توكن من الخبراء والمتخصصين
+            <h3 className="text-xl font-bold mb-2 dark:text-white">{translate('features.team')}</h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
+              {translate('features.team.desc')}
             </p>
-            <Button variant="outline" className="w-full" asChild>
+            <Button variant="outline" className="w-full dark:text-gray-200 dark:border-gray-600" asChild>
               <Link href="/team">
-                تعرف على الفريق
+                {translate('features.team.cta')}
               </Link>
             </Button>
           </div>
