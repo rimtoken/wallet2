@@ -101,68 +101,93 @@ export default function MainSimplifiedPage() {
 
         {/* صف إضافي من البطاقات */}
         <div className="grid md:grid-cols-3 gap-6 mb-12">
-          <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100 hover:shadow-lg transition-shadow">
-            <div className="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center mb-4">
-              <Newspaper className="h-6 w-6 text-yellow-700" />
+          <div className="card-enhanced bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700 hover:shadow-lg transition-shadow">
+            <div className="w-12 h-12 rounded-full bg-yellow-100 dark:bg-yellow-900/30 flex items-center justify-center mb-4">
+              <Newspaper className="h-6 w-6 text-yellow-700 dark:text-yellow-400" />
             </div>
-            <h3 className="text-xl font-bold mb-2">أخبار RimToken</h3>
-            <p className="text-gray-600 mb-4">
-              تابع آخر الأخبار والتحديثات حول منصة ريم توكن والعملات الرقمية
+            <h3 className="text-xl font-bold mb-2 dark:text-white">{translate('nav.news')}</h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
+              {language === 'fr' 
+                ? "Suivez les dernières actualités et mises à jour concernant RimToken et les cryptomonnaies"
+                : language === 'en'
+                ? "Follow the latest news and updates about RimToken platform and cryptocurrencies"
+                : "تابع آخر الأخبار والتحديثات حول منصة ريم توكن والعملات الرقمية"
+              }
             </p>
-            <Button variant="outline" className="w-full" asChild>
+            <Button variant="outline" className="w-full dark:text-gray-200 dark:border-gray-600" asChild>
               <Link href="/news">
-                قراءة الأخبار
+                {language === 'fr' ? "Lire les Actualités" : language === 'en' ? "Read News" : "قراءة الأخبار"}
               </Link>
             </Button>
           </div>
           
-          <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100 hover:shadow-lg transition-shadow">
-            <div className="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center mb-4">
-              <Building2 className="h-6 w-6 text-indigo-700" />
+          <div className="card-enhanced bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700 hover:shadow-lg transition-shadow">
+            <div className="w-12 h-12 rounded-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center mb-4">
+              <Building2 className="h-6 w-6 text-indigo-700 dark:text-indigo-400" />
             </div>
-            <h3 className="text-xl font-bold mb-2">عن الشركة</h3>
-            <p className="text-gray-600 mb-4">
-              تعرف على قصة RimToken ورؤيتنا ورسالتنا وقيمنا الأساسية
+            <h3 className="text-xl font-bold mb-2 dark:text-white">{translate('nav.about')}</h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
+              {language === 'fr' 
+                ? "Découvrez l'histoire de RimToken, notre vision, notre mission et nos valeurs fondamentales"
+                : language === 'en'
+                ? "Learn about RimToken's story, our vision, mission and core values"
+                : "تعرف على قصة RimToken ورؤيتنا ورسالتنا وقيمنا الأساسية"
+              }
             </p>
-            <Button variant="outline" className="w-full" asChild>
+            <Button variant="outline" className="w-full dark:text-gray-200 dark:border-gray-600" asChild>
               <Link href="/about">
-                المزيد عنا
+                {language === 'fr' ? "En Savoir Plus" : language === 'en' ? "Learn More" : "المزيد عنا"}
               </Link>
             </Button>
           </div>
           
-          <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100 hover:shadow-lg transition-shadow">
-            <div className="w-12 h-12 rounded-full bg-teal-100 flex items-center justify-center mb-4">
-              <PhoneCall className="h-6 w-6 text-teal-700" />
+          <div className="card-enhanced bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700 hover:shadow-lg transition-shadow">
+            <div className="w-12 h-12 rounded-full bg-teal-100 dark:bg-teal-900/30 flex items-center justify-center mb-4">
+              <PhoneCall className="h-6 w-6 text-teal-700 dark:text-teal-400" />
             </div>
-            <h3 className="text-xl font-bold mb-2">اتصل بنا</h3>
-            <p className="text-gray-600 mb-4">
-              تواصل مع فريق الدعم للإجابة على استفساراتك ومساعدتك
+            <h3 className="text-xl font-bold mb-2 dark:text-white">{translate('nav.contact')}</h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
+              {language === 'fr' 
+                ? "Contactez notre équipe d'assistance pour répondre à vos questions et vous aider"
+                : language === 'en'
+                ? "Contact our support team to answer your inquiries and assist you"
+                : "تواصل مع فريق الدعم للإجابة على استفساراتك ومساعدتك"
+              }
             </p>
-            <Button variant="outline" className="w-full" asChild>
+            <Button variant="outline" className="w-full dark:text-gray-200 dark:border-gray-600" asChild>
               <Link href="/contact">
-                تواصل معنا
+                {language === 'fr' ? "Nous Contacter" : language === 'en' ? "Contact Us" : "تواصل معنا"}
               </Link>
             </Button>
           </div>
         </div>
         
         {/* قسم الدعوة للعمل */}
-        <div className="bg-gradient-to-r from-amber-500/10 to-amber-700/10 rounded-xl p-8 text-center">
-          <h3 className="text-2xl font-bold text-gray-900 mb-4">ابدأ رحلتك مع RimToken اليوم</h3>
-          <p className="text-lg text-gray-700 mb-6 max-w-xl mx-auto">
-            انضم إلى الآلاف من المستخدمين الذين يديرون أصولهم الرقمية بسهولة وأمان
+        <div className="bg-gradient-to-r from-amber-500/10 to-amber-700/10 dark:from-amber-600/5 dark:to-amber-800/5 rounded-xl p-8 text-center">
+          <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            {language === 'fr' 
+              ? "Commencez votre aventure avec RimToken aujourd'hui" 
+              : language === 'en' 
+              ? "Start your journey with RimToken today" 
+              : "ابدأ رحلتك مع RimToken اليوم"}
+          </h3>
+          <p className="text-lg text-gray-700 dark:text-gray-300 mb-6 max-w-xl mx-auto">
+            {language === 'fr' 
+              ? "Rejoignez des milliers d'utilisateurs qui gèrent leurs actifs numériques avec facilité et sécurité" 
+              : language === 'en' 
+              ? "Join thousands of users who manage their digital assets with ease and security" 
+              : "انضم إلى الآلاف من المستخدمين الذين يديرون أصولهم الرقمية بسهولة وأمان"}
           </p>
           
           <div className="flex flex-wrap justify-center gap-4">
-            <Button className="bg-amber-500 hover:bg-amber-600 text-lg px-6 py-2" asChild>
+            <Button className="bg-amber-500 hover:bg-amber-600 dark:bg-amber-600 dark:hover:bg-amber-700 text-white dark:text-gray-900 text-lg px-6 py-2" asChild>
               <Link href="/wallet">
-                بدء الاستخدام
+                {language === 'fr' ? "Commencer" : language === 'en' ? "Get Started" : "بدء الاستخدام"}
               </Link>
             </Button>
-            <Button variant="outline" className="text-lg px-6 py-2" asChild>
+            <Button variant="outline" className="text-lg px-6 py-2 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-700" asChild>
               <Link href="/swap">
-                تجربة التبادل
+                {language === 'fr' ? "Essayer l'échange" : language === 'en' ? "Try Swapping" : "تجربة التبادل"}
               </Link>
             </Button>
           </div>
@@ -170,7 +195,7 @@ export default function MainSimplifiedPage() {
       </div>
       
       {/* تذييل الصفحة */}
-      <footer className="bg-gray-900 text-white py-12 mt-12">
+      <footer className="bg-gray-900 dark:bg-gray-950 text-white py-12 mt-12">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-6 md:mb-0">
@@ -179,34 +204,38 @@ export default function MainSimplifiedPage() {
                 <h2 className="text-xl font-bold text-white">RimToken</h2>
               </div>
               <p className="text-gray-400 mt-2">
-                محفظة وتبادل العملات المشفرة ببساطة
+                {language === 'fr' 
+                  ? "Portefeuille et échange de cryptomonnaies en toute simplicité" 
+                  : language === 'en' 
+                  ? "Cryptocurrency wallet and exchange made simple" 
+                  : "محفظة وتبادل العملات المشفرة ببساطة"}
               </p>
             </div>
             
             <div className="grid grid-cols-2 gap-8">
               <div>
-                <h3 className="text-lg font-semibold mb-4">روابط سريعة</h3>
+                <h3 className="text-lg font-semibold mb-4">{translate('footer.quickLinks')}</h3>
                 <ul className="space-y-2">
                   <li>
                     <Link href="/" className="text-gray-400 hover:text-white transition-colors">
-                      الصفحة الرئيسية
+                      {translate('nav.home')}
                     </Link>
                   </li>
                   <li>
                     <Link href="/wallet" className="text-gray-400 hover:text-white transition-colors">
-                      المحفظة
+                      {translate('nav.wallet')}
                     </Link>
                   </li>
                   <li>
                     <Link href="/swap" className="text-gray-400 hover:text-white transition-colors">
-                      تبادل العملات
+                      {translate('nav.swap')}
                     </Link>
                   </li>
                 </ul>
               </div>
               
               <div>
-                <h3 className="text-lg font-semibold mb-4">تواصل معنا</h3>
+                <h3 className="text-lg font-semibold mb-4">{translate('footer.contact')}</h3>
                 <ul className="space-y-2">
                   <li className="text-gray-400">support@rimtoken.com</li>
                   <li className="text-gray-400">+1 234 567 890</li>
@@ -217,7 +246,7 @@ export default function MainSimplifiedPage() {
           
           <div className="border-t border-gray-800 mt-8 pt-8 text-center">
             <p className="text-gray-500">
-              &copy; {new Date().getFullYear()} RimToken - جميع الحقوق محفوظة
+              &copy; {new Date().getFullYear()} RimToken - {translate('footer.copyright')}
             </p>
           </div>
         </div>
