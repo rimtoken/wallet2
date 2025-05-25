@@ -16,6 +16,7 @@ interface LanguageContextType {
   languageInfo: LanguageInfo;
   setLanguage: (language: Language) => void;
   translate: (key: string) => string;
+  getText: (key: string) => string; // إضافة وظيفة getText كمرادف لـ translate
 }
 
 // معلومات اللغات المدعومة
