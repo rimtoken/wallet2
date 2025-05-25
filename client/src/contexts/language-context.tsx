@@ -113,7 +113,7 @@ const translations: Record<Language, Record<string, string>> = {
     'failedToFetchUser': 'فشل في جلب بيانات المستخدم',
     
     // ترجمات المحفظة
-    'connectWallet': 'ربط المحفظة',
+    'connectWalletArabic': 'ربط المحفظة',
     'connectWalletDescription': 'اختر المحفظة التي ترغب في ربطها بحسابك',
     'walletConnected': 'تم ربط المحفظة',
     'connectedTo': 'متصل بـ',
@@ -443,7 +443,7 @@ const translations: Record<Language, Record<string, string>> = {
     'priceAlerts': 'Price Alerts',
     
     // Web3 wallet interface
-    'connectWallet': 'Connect Wallet',
+    'connectWalletBtn': 'Connect Wallet',
     'connectYourWeb3Wallet': 'Connect your Web3 wallet to interact with the blockchain',
     'selectWallet': 'Select Wallet',
     'selectWalletDescription': 'Choose from supported Web3 wallets to complete the connection',
@@ -459,7 +459,7 @@ const translations: Record<Language, Record<string, string>> = {
     'walletAddressCopiedToClipboard': 'Your wallet address has been copied to clipboard',
     'walletDisconnected': 'Wallet Disconnected',
     'walletDisconnectedSuccessfully': 'Your wallet has been disconnected successfully',
-    'connectedWallets': 'Connected Wallets',
+    'connectedWalletsList': 'Connected Wallets',
     'manageYourConnectedWallets': 'Manage your connected Web3 wallets',
     'explore': 'Explore',
     'disconnect': 'Disconnect',
@@ -547,7 +547,7 @@ const translations: Record<Language, Record<string, string>> = {
     'failedToFetchUser': 'Impossible de récupérer les données utilisateur',
     
     // Traductions du portefeuille
-    'connectWallet': 'Connecter un Portefeuille',
+    'connectWalletHeader': 'Connecter un Portefeuille',
     'connectWalletDescription': 'Choisissez le portefeuille que vous souhaitez connecter à votre compte',
     'walletConnected': 'Portefeuille Connecté',
     'connectedTo': 'Connecté à',
@@ -660,7 +660,7 @@ const translations: Record<Language, Record<string, string>> = {
     'priceAlerts': 'Alertes de Prix',
     
     // Interface portefeuille Web3
-    'connectWallet': 'Connecter le Portefeuille',
+    'connectWalletBtn': 'Connecter le Portefeuille',
     'connectYourWeb3Wallet': 'Connectez votre portefeuille Web3 pour interagir avec la blockchain',
     'selectWallet': 'Sélectionner un Portefeuille',
     'selectWalletDescription': 'Choisissez parmi les portefeuilles Web3 pris en charge pour compléter la connexion',
