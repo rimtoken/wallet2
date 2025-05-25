@@ -22,7 +22,7 @@ export function LanguageToggle() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full">
-          <Globe className="h-5 w-5" />
+          <Globe className="h-5 w-5 text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white" />
           <span className="sr-only">
             {language === 'ar' ? 'تغيير اللغة' : 
              language === 'en' ? 'Change language' : 

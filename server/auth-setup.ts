@@ -5,19 +5,14 @@ import session from "express-session";
 import { scrypt, randomBytes, timingSafeEqual } from "crypto";
 import { promisify } from "util";
 import { dbStorage } from "./storage-db";
-import type { User } from "@shared/schema";
 
-declare global {
-  namespace Express {
-    // تعريف نوع المستخدم للاستخدام مع passport
-    interface User {
-      id: number;
-      username: string;
-      email: string;
-      password: string;
-      createdAt: Date;
-    }
-  }
+// تحديد نوع المستخدم المسترجع من قاعدة البيانات
+interface UserRecord {
+  id: number;
+  username: string;
+  email: string;
+  password: string;
+  createdAt: Date;
 }
 
 const scryptAsync = promisify(scrypt);
@@ -38,7 +33,7 @@ async function comparePasswords(supplied: string, stored: string) {
 export function setupAuth(app: Express) {
   // تكوين الجلسة مع استخدام مخزن PostgreSQL
   const sessionSettings: session.SessionOptions = {
-    secret: process.env.SESSION_SECRET || "RimToken-secret-key",
+    secret: process.env.SESSION_SECRET || "RimToken-secure-secret-key",
     resave: false,
     saveUninitialized: false,
     store: dbStorage.sessionStore,
@@ -70,7 +65,10 @@ export function setupAuth(app: Express) {
   );
 
   // تسلسل وإلغاء تسلسل المستخدم (للحفظ في الجلسة)
-  passport.serializeUser((user, done) => done(null, user.id));
+  passport.serializeUser((user: any, done) => {
+    done(null, user.id);
+  });
+  
   passport.deserializeUser(async (id: number, done) => {
     try {
       const user = await dbStorage.getUser(id);
@@ -88,7 +86,10 @@ export function setupAuth(app: Express) {
       // التحقق من وجود المستخدم
       const existingUser = await dbStorage.getUserByUsername(req.body.username);
       if (existingUser) {
-        return res.status(400).json({ success: false, message: "اسم المستخدم موجود بالفعل" });
+        return res.status(400).json({ 
+          success: false, 
+          message: "اسم المستخدم موجود بالفعل" 
+        });
       }
 
       // تشفير كلمة المرور وإنشاء المستخدم
@@ -101,24 +102,40 @@ export function setupAuth(app: Express) {
       // تسجيل الدخول التلقائي بعد التسجيل
       req.login(user, (err) => {
         if (err) return next(err);
-        return res.status(201).json({ success: true, user: { id: user.id, username: user.username, email: user.email } });
+        // إرجاع بيانات المستخدم بدون كلمة المرور
+        const { password, ...safeUser } = user;
+        return res.status(201).json({ 
+          success: true, 
+          user: safeUser 
+        });
       });
     } catch (error) {
       console.error("Registration error:", error);
-      res.status(500).json({ success: false, message: "خطأ في تسجيل المستخدم" });
+      res.status(500).json({ 
+        success: false, 
+        message: "خطأ في تسجيل المستخدم" 
+      });
     }
   });
 
   // تسجيل الدخول
   app.post("/api/login", (req: Request, res: Response, next: NextFunction) => {
-    passport.authenticate("local", (err: any, user: User, info: any) => {
+    passport.authenticate("local", (err: any, user: UserRecord, info: any) => {
       if (err) return next(err);
       if (!user) {
-        return res.status(401).json({ success: false, message: info?.message || "فشل تسجيل الدخول" });
+        return res.status(401).json({ 
+          success: false, 
+          message: info?.message || "فشل تسجيل الدخول" 
+        });
       }
       req.login(user, (err) => {
         if (err) return next(err);
-        return res.json({ success: true, user: { id: user.id, username: user.username, email: user.email } });
+        // إرجاع بيانات المستخدم بدون كلمة المرور
+        const { password, ...safeUser } = user;
+        return res.json({ 
+          success: true, 
+          user: safeUser 
+        });
       });
     })(req, res, next);
   });
@@ -126,7 +143,12 @@ export function setupAuth(app: Express) {
   // تسجيل الخروج
   app.post("/api/logout", (req: Request, res: Response) => {
     req.logout((err) => {
-      if (err) return res.status(500).json({ success: false, message: "خطأ في تسجيل الخروج" });
+      if (err) {
+        return res.status(500).json({ 
+          success: false, 
+          message: "خطأ في تسجيل الخروج" 
+        });
+      }
       res.json({ success: true });
     });
   });
@@ -134,10 +156,17 @@ export function setupAuth(app: Express) {
   // الحصول على معلومات المستخدم الحالي
   app.get("/api/user", (req: Request, res: Response) => {
     if (!req.isAuthenticated()) {
-      return res.status(401).json({ success: false, message: "غير مصرح" });
+      return res.status(401).json({ 
+        success: false, 
+        message: "غير مصرح" 
+      });
     }
     // إرجاع بيانات المستخدم بدون كلمة المرور
-    const { password, ...safeUser } = req.user as User;
-    res.json({ success: true, user: safeUser });
+    const user = req.user as UserRecord;
+    const { password, ...safeUser } = user;
+    res.json({ 
+      success: true, 
+      user: safeUser 
+    });
   });
 }

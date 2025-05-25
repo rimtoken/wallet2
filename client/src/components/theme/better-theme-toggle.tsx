@@ -48,9 +48,9 @@ export function BetterThemeToggle() {
       onClick={toggleDarkMode}
     >
       {isDark ? (
-        <Moon className="h-5 w-5" />
+        <Moon className="h-5 w-5 text-gray-100 hover:text-white" />
       ) : (
-        <Sun className="h-5 w-5" />
+        <Sun className="h-5 w-5 text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white" />
       )}
       <span className="sr-only">تبديل الوضع</span>
     </Button>
