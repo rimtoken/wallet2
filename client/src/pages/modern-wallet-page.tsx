@@ -54,15 +54,24 @@ export default function ModernWalletPage() {
             </div>
             
             <div className="hidden md:flex items-center gap-6">
-              <button className="text-slate-300 hover:text-white transition-colors">
-                {language === 'ar' ? 'المنتجات' : language === 'fr' ? 'Produits' : 'Products'}
-              </button>
-              <button className="text-slate-300 hover:text-white transition-colors">
-                {language === 'ar' ? 'المطورون' : language === 'fr' ? 'Développeurs' : 'Developers'}
-              </button>
-              <button className="text-slate-300 hover:text-white transition-colors">
-                {language === 'ar' ? 'حول' : language === 'fr' ? 'À propos' : 'About'}
-              </button>
+              <div className="relative group">
+                <button className="text-slate-300 hover:text-white transition-colors flex items-center gap-1">
+                  {language === 'ar' ? 'المنتجات' : language === 'fr' ? 'Produits' : 'Products'}
+                  <ChevronRight className="w-4 h-4 rotate-90" />
+                </button>
+              </div>
+              <div className="relative group">
+                <button className="text-slate-300 hover:text-white transition-colors flex items-center gap-1">
+                  {language === 'ar' ? 'المطورون' : language === 'fr' ? 'Développeurs' : 'Developers'}
+                  <ChevronRight className="w-4 h-4 rotate-90" />
+                </button>
+              </div>
+              <div className="relative group">
+                <button className="text-slate-300 hover:text-white transition-colors flex items-center gap-1">
+                  {language === 'ar' ? 'حول' : language === 'fr' ? 'À propos' : 'About'}
+                  <ChevronRight className="w-4 h-4 rotate-90" />
+                </button>
+              </div>
               <button className="text-slate-300 hover:text-white transition-colors">
                 {language === 'ar' ? 'المجتمع' : language === 'fr' ? 'Communauté' : 'Community'}
               </button>
@@ -223,6 +232,199 @@ export default function ModernWalletPage() {
                     </p>
                   </div>
                   <ChevronRight className="w-5 h-5 text-slate-400 ml-auto" />
+                </div>
+              </div>
+            </div>
+            {/* Additional Services Grid */}
+            <div className="grid lg:grid-cols-2 gap-12 mt-16">
+              
+              {/* Developers Section */}
+              <div>
+                <h2 className="text-2xl font-bold text-white mb-8">
+                  {language === 'ar' ? 'المطورون' : language === 'fr' ? 'Développeurs' : 'Developers'}
+                </h2>
+                
+                <div className="space-y-6">
+                  {/* Developer Portal */}
+                  <div className="flex items-start gap-4 p-4 rounded-xl bg-slate-800/50 hover:bg-slate-700/50 transition-colors cursor-pointer">
+                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center">
+                      <div className="w-6 h-6 border-2 border-white rounded border-dashed"></div>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-white mb-1 flex items-center gap-2">
+                        {language === 'ar' ? 'بوابة المطورين' : language === 'fr' ? 'Portail Développeur' : 'Developer Portal'}
+                        <ChevronRight className="w-4 h-4 text-slate-400" />
+                      </h3>
+                      <p className="text-slate-400 text-sm">
+                        {language === 'ar' ? 'دمج أدوات ويب3 التي تناسب احتياجاتك' : 
+                         language === 'fr' ? 'Intégrez les outils Web3 qui correspondent à vos besoins' : 
+                         'Integrate Web3 tools that suit your needs'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <h3 className="text-xl font-bold text-white mb-6 mt-12">
+                  {language === 'ar' ? 'البروتوكولات' : language === 'fr' ? 'Protocoles' : 'Protocols'}
+                </h3>
+                
+                <div className="space-y-6">
+                  {/* Aggregation Protocol */}
+                  <div className="flex items-start gap-4 p-4 rounded-xl bg-slate-800/50 hover:bg-slate-700/50 transition-colors cursor-pointer">
+                    <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center">
+                      <div className="w-6 h-6 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full"></div>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-white mb-1">
+                        {language === 'ar' ? 'بروتوكول التجميع' : language === 'fr' ? 'Protocole d\'Agrégation' : 'Aggregation Protocol'}
+                      </h3>
+                      <p className="text-slate-400 text-sm">
+                        {language === 'ar' ? 'البروتوكول يجمع السيولة من DEXs متعددة لضمان أفضل أسعار التبديل' : 
+                         language === 'fr' ? 'Le protocole agrège la liquidité de plusieurs DEXs pour garantir les meilleurs taux de swap' : 
+                         'The protocol aggregates liquidity from multiple DEXes to ensure the best swap rates'}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Limit Order Protocol */}
+                  <div className="flex items-start gap-4 p-4 rounded-xl bg-slate-800/50 hover:bg-slate-700/50 transition-colors cursor-pointer">
+                    <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-violet-600 rounded-xl flex items-center justify-center">
+                      <div className="w-6 h-6 border-2 border-white rounded-sm"></div>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-white mb-1">
+                        {language === 'ar' ? 'بروتوكول الأوامر المحدودة' : language === 'fr' ? 'Protocole d\'Ordre Limite' : 'Limit Order Protocol'}
+                      </h3>
+                      <p className="text-slate-400 text-sm">
+                        {language === 'ar' ? 'الوظائف الأكثر ابتكاراً ومرونة للأوامر المحدودة في DeFi' : 
+                         language === 'fr' ? 'La fonctionnalité d\'ordre limite la plus innovante et flexible en DeFi' : 
+                         'The most innovative and flexible limit order functionality in DeFi'}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Liquidity Protocol */}
+                  <div className="flex items-start gap-4 p-4 rounded-xl bg-slate-800/50 hover:bg-slate-700/50 transition-colors cursor-pointer">
+                    <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center">
+                      <div className="w-6 h-6 bg-gradient-to-b from-green-400 to-emerald-500 rounded"></div>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-white mb-1">
+                        {language === 'ar' ? 'بروتوكول السيولة' : language === 'fr' ? 'Protocole de Liquidité' : 'Liquidity Protocol'}
+                      </h3>
+                      <p className="text-slate-400 text-sm">
+                        {language === 'ar' ? 'AMM من الجيل التالي يوفر كفاءة رؤوس الأموال لمقدمي السيولة' : 
+                         language === 'fr' ? 'AMM de nouvelle génération offrant l\'efficacité du capital aux fournisseurs de liquidité' : 
+                         'A next-generation AMM that offers capital efficiency to liquidity providers'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* About & Other Section */}
+              <div>
+                <h2 className="text-2xl font-bold text-white mb-8">
+                  {language === 'ar' ? 'حول' : language === 'fr' ? 'À propos' : 'About'}
+                </h2>
+                
+                <div className="space-y-6">
+                  {/* Security */}
+                  <div className="flex items-start gap-4 p-4 rounded-xl bg-slate-800/50 hover:bg-slate-700/50 transition-colors cursor-pointer">
+                    <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-pink-600 rounded-xl flex items-center justify-center">
+                      <Shield className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-white mb-1">
+                        {language === 'ar' ? 'الأمان' : language === 'fr' ? 'Sécurité' : 'Security'}
+                      </h3>
+                      <p className="text-slate-400 text-sm">
+                        {language === 'ar' ? 'دفاعك ضد الأنشطة غير المشروعة في DeFi' : 
+                         language === 'fr' ? 'Votre défense contre les activités illicites en DeFi' : 
+                         'Your defense against illicit activity in DeFi'}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Partners & Stakeholders */}
+                  <div className="flex items-start gap-4 p-4 rounded-xl bg-slate-800/50 hover:bg-slate-700/50 transition-colors cursor-pointer">
+                    <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-violet-600 rounded-xl flex items-center justify-center">
+                      <div className="w-6 h-6 flex items-center justify-center">
+                        <div className="w-2 h-2 bg-white rounded-full mx-0.5"></div>
+                        <div className="w-2 h-2 bg-white rounded-full mx-0.5"></div>
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-white mb-1">
+                        {language === 'ar' ? 'الشركاء وأصحاب المصلحة' : language === 'fr' ? 'Partenaires et Parties Prenantes' : 'Partners & Stakeholders'}
+                      </h3>
+                      <p className="text-slate-400 text-sm">
+                        {language === 'ar' ? 'قائمة بالشركاء الرئيسيين وأصحاب المصلحة في شبكة ريم توكن' : 
+                         language === 'fr' ? 'Une liste des principaux partenaires et parties prenantes du réseau RimToken' : 
+                         'A list of the RimToken Network\'s major partners and stakeholders'}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Foundation */}
+                  <div className="flex items-start gap-4 p-4 rounded-xl bg-slate-800/50 hover:bg-slate-700/50 transition-colors cursor-pointer">
+                    <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center">
+                      <div className="w-6 h-6 bg-gradient-to-t from-indigo-400 to-purple-400 rounded-t-full"></div>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-white mb-1">
+                        {language === 'ar' ? 'المؤسسة' : language === 'fr' ? 'Fondation' : 'Foundation'}
+                      </h3>
+                      <p className="text-slate-400 text-sm">
+                        {language === 'ar' ? 'منظمة غير ربحية مخصصة لتعزيز شبكة ريم توكن' : 
+                         language === 'fr' ? 'Une organisation à but non lucratif dédiée à la promotion du réseau RimToken' : 
+                         'A non-profit organization dedicated to fostering the RimToken Network'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <h3 className="text-xl font-bold text-white mb-6 mt-12">
+                  {language === 'ar' ? 'أخرى' : language === 'fr' ? 'Autre' : 'Other'}
+                </h3>
+                
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <span className="text-slate-400 hover:text-white transition-colors cursor-pointer flex items-center gap-2">
+                      {language === 'ar' ? 'غرفة الصحافة' : language === 'fr' ? 'Salle de presse' : 'Press room'}
+                      <ChevronRight className="w-4 h-4" />
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-slate-400 hover:text-white transition-colors cursor-pointer flex items-center gap-2">
+                      {language === 'ar' ? 'جهات الاتصال' : language === 'fr' ? 'Contacts' : 'Contacts'}
+                      <ChevronRight className="w-4 h-4" />
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-slate-400 hover:text-white transition-colors cursor-pointer flex items-center gap-2">
+                      {language === 'ar' ? 'شروط الاستخدام' : language === 'fr' ? 'Conditions d\'utilisation' : 'Terms of use'}
+                      <ChevronRight className="w-4 h-4" />
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-slate-400 hover:text-white transition-colors cursor-pointer flex items-center gap-2">
+                      {language === 'ar' ? 'سياسة الخصوصية' : language === 'fr' ? 'Politique de confidentialité' : 'Privacy policy'}
+                      <ChevronRight className="w-4 h-4" />
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-slate-400 hover:text-white transition-colors cursor-pointer flex items-center gap-2">
+                      {language === 'ar' ? 'الورقة البيضاء للأمان' : language === 'fr' ? 'Livre blanc sur la sécurité' : 'Security White paper'}
+                      <ChevronRight className="w-4 h-4" />
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-slate-400 hover:text-white transition-colors cursor-pointer flex items-center gap-2">
+                      {language === 'ar' ? 'الرموز' : language === 'fr' ? 'Tokens' : 'Tokens'}
+                      <ChevronRight className="w-4 h-4" />
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
