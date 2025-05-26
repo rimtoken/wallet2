@@ -33,7 +33,7 @@ import TeamPage from "@/pages/team-page";
 import NewsPage from "@/pages/news-page";
 import AboutPage from "@/pages/about-page";
 import ContactPage from "@/pages/contact-page";
-import AchievementsPage from "@/pages/achievements-page";
+
 import DepositPage from "@/pages/deposit-page";
 import WithdrawalPage from "@/pages/withdrawal-page";
 import FAQPage from "@/pages/faq-page";

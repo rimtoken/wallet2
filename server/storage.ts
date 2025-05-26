@@ -207,7 +207,7 @@ export class MemStorage implements IStorage {
   async getMarketData(): Promise<MarketAsset[]> {
     const marketAssets: MarketAsset[] = [];
     
-    for (const asset of this.assets.values()) {
+    for (const asset of Array.from(this.assets.values())) {
       const price = parseFloat(asset.currentPrice || "0");
       const priceChangePercentage24h = parseFloat(asset.priceChangePercentage24h || "0");
       
