@@ -1,3 +1,7 @@
+/* استيراد ملف التفاعلات الدقيقة */
+@import './components/ui/micro-interactions.css';
+@import './styles/themes.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -101,10 +105,6 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transform: translateY(-2px);
 }
-
-/* استيراد ملف التفاعلات الدقيقة */
-@import './components/ui/micro-interactions.css';
-@import './styles/themes.css';
 
 @layer base {
   * {
