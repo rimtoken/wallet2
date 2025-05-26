@@ -30,5 +30,18 @@ author = "agent"
 task = "shell.exec"
 args = "python main.py"
 
+[[workflows.workflow]]
+name = "Show Application"
+mode = "sequential"
+author = 42511845
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm run dev"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Show Application"
+
 [[ports]]
 localPort = 5000
