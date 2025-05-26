@@ -286,7 +286,7 @@ const server = http.createServer((req, res) => {
   `);
 });
 
-const PORT = 3000;
+const PORT = 5000;
 server.listen(PORT, '0.0.0.0', () => {
   console.log(`🎉 RimToken Website is running at http://localhost:${PORT}`);
   console.log('✨ Your beautiful registration page is ready!');
