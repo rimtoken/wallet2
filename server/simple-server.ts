@@ -104,25 +104,6 @@ app.get("/", (req, res) => {
             .btn-green:hover {
                 background: #047857;
             }
-            .social-links {
-                margin-top: 1rem;
-                display: flex;
-                justify-content: center;
-                gap: 1rem;
-                flex-wrap: wrap;
-            }
-            .social-link {
-                color: #ddd6fe;
-                text-decoration: none;
-                padding: 0.5rem;
-                border-radius: 0.5rem;
-                background: rgba(255, 255, 255, 0.1);
-                transition: background 0.3s ease;
-            }
-            .social-link:hover {
-                background: rgba(255, 255, 255, 0.2);
-                color: white;
-            }
         </style>
     </head>
     <body>
@@ -158,21 +139,6 @@ app.get("/", (req, res) => {
                 <p>📞 هاتف: 37968897</p>
                 <p>📧 بريد إلكتروني: INFO@RIMTOKEN.ORG</p>
                 <p>🌐 الموقع: rimtoken.org</p>
-                
-                <div class="social-links">
-                    <a href="https://www.reddit.com/u/rimtoken/" class="social-link">Reddit</a>
-                    <a href="https://tiktok.com/@rimtoken" class="social-link">TikTok</a>
-                    <a href="https://discord.com/invite/ZqvXkQEwyA" class="social-link">Discord</a>
-                    <a href="https://t.me/rimtoken9" class="social-link">Telegram</a>
-                    <a href="https://www.youtube.com/@Rimtoken" class="social-link">YouTube</a>
-                    <a href="https://chat.whatsapp.com/HIjL1n2nLC55bJhTMifDZD" class="social-link">WhatsApp</a>
-                    <a href="https://github.com/Hacenm" class="social-link">GitHub</a>
-                    <a href="https://www.facebook.com/rimtoken1" class="social-link">Facebook</a>
-                    <a href="https://x.com/rimtoken" class="social-link">Twitter/X</a>
-                    <a href="https://www.linkedin.com/in/rim-token-6373082a2" class="social-link">LinkedIn</a>
-                    <a href="https://medium.com/@rimtoken9" class="social-link">Medium</a>
-                </div>
-                
                 <br>
                 <p>شبكات مدعومة: Ethereum • Solana • BSC • Polygon</p>
             </div>
@@ -204,3 +170,5 @@ server.listen(port, "0.0.0.0", () => {
   console.log(`✅ RimToken Server is running on port ${port}`);
   console.log(`🌐 Access the app at: http://localhost:${port}`);
 });
+
+export default app;
