@@ -5,7 +5,9 @@ import {
   transactions, type Transaction, type InsertTransaction,
   marketData, type MarketData, type InsertMarketData,
   portfolioHistory, type PortfolioHistory, type InsertPortfolioHistory,
-  type WalletAsset, type MarketAsset, type PortfolioSummary
+  achievements, type Achievement, type InsertAchievement,
+  userAchievements, type UserAchievement, type InsertUserAchievement,
+  type WalletAsset, type MarketAsset, type PortfolioSummary, type AchievementWithProgress
 } from "@shared/schema";
 
 import session from "express-session";
@@ -45,6 +47,13 @@ export interface IStorage {
   getPortfolioSummary(userId: number): Promise<PortfolioSummary>;
   getPortfolioHistory(userId: number, days: number): Promise<PortfolioHistory[]>;
   createPortfolioHistoryEntry(entry: InsertPortfolioHistory): Promise<PortfolioHistory>;
+  
+  // Achievement methods
+  getAchievements(): Promise<Achievement[]>;
+  getUserAchievements(userId: number): Promise<AchievementWithProgress[]>;
+  unlockAchievement(userId: number, achievementId: number): Promise<UserAchievement>;
+  updateAchievementProgress(userId: number, achievementId: number, progress: number): Promise<UserAchievement>;
+  createAchievement(achievement: InsertAchievement): Promise<Achievement>;
 }
 
 import createMemoryStore from "memorystore";
@@ -60,6 +69,8 @@ export class MemStorage implements IStorage {
   private transactions: Map<number, Transaction>;
   private marketDataEntries: Map<number, MarketData>;
   private portfolioHistoryEntries: Map<number, PortfolioHistory>;
+  private achievements: Map<number, Achievement>;
+  private userAchievements: Map<number, UserAchievement>;
   
   private userId: number = 1;
   private assetId: number = 1;
