@@ -88,6 +88,148 @@ export default function ModernWalletPage() {
         </div>
       </nav>
 
+      {/* Products/Services Section */}
+      <div className="bg-slate-800/30 backdrop-blur-sm border-t border-slate-700/50">
+        <div className="container mx-auto px-4 py-16">
+          <div className="grid lg:grid-cols-2 gap-12">
+            
+            {/* Apps Section */}
+            <div>
+              <h2 className="text-2xl font-bold text-white mb-8">
+                {language === 'ar' ? 'التطبيقات' : language === 'fr' ? 'Applications' : 'Apps'}
+              </h2>
+              
+              <div className="space-y-6">
+                {/* Swap */}
+                <div className="flex items-start gap-4 p-4 rounded-xl bg-slate-800/50 hover:bg-slate-700/50 transition-colors cursor-pointer"
+                     onClick={() => setLocation("/swap")}>
+                  <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center">
+                    <ArrowUpDown className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-white mb-1">
+                      {language === 'ar' ? 'التبديل' : language === 'fr' ? 'Swap' : 'Swap'}
+                    </h3>
+                    <p className="text-slate-400 text-sm">
+                      {language === 'ar' ? 'تبديل أي رموز بأفضل الأسعار' : 
+                       language === 'fr' ? 'Échangez tous les tokens aux meilleurs taux' : 
+                       'Swap any tokens at the best rates'}
+                    </p>
+                  </div>
+                  <ChevronRight className="w-5 h-5 text-slate-400 ml-auto" />
+                </div>
+
+                {/* Wallet */}
+                <div className="flex items-start gap-4 p-4 rounded-xl bg-slate-800/50 hover:bg-slate-700/50 transition-colors cursor-pointer">
+                  <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center">
+                    <Wallet className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-white mb-1">
+                      {language === 'ar' ? 'المحفظة' : language === 'fr' ? 'Portefeuille' : 'Wallet'}
+                    </h3>
+                    <p className="text-slate-400 text-sm">
+                      {language === 'ar' ? 'الوصول إلى ويب3 من هاتفك' : 
+                       language === 'fr' ? 'Accédez au Web3 depuis votre téléphone' : 
+                       'Access Web3 with your phone'}
+                    </p>
+                  </div>
+                  <ChevronRight className="w-5 h-5 text-slate-400 ml-auto" />
+                </div>
+
+                {/* Portfolio */}
+                <div className="flex items-start gap-4 p-4 rounded-xl bg-slate-800/50 hover:bg-slate-700/50 transition-colors cursor-pointer"
+                     onClick={() => setLocation("/portfolio-analytics")}>
+                  <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-violet-600 rounded-xl flex items-center justify-center">
+                    <TrendingUp className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-white mb-1">
+                      {language === 'ar' ? 'المحفظة الاستثمارية' : language === 'fr' ? 'Portefeuille' : 'Portfolio'}
+                    </h3>
+                    <p className="text-slate-400 text-sm">
+                      {language === 'ar' ? 'تتبع أداء أصولك' : 
+                       language === 'fr' ? 'Suivez la performance de vos actifs' : 
+                       'Track your assets\' performance'}
+                    </p>
+                  </div>
+                  <ChevronRight className="w-5 h-5 text-slate-400 ml-auto" />
+                </div>
+              </div>
+            </div>
+
+            {/* Physical & Other Section */}
+            <div>
+              <h2 className="text-2xl font-bold text-white mb-8">
+                {language === 'ar' ? 'المنتجات الفيزيائية' : language === 'fr' ? 'Physique' : 'Physical'}
+              </h2>
+              
+              <div className="space-y-6 mb-12">
+                {/* Card */}
+                <div className="flex items-start gap-4 p-4 rounded-xl bg-slate-800/50 hover:bg-slate-700/50 transition-colors cursor-pointer">
+                  <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl flex items-center justify-center">
+                    <div className="w-6 h-4 bg-white rounded-sm"></div>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-white mb-1">
+                      {language === 'ar' ? 'البطاقة' : language === 'fr' ? 'Carte' : 'Card'}
+                    </h3>
+                    <p className="text-slate-400 text-sm">
+                      {language === 'ar' ? 'ادفع بالعملات المشفرة في أي مكان' : 
+                       language === 'fr' ? 'Payez avec des crypto partout' : 
+                       'Pay with crypto anywhere'}
+                    </p>
+                  </div>
+                  <ChevronRight className="w-5 h-5 text-slate-400 ml-auto" />
+                </div>
+              </div>
+
+              <h2 className="text-2xl font-bold text-white mb-8">
+                {language === 'ar' ? 'أخرى' : language === 'fr' ? 'Autre' : 'Other'}
+              </h2>
+              
+              <div className="space-y-6">
+                {/* Fusion+ */}
+                <div className="flex items-start gap-4 p-4 rounded-xl bg-slate-800/50 hover:bg-slate-700/50 transition-colors cursor-pointer">
+                  <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-teal-600 rounded-xl flex items-center justify-center">
+                    <Zap className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-white mb-1">
+                      {language === 'ar' ? 'فيوجن+' : language === 'fr' ? 'Fusion+' : 'Fusion+'}
+                    </h3>
+                    <p className="text-slate-400 text-sm">
+                      {language === 'ar' ? 'استمتع بتبديل سلس عبر السلاسل مع حماية MEV' : 
+                       language === 'fr' ? 'Profitez de swaps cross-chain sans friction avec protection MEV' : 
+                       'Enjoy gasless cross-chain swaps and MEV protection'}
+                    </p>
+                  </div>
+                  <ChevronRight className="w-5 h-5 text-slate-400 ml-auto" />
+                </div>
+
+                {/* RimToken Security */}
+                <div className="flex items-start gap-4 p-4 rounded-xl bg-slate-800/50 hover:bg-slate-700/50 transition-colors cursor-pointer">
+                  <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-pink-600 rounded-xl flex items-center justify-center">
+                    <Shield className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-white mb-1">
+                      {language === 'ar' ? 'حماية ريم توكن' : language === 'fr' ? 'Protection RimToken' : 'RimToken Guard'}
+                    </h3>
+                    <p className="text-slate-400 text-sm">
+                      {language === 'ar' ? 'ابق محمياً من هجمات الساندويتش' : 
+                       language === 'fr' ? 'Restez protégé des attaques sandwich' : 
+                       'Stay protected from sandwich attacks'}
+                    </p>
+                  </div>
+                  <ChevronRight className="w-5 h-5 text-slate-400 ml-auto" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Main Content */}
       <div className="container mx-auto px-4 py-12">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
