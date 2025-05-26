@@ -92,36 +92,7 @@ export const insertPortfolioHistorySchema = createInsertSchema(portfolioHistory)
   timestamp: true,
 });
 
-// Achievement Badges Schema
-export const achievements = pgTable("achievements", {
-  id: serial("id").primaryKey(),
-  name: text("name").notNull(),
-  description: text("description").notNull(),
-  icon: text("icon").notNull(),
-  category: text("category").notNull(), // trading, portfolio, security, social
-  condition: text("condition").notNull(), // JSON string describing unlock condition
-  rarity: text("rarity").notNull(), // common, rare, epic, legendary
-  points: integer("points").notNull().default(0),
-  isActive: boolean("is_active").notNull().default(true),
-});
 
-export const userAchievements = pgTable("user_achievements", {
-  id: serial("id").primaryKey(),
-  userId: integer("user_id").notNull().references(() => users.id),
-  achievementId: integer("achievement_id").notNull().references(() => achievements.id),
-  unlockedAt: timestamp("unlocked_at").defaultNow().notNull(),
-  progress: integer("progress").notNull().default(0),
-  isCompleted: boolean("is_completed").notNull().default(false),
-});
-
-export const insertAchievementSchema = createInsertSchema(achievements).omit({
-  id: true,
-});
-
-export const insertUserAchievementSchema = createInsertSchema(userAchievements).omit({
-  id: true,
-  unlockedAt: true,
-});
 
 // Types
 export type User = typeof users.$inferSelect;
@@ -142,11 +113,7 @@ export type InsertMarketData = z.infer<typeof insertMarketDataSchema>;
 export type PortfolioHistory = typeof portfolioHistory.$inferSelect;
 export type InsertPortfolioHistory = z.infer<typeof insertPortfolioHistorySchema>;
 
-export type Achievement = typeof achievements.$inferSelect;
-export type InsertAchievement = z.infer<typeof insertAchievementSchema>;
 
-export type UserAchievement = typeof userAchievements.$inferSelect;
-export type InsertUserAchievement = z.infer<typeof insertUserAchievementSchema>;
 
 // Export custom type for displaying portfolio data
 export type PortfolioSummary = {

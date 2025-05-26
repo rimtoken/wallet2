@@ -5,9 +5,7 @@ import {
   transactions, type Transaction, type InsertTransaction,
   marketData, type MarketData, type InsertMarketData,
   portfolioHistory, type PortfolioHistory, type InsertPortfolioHistory,
-  achievements, type Achievement, type InsertAchievement,
-  userAchievements, type UserAchievement, type InsertUserAchievement,
-  type WalletAsset, type MarketAsset, type PortfolioSummary, type AchievementWithProgress
+  type WalletAsset, type MarketAsset, type PortfolioSummary
 } from "@shared/schema";
 
 import session from "express-session";
@@ -48,12 +46,7 @@ export interface IStorage {
   getPortfolioHistory(userId: number, days: number): Promise<PortfolioHistory[]>;
   createPortfolioHistoryEntry(entry: InsertPortfolioHistory): Promise<PortfolioHistory>;
   
-  // Achievement methods
-  getAchievements(): Promise<Achievement[]>;
-  getUserAchievements(userId: number): Promise<AchievementWithProgress[]>;
-  unlockAchievement(userId: number, achievementId: number): Promise<UserAchievement>;
-  updateAchievementProgress(userId: number, achievementId: number, progress: number): Promise<UserAchievement>;
-  createAchievement(achievement: InsertAchievement): Promise<Achievement>;
+
 }
 
 import createMemoryStore from "memorystore";
@@ -69,8 +62,6 @@ export class MemStorage implements IStorage {
   private transactions: Map<number, Transaction>;
   private marketDataEntries: Map<number, MarketData>;
   private portfolioHistoryEntries: Map<number, PortfolioHistory>;
-  private achievements: Map<number, Achievement>;
-  private userAchievements: Map<number, UserAchievement>;
   
   private userId: number = 1;
   private assetId: number = 1;
@@ -131,7 +122,13 @@ export class MemStorage implements IStorage {
 
   async createAsset(insertAsset: InsertAsset): Promise<Asset> {
     const id = this.assetId++;
-    const asset: Asset = { ...insertAsset, id };
+    const asset: Asset = { 
+      ...insertAsset, 
+      id,
+      icon: insertAsset.icon || null,
+      currentPrice: insertAsset.currentPrice || null,
+      priceChangePercentage24h: insertAsset.priceChangePercentage24h || null
+    };
     this.assets.set(id, asset);
     return asset;
   }
@@ -192,7 +189,12 @@ export class MemStorage implements IStorage {
   async createWallet(insertWallet: InsertWallet): Promise<Wallet> {
     const id = this.walletId++;
     const now = new Date();
-    const wallet: Wallet = { ...insertWallet, id, lastUpdated: now };
+    const wallet: Wallet = { 
+      ...insertWallet, 
+      id, 
+      lastUpdated: now,
+      balance: insertWallet.balance || "0"
+    };
     this.wallets.set(id, wallet);
     return wallet;
   }

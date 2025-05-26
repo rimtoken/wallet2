@@ -8,8 +8,8 @@ export default function AchievementsPage() {
   const [, setLocation] = useLocation();
   const [language, setLanguage] = useState<'en' | 'ar' | 'fr'>('en');
 
-  const getText = (key: string) => {
-    const texts = {
+  const getText = (key: string): string => {
+    const texts: Record<string, string> = {
       back: language === 'ar' ? 'رجوع' : language === 'fr' ? 'Retour' : 'Back',
       achievements: language === 'ar' ? 'الإنجازات' : language === 'fr' ? 'Réalisations' : 'Achievements',
       subtitle: language === 'ar' ? 'اكتشف واحصل على شارات مختلفة من خلال استخدام ريم توكن' : 

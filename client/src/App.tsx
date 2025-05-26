@@ -101,9 +101,7 @@ function Router() {
       <Route path="/contact">
         <ContactPage />
       </Route>
-      <Route path="/achievements">
-        <AchievementsPage />
-      </Route>
+
       <Route path="/deposit">
         <DepositPage />
       </Route>

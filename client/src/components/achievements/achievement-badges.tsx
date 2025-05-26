@@ -213,7 +213,6 @@ export default function AchievementBadges({ language = 'en' }: { language?: stri
             <TabsContent value={selectedCategory} className="mt-6">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {filteredAchievements.map((achievement) => {
-                  const IconComponent = categoryIcons[achievement.category];
                   const isCompleted = achievement.isCompleted;
                   
                   return (
@@ -221,14 +220,14 @@ export default function AchievementBadges({ language = 'en' }: { language?: stri
                       key={achievement.id}
                       className={`relative transition-all duration-300 hover:shadow-lg ${
                         isCompleted 
-                          ? `${rarityBorders[achievement.rarity]} border-2 bg-gradient-to-br from-white to-slate-50` 
+                          ? `${rarityBorders[achievement.rarity] || 'border-gray-400'} border-2 bg-gradient-to-br from-white to-slate-50` 
                           : 'border-slate-200 bg-white opacity-75'
                       }`}
                     >
                       <CardContent className="p-4">
                         {/* Achievement Icon & Rarity */}
                         <div className="flex items-start justify-between mb-3">
-                          <div className={`w-12 h-12 rounded-full ${rarityColors[achievement.rarity]} flex items-center justify-center text-2xl`}>
+                          <div className={`w-12 h-12 rounded-full ${rarityColors[achievement.rarity] || 'bg-gray-500'} flex items-center justify-center text-2xl`}>
                             {isCompleted ? achievement.icon : '🔒'}
                           </div>
                           <div className="flex flex-col items-end gap-1">
