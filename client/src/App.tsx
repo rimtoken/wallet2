@@ -43,6 +43,7 @@ import AdvancedTradingPage from "@/pages/advanced-trading-page";
 import PortfolioAnalyticsPage from "@/pages/portfolio-analytics-page";
 import SmartAlertsPage from "@/pages/smart-alerts-page";
 import DemoLoginPage from "@/pages/demo-login-page";
+import RegisterPage from "@/pages/register-page";
 // Theme CSS is already imported in index.css
 // سنضيف مزود المصادقة لاحقاً
 
@@ -68,6 +69,11 @@ function Router() {
       {/* صفحة التسجيل خارج القالب الرئيسي */}
       <Route path="/auth">
         <DemoLoginPage />
+      </Route>
+      
+      {/* صفحة إنشاء حساب جديد */}
+      <Route path="/register">
+        <RegisterPage />
       </Route>
       
       {/* الصفحة الرئيسية المبسطة كصفحة افتراضية */}

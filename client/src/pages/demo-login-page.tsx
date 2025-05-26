@@ -127,7 +127,11 @@ export default function DemoLoginPage() {
                   <Button variant="outline" className="w-full">
                     {language === 'ar' ? 'تسجيل الدخول' : language === 'fr' ? 'Se connecter' : 'Login'}
                   </Button>
-                  <Button variant="ghost" className="w-full text-green-600">
+                  <Button 
+                    variant="ghost" 
+                    className="w-full text-green-600"
+                    onClick={() => setLocation("/register")}
+                  >
                     {language === 'ar' ? 'إنشاء حساب جديد' : language === 'fr' ? 'Créer un nouveau compte' : 'Create New Account'}
                   </Button>
                 </div>
