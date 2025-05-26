@@ -123,33 +123,131 @@ app.get("/", (req, res) => {
                 background: rgba(255, 255, 255, 0.2);
                 color: white;
             }
+            .register-form {
+                background: rgba(255, 255, 255, 0.15);
+                backdrop-filter: blur(15px);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                border-radius: 2rem;
+                padding: 3rem;
+                margin: 3rem 0;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            }
+            .register-form h2 {
+                font-size: 2.5rem;
+                margin-bottom: 2rem;
+                color: white;
+                text-align: center;
+            }
+            .form-row {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+                margin-bottom: 1.5rem;
+            }
+            .form-row input {
+                padding: 1.2rem;
+                border: 2px solid rgba(255, 255, 255, 0.3);
+                border-radius: 1rem;
+                background: rgba(255, 255, 255, 0.9);
+                font-size: 1.1rem;
+                transition: all 0.3s ease;
+            }
+            .form-row input:focus {
+                outline: none;
+                border-color: #fff;
+                background: white;
+                transform: translateY(-2px);
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            }
+            .btn-register {
+                background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+                color: white;
+                padding: 1.5rem 3rem;
+                border: none;
+                border-radius: 1rem;
+                font-size: 1.3rem;
+                font-weight: bold;
+                cursor: pointer;
+                width: 100%;
+                margin-top: 1rem;
+                transition: all 0.3s ease;
+                box-shadow: 0 10px 30px rgba(238, 90, 36, 0.4);
+            }
+            .btn-register:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 15px 40px rgba(238, 90, 36, 0.6);
+            }
+            .success-message {
+                background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+                color: white;
+                padding: 2rem;
+                border-radius: 1rem;
+                text-align: center;
+                font-size: 1.3rem;
+                font-weight: bold;
+                margin-top: 2rem;
+                animation: slideIn 0.5s ease;
+            }
+            @keyframes slideIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            @media (max-width: 768px) {
+                .form-row {
+                    grid-template-columns: 1fr;
+                }
+                .container {
+                    padding: 1rem;
+                }
+                .register-form {
+                    padding: 2rem;
+                }
+            }
         </style>
     </head>
     <body>
         <div class="container">
-            <h1>RimToken</h1>
-            <p class="subtitle">محفظة العملات المشفرة الحديثة والآمنة</p>
+            <h1>🪙 RimToken</h1>
+            <p class="subtitle">منصة العملات المشفرة الحديثة - ابدأ رحلتك الآن!</p>
             
+            <!-- نموذج التسجيل الرئيسي -->
+            <div class="register-form">
+                <h2>إنشاء حساب جديد</h2>
+                <form id="registerForm">
+                    <div class="form-row">
+                        <input type="text" placeholder="الاسم الكامل" required>
+                        <input type="email" placeholder="البريد الإلكتروني" required>
+                    </div>
+                    <div class="form-row">
+                        <input type="tel" placeholder="رقم الهاتف" required>
+                        <input type="password" placeholder="كلمة المرور" required>
+                    </div>
+                    <button type="submit" class="btn btn-register">إنشاء حساب مجاناً</button>
+                </form>
+                
+                <div id="successMsg" style="display:none;" class="success-message">
+                    🎉 تم إنشاء حسابك بنجاح! مرحباً بك في RimToken
+                </div>
+            </div>
+            
+            <!-- المميزات -->
             <div class="features">
                 <div class="feature-card">
                     <div class="feature-icon">💰</div>
-                    <div class="feature-title">المحفظة</div>
-                    <p>إدارة آمنة لعملاتك المشفرة عبر شبكات متعددة</p>
-                    <button class="btn">فتح المحفظة</button>
+                    <div class="feature-title">محفظة متعددة العملات</div>
+                    <p>ادعم أكثر من 1000 عملة مشفرة</p>
                 </div>
                 
                 <div class="feature-card">
                     <div class="feature-icon">🔄</div>
-                    <div class="feature-title">التبديل</div>
-                    <p>تبديل العملات المشفرة بسهولة وأمان</p>
-                    <button class="btn btn-purple">تبديل العملات</button>
+                    <div class="feature-title">تبديل فوري</div>
+                    <p>تبديل العملات بأفضل الأسعار</p>
                 </div>
                 
                 <div class="feature-card">
-                    <div class="feature-icon">📥</div>
-                    <div class="feature-title">الإيداع والسحب</div>
-                    <p>إيداع وسحب العملات بطريقة آمنة ومضمونة</p>
-                    <button class="btn btn-green">إدارة الأموال</button>
+                    <div class="feature-icon">🔒</div>
+                    <div class="feature-title">أمان متقدم</div>
+                    <p>حماية عالية المستوى لأموالك</p>
                 </div>
             </div>
             
@@ -233,17 +331,37 @@ app.get("/", (req, res) => {
         </div>
         
         <script>
-            // Add some interactivity
-            document.querySelectorAll('.btn').forEach(btn => {
+            // تفعيل نموذج التسجيل
+            document.getElementById('registerForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // إخفاء النموذج مع تأثير
+                const form = document.getElementById('registerForm');
+                form.style.transform = 'scale(0.9)';
+                form.style.opacity = '0.5';
+                
+                setTimeout(() => {
+                    form.style.display = 'none';
+                    document.getElementById('successMsg').style.display = 'block';
+                    
+                    // رسالة ترحيب إضافية
+                    setTimeout(() => {
+                        alert('🎉 مرحباً بك في عائلة RimToken!\n\nستتمكن الآن من:\n• إدارة محفظتك بأمان\n• تبديل العملات المشفرة\n• تتبع استثماراتك\n\nابدأ رحلتك معنا!');
+                    }, 1000);
+                }, 500);
+            });
+            
+            // تفعيل الأزرار الأخرى
+            document.querySelectorAll('.btn:not(.btn-register)').forEach(btn => {
                 btn.addEventListener('click', () => {
-                    alert('مرحباً بك في RimToken! الميزة قيد التطوير.');
+                    alert('قم بإنشاء حساب أولاً للوصول لهذه الميزة!');
                 });
             });
             
             // Test API connection
             fetch('/api/test')
                 .then(response => response.json())
-                .then(data => console.log('✅ اتصال ناجح:', data))
+                .then(data => console.log('✅ RimToken متصل بنجاح:', data))
                 .catch(error => console.error('❌ خطأ في الاتصال:', error));
         </script>
     </body>
