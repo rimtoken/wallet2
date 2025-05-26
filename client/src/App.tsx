@@ -39,6 +39,9 @@ import WithdrawalPage from "@/pages/withdrawal-page";
 import FAQPage from "@/pages/faq-page";
 import AdvancedDashboardPage from "@/pages/advanced-dashboard";
 import DemoFeaturesPage from "@/pages/demo-features";
+import AdvancedTradingPage from "@/pages/advanced-trading-page";
+import PortfolioAnalyticsPage from "@/pages/portfolio-analytics-page";
+import SmartAlertsPage from "@/pages/smart-alerts-page";
 // Theme CSS is already imported in index.css
 // سنضيف مزود المصادقة لاحقاً
 
@@ -104,6 +107,17 @@ function Router() {
       </Route>
       <Route path="/advanced-dashboard">
         <AdvancedDashboardPage />
+      </Route>
+      
+      {/* المميزات المتقدمة الجديدة */}
+      <Route path="/advanced-trading">
+        <AdvancedTradingPage />
+      </Route>
+      <Route path="/portfolio-analytics">
+        <PortfolioAnalyticsPage />
+      </Route>
+      <Route path="/smart-alerts">
+        <SmartAlertsPage />
       </Route>
       
       {/* صفحة عرض المميزات الجديدة */}
