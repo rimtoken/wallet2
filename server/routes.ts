@@ -5,11 +5,11 @@ import axios from "axios";
 import { z } from "zod";
 import { insertTransactionSchema, insertUserSchema } from "@shared/schema";
 import { fromZodError } from "zod-validation-error";
-import { setupAuth } from "./auth";
+// import { setupAuth } from "./auth";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // إعداد نظام المصادقة
-  setupAuth(app);
+  // setupAuth(app);
   // Users
   app.post("/api/users", async (req: Request, res: Response) => {
     try {
