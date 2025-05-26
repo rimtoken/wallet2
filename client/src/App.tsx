@@ -44,6 +44,7 @@ import PortfolioAnalyticsPage from "@/pages/portfolio-analytics-page";
 import SmartAlertsPage from "@/pages/smart-alerts-page";
 import DemoLoginPage from "@/pages/demo-login-page";
 import RegisterPage from "@/pages/register-page";
+import ModernWalletPage from "@/pages/modern-wallet-page";
 // Theme CSS is already imported in index.css
 // سنضيف مزود المصادقة لاحقاً
 
@@ -81,7 +82,7 @@ function Router() {
         <MainSimplifiedPage />
       </Route>
       <Route path="/wallet">
-        <WalletPage userId={userId} />
+        <ModernWalletPage />
       </Route>
       <Route path="/swap">
         <SwapPageNew />
