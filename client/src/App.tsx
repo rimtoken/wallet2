@@ -1,52 +1,8 @@
-import { Switch, Route, useLocation } from "wouter";
-import { queryClient } from "./lib/queryClient";
+import { Switch, Route } from "wouter";
 import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "./lib/queryClient";
 import { Toaster } from "@/components/ui/toaster";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { LanguageProvider } from '@/contexts/language-context';
-import { ThemeProvider } from '@/contexts/theme-context';
-import NotFound from "@/pages/not-found";
-import Dashboard from "@/pages/dashboard";
-import HomePage from "@/pages/home-page";
-import Transactions from "@/pages/transactions";
-import Markets from "@/pages/markets";
-import Settings from "@/pages/settings";
-import SettingsPage from "@/pages/settings-page";
-import Web3WalletPage from "@/pages/web3-wallet";
-import PosPage from "@/pages/point-of-sale/pos-page";
-import AuthPage from "@/pages/auth-page";
-import EnhancedRegisterPage from "@/pages/enhanced-register-page";
-import ProfilePage from "@/pages/profile";
-import TradingViewPage from "@/pages/trading-view";
-import PriceAlertsPage from "@/pages/price-alerts";
-import { useState, useEffect } from "react";
-import { MainLayout } from "@/components/layout/main-layout";
-import WalletPage from "@/pages/wallet";
-import SwapPage from "@/pages/swap";
-import MainSimplifiedPage from "@/pages/main-simplified";
-import WalletSimplifiedPage from "@/pages/wallet-simplified";
-import SwapSimplifiedPage from "@/pages/swap-simplified";
-import SwapPageNew from "@/pages/swap-page";
-
-// الصفحات الجديدة
-import TeamPage from "@/pages/team-page";
-import NewsPage from "@/pages/news-page";
-import AboutPage from "@/pages/about-page";
-import ContactPage from "@/pages/contact-page";
-
-import DepositPage from "@/pages/deposit-page";
-import WithdrawalPage from "@/pages/withdrawal-page";
-import FAQPage from "@/pages/faq-page";
-import AdvancedDashboardPage from "@/pages/advanced-dashboard";
-import DemoFeaturesPage from "@/pages/demo-features";
-import AdvancedTradingPage from "@/pages/advanced-trading-page";
-import PortfolioAnalyticsPage from "@/pages/portfolio-analytics-page";
-import SmartAlertsPage from "@/pages/smart-alerts-page";
-import DemoLoginPage from "@/pages/demo-login-page";
-import RegisterPage from "@/pages/register-page";
-import ModernWalletPage from "@/pages/modern-wallet-page";
-// Theme CSS is already imported in index.css
-// سنضيف مزود المصادقة لاحقاً
+import SimpleHome from "@/pages/simple-home";
 
 function Router() {
   // Active user ID for demo purposes
@@ -79,24 +35,24 @@ function Router() {
       
       {/* الصفحة الرئيسية المبسطة كصفحة افتراضية */}
       <Route path="/">
-        <MainSimplifiedPage />
+        <SimpleHome />
       </Route>
       <Route path="/wallet">
-        <ModernWalletPage />
+        <SimpleHome />
       </Route>
       <Route path="/swap">
-        <SwapPageNew />
+        <SimpleHome />
       </Route>
       
       {/* الصفحات الإضافية الجديدة */}
       <Route path="/team">
-        <TeamPage />
+        <SimpleHome />
       </Route>
       <Route path="/news">
-        <NewsPage />
+        <SimpleHome />
       </Route>
       <Route path="/about">
-        <AboutPage />
+        <SimpleHome />
       </Route>
       <Route path="/contact">
         <ContactPage />

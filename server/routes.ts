@@ -1,12 +1,11 @@
 import type { Express, Request, Response } from "express";
 import { createServer, type Server } from "http";
-import { storage } from "./storage"; // استخدام MemStorage للتوافق مع الكود القديم
-import { dbStorage } from "./storage-db"; // استخدام قاعدة البيانات للميزات الجديدة
+import { storage } from "./storage";
 import axios from "axios";
 import { z } from "zod";
 import { insertTransactionSchema, insertUserSchema } from "@shared/schema";
 import { fromZodError } from "zod-validation-error";
-import { setupAuth } from "./auth-setup";
+import { setupAuth } from "./auth";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // إعداد نظام المصادقة
