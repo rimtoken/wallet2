@@ -28,8 +28,25 @@ class RimTokenHandler(SimpleHTTPRequestHandler):
         super().do_GET()
 
 if __name__ == '__main__':
-    port = 5000
+    import socket
+    
+    # البحث عن بورت متاح
+    def find_port():
+        for p in [3000, 8080, 8000, 5000, 4000]:
+            try:
+                with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                    s.bind(('0.0.0.0', p))
+                    return p
+            except:
+                continue
+        return 3000
+    
+    port = find_port()
     server = HTTPServer(('0.0.0.0', port), RimTokenHandler)
+    
     print(f'🎉 RimToken Website is running at http://localhost:{port}')
+    print(f'🌐 Preview URL: https://{os.environ.get("REPL_SLUG", "preview")}-{port}.{os.environ.get("REPL_OWNER", "user")}.repl.co')
     print('✨ Your beautiful crypto website is ready!')
+    print('📱 Click the Preview button to see your site!')
+    
     server.serve_forever()
