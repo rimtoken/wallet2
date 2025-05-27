@@ -4,21 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RimToken - منصة العملات المشفرة الحديثة</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- استخدام CDN بديل لـ Font Awesome -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        /* إضافة خطوط آمنة للمتصفحات */
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap');
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Cairo', 'Arial', sans-serif;
         }
         
         body {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             direction: rtl;
+            overflow-x: hidden;
         }
         
         .container {
@@ -27,10 +30,11 @@
             padding: 0 20px;
         }
         
-        /* Navigation */
+        /* Navigation - متوافق مع جميع المتصفحات */
         .navbar {
-            backdrop-filter: blur(20px);
             background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             padding: 1rem 0;
             position: fixed;
@@ -40,13 +44,23 @@
         }
         
         .nav-content {
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
+            -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
             justify-content: space-between;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
             align-items: center;
         }
         
         .logo {
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
             align-items: center;
             gap: 10px;
             color: white;
@@ -59,14 +73,22 @@
             height: 40px;
             border-radius: 50%;
             background: linear-gradient(45deg, #667eea, #764ba2);
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
             align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
             justify-content: center;
             color: white;
             font-size: 1.2rem;
         }
         
         .nav-links {
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
             gap: 30px;
             list-style: none;
@@ -99,10 +121,14 @@
             box-shadow: 0 15px 40px rgba(238, 90, 36, 0.5);
         }
         
-        /* Hero Section */
+        /* Hero Section - Grid متوافق */
         .hero-section {
             min-height: 100vh;
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
             align-items: center;
             position: relative;
             overflow: hidden;
@@ -122,9 +148,13 @@
         }
         
         .hero-content {
+            display: -ms-grid;
             display: grid;
+            -ms-grid-columns: 1fr 60px 1fr;
             grid-template-columns: 1fr 1fr;
             gap: 60px;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
             align-items: center;
             width: 100%;
         }
@@ -152,12 +182,16 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            color: #ffd700; /* fallback لـ Chrome القديم */
         }
         
         .hero-buttons {
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
             gap: 20px;
             margin-bottom: 3rem;
+            -ms-flex-wrap: wrap;
             flex-wrap: wrap;
         }
         
@@ -178,7 +212,9 @@
         }
         
         .stats-grid {
+            display: -ms-grid;
             display: grid;
+            -ms-grid-columns: 1fr 30px 1fr 30px 1fr;
             grid-template-columns: repeat(3, 1fr);
             gap: 30px;
             text-align: center;
@@ -203,6 +239,7 @@
             padding: 40px;
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
         }
         
         .card-title {
@@ -214,7 +251,9 @@
         }
         
         .form-grid {
+            display: -ms-grid;
             display: grid;
+            -ms-grid-columns: 1fr 20px 1fr;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
             margin-bottom: 20px;
@@ -261,10 +300,15 @@
         }
         
         .network-tags {
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
             justify-content: center;
             gap: 10px;
             margin-top: 10px;
+            -ms-flex-wrap: wrap;
             flex-wrap: wrap;
         }
         
@@ -313,7 +357,9 @@
         }
         
         .crypto-grid {
+            display: -ms-grid;
             display: grid;
+            -ms-grid-columns: (minmax(280px, 1fr))[auto-fit];
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
         }
@@ -324,6 +370,7 @@
             border-radius: 20px;
             padding: 30px;
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             transition: all 0.3s;
             color: white;
         }
@@ -334,7 +381,11 @@
         }
         
         .crypto-header {
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
             align-items: center;
             margin-bottom: 20px;
         }
@@ -343,8 +394,14 @@
             width: 50px;
             height: 50px;
             border-radius: 50%;
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
             align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
             justify-content: center;
             font-size: 1.5rem;
             margin-left: 15px;
@@ -381,7 +438,9 @@
         }
         
         .features-grid {
+            display: -ms-grid;
             display: grid;
+            -ms-grid-columns: (minmax(350px, 1fr))[auto-fit];
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 40px;
             margin-top: 3rem;
@@ -397,8 +456,14 @@
             height: 80px;
             background: linear-gradient(135deg, #667eea, #764ba2);
             border-radius: 20px;
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
             align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
             justify-content: center;
             margin: 0 auto 20px;
             font-size: 2rem;
@@ -432,13 +497,15 @@
         }
         
         .contact-grid {
+            display: -ms-grid;
             display: grid;
+            -ms-grid-columns: (minmax(200px, 1fr))[auto-fit];
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 40px;
             margin: 40px 0;
         }
         
-        .contact-item i {
+        .contact-item .icon {
             font-size: 2.5rem;
             color: #667eea;
             margin-bottom: 15px;
@@ -456,7 +523,11 @@
         }
         
         .social-links {
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
             justify-content: center;
             gap: 20px;
             margin-top: 30px;
@@ -467,8 +538,14 @@
             height: 50px;
             background: linear-gradient(135deg, #667eea, #764ba2);
             border-radius: 50%;
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
             align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
             justify-content: center;
             color: white;
             font-size: 1.2rem;
@@ -489,9 +566,10 @@
             opacity: 0.8;
         }
         
-        /* Responsive Design */
-        @media (max-width: 768px) {
+        /* Responsive Design - متوافق مع جميع المتصفحات */
+        @media screen and (max-width: 768px) {
             .hero-content {
+                -ms-grid-columns: 1fr;
                 grid-template-columns: 1fr;
                 gap: 40px;
             }
@@ -501,6 +579,7 @@
             }
             
             .form-grid {
+                -ms-grid-columns: 1fr;
                 grid-template-columns: 1fr;
             }
             
@@ -509,6 +588,7 @@
             }
             
             .stats-grid {
+                -ms-grid-columns: 1fr;
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
@@ -541,7 +621,7 @@
                 </ul>
                 
                 <button class="cta-button" onclick="scrollToRegistration()">
-                    ابدأ الآن <i class="fas fa-rocket"></i>
+                    ابدأ الآن ⭐
                 </button>
             </div>
         </div>
@@ -551,13 +631,13 @@
     <section id="home" class="hero-section">
         <!-- Floating Elements -->
         <div class="floating-crypto" style="top: 10%; left: 10%;">
-            <i class="fab fa-bitcoin" style="font-size: 4rem;"></i>
+            <span style="font-size: 4rem;">₿</span>
         </div>
         <div class="floating-crypto" style="top: 20%; right: 15%; animation-delay: -2s;">
-            <i class="fab fa-ethereum" style="font-size: 3rem;"></i>
+            <span style="font-size: 3rem;">Ξ</span>
         </div>
         <div class="floating-crypto" style="bottom: 30%; left: 20%; animation-delay: -4s;">
-            <i class="fas fa-coins" style="font-size: 2.5rem;"></i>
+            <span style="font-size: 2.5rem;">◎</span>
         </div>
         
         <div class="container">
@@ -573,11 +653,11 @@
                     
                     <div class="hero-buttons">
                         <button class="cta-button" onclick="scrollToRegistration()">
-                            ابدأ التداول الآن <i class="fas fa-arrow-left"></i>
+                            ابدأ التداول الآن ←
                         </button>
                         
                         <button class="secondary-button">
-                            شاهد الفيديو التعريفي <i class="fas fa-play"></i>
+                            شاهد الفيديو التعريفي ▶
                         </button>
                     </div>
                     
@@ -616,7 +696,7 @@
                         </div>
                         
                         <button type="submit" class="submit-button">
-                            إنشاء حساب مجاناً <i class="fas fa-user-plus"></i>
+                            إنشاء حساب مجاناً 🚀
                         </button>
                     </form>
                     
@@ -643,8 +723,8 @@
             <div class="crypto-grid">
                 <div class="crypto-card">
                     <div class="crypto-header">
-                        <div class="crypto-logo" style="background: #f7931a;">
-                            <i class="fab fa-bitcoin"></i>
+                        <div class="crypto-logo" style="background: #f7931a; color: white;">
+                            ₿
                         </div>
                         <div class="crypto-info">
                             <h4>Bitcoin</h4>
@@ -657,8 +737,8 @@
                 
                 <div class="crypto-card">
                     <div class="crypto-header">
-                        <div class="crypto-logo" style="background: #627eea;">
-                            <i class="fab fa-ethereum"></i>
+                        <div class="crypto-logo" style="background: #627eea; color: white;">
+                            Ξ
                         </div>
                         <div class="crypto-info">
                             <h4>Ethereum</h4>
@@ -671,8 +751,8 @@
                 
                 <div class="crypto-card">
                     <div class="crypto-header">
-                        <div class="crypto-logo" style="background: linear-gradient(45deg, #9945ff, #14f195);">
-                            <span style="font-weight: bold;">S</span>
+                        <div class="crypto-logo" style="background: linear-gradient(45deg, #9945ff, #14f195); color: white;">
+                            ◎
                         </div>
                         <div class="crypto-info">
                             <h4>Solana</h4>
@@ -685,8 +765,8 @@
                 
                 <div class="crypto-card">
                     <div class="crypto-header">
-                        <div class="crypto-logo" style="background: #f3ba2f;">
-                            <span style="font-weight: bold; color: #000;">B</span>
+                        <div class="crypto-logo" style="background: #f3ba2f; color: #000;">
+                            B
                         </div>
                         <div class="crypto-info">
                             <h4>BNB</h4>
@@ -709,7 +789,7 @@
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
+                        🛡️
                     </div>
                     <h3 class="feature-title">محفظة آمنة متطورة</h3>
                     <p class="feature-description">
@@ -719,7 +799,7 @@
                 
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-exchange-alt"></i>
+                        🔄
                     </div>
                     <h3 class="feature-title">تبديل فوري ورسوم منخفضة</h3>
                     <p class="feature-description">
@@ -729,7 +809,7 @@
                 
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-network-wired"></i>
+                        🌐
                     </div>
                     <h3 class="feature-title">دعم شبكات متعددة</h3>
                     <p class="feature-description">
@@ -748,43 +828,31 @@
                 
                 <div class="contact-grid">
                     <div class="contact-item">
-                        <i class="fas fa-phone"></i>
+                        <div class="icon">📞</div>
                         <h4>الهاتف</h4>
                         <p>37968897</p>
                     </div>
                     
                     <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
+                        <div class="icon">📧</div>
                         <h4>البريد الإلكتروني</h4>
                         <p>INFO@RIMTOKEN.ORG</p>
                     </div>
                     
                     <div class="contact-item">
-                        <i class="fas fa-globe"></i>
+                        <div class="icon">🌐</div>
                         <h4>الموقع</h4>
                         <p>rimtoken.org</p>
                     </div>
                 </div>
                 
                 <div class="social-links">
-                    <a href="https://t.me/rimtoken9" class="social-link" title="Telegram">
-                        <i class="fab fa-telegram"></i>
-                    </a>
-                    <a href="https://discord.com/invite/ZqvXkQEwyA" class="social-link" title="Discord">
-                        <i class="fab fa-discord"></i>
-                    </a>
-                    <a href="https://x.com/rimtoken" class="social-link" title="Twitter/X">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="https://github.com/Hacenm" class="social-link" title="GitHub">
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a href="https://www.youtube.com/@Rimtoken" class="social-link" title="YouTube">
-                        <i class="fab fa-youtube"></i>
-                    </a>
-                    <a href="https://www.reddit.com/u/rimtoken/s/HnGk0uGY70" class="social-link" title="Reddit">
-                        <i class="fab fa-reddit"></i>
-                    </a>
+                    <a href="https://t.me/rimtoken9" class="social-link" title="Telegram">T</a>
+                    <a href="https://discord.com/invite/ZqvXkQEwyA" class="social-link" title="Discord">D</a>
+                    <a href="https://x.com/rimtoken" class="social-link" title="Twitter/X">X</a>
+                    <a href="https://github.com/Hacenm" class="social-link" title="GitHub">G</a>
+                    <a href="https://www.youtube.com/@Rimtoken" class="social-link" title="YouTube">Y</a>
+                    <a href="https://www.reddit.com/u/rimtoken/s/HnGk0uGY70" class="social-link" title="Reddit">R</a>
                 </div>
             </div>
         </div>
@@ -803,19 +871,19 @@
         document.getElementById('registrationForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const form = this;
-            const successMessage = document.getElementById('successMessage');
+            var form = this;
+            var successMessage = document.getElementById('successMessage');
             
             // Hide form with animation
             form.style.transform = 'scale(0.95)';
             form.style.opacity = '0.3';
             
-            setTimeout(() => {
+            setTimeout(function() {
                 form.style.display = 'none';
                 successMessage.style.display = 'block';
                 
                 // Welcome message
-                setTimeout(() => {
+                setTimeout(function() {
                     alert('🎉 مرحباً بك في عائلة RimToken!\n\nستتمكن الآن من:\n• إدارة محفظتك بأمان عالي\n• تبديل العملات بأفضل الأسعار\n• الوصول لأكثر من 1000 عملة\n• التداول عبر شبكات متعددة\n\nابدأ رحلتك الاستثمارية معنا!');
                 }, 1500);
             }, 800);
@@ -830,10 +898,11 @@
         }
 
         // Navigation smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+        var navLinks = document.querySelectorAll('a[href^="#"]');
+        for (var i = 0; i < navLinks.length; i++) {
+            navLinks[i].addEventListener('click', function(e) {
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
+                var target = document.querySelector(this.getAttribute('href'));
                 if (target) {
                     target.scrollIntoView({
                         behavior: 'smooth',
@@ -841,47 +910,51 @@
                     });
                 }
             });
-        });
+        }
 
         // Simulate price updates
         function updatePrices() {
-            const prices = {
+            var prices = {
                 'btc-price': { element: document.getElementById('btc-price'), base: 43250 },
                 'eth-price': { element: document.getElementById('eth-price'), base: 2580 },
                 'sol-price': { element: document.getElementById('sol-price'), base: 125.40 },
                 'bnb-price': { element: document.getElementById('bnb-price'), base: 315.20 }
             };
 
-            Object.keys(prices).forEach(id => {
-                const { element, base } = prices[id];
-                const change = (Math.random() - 0.5) * 0.02; // ±1% change
-                const newPrice = base * (1 + change);
+            for (var id in prices) {
+                var item = prices[id];
+                var element = item.element;
+                var base = item.base;
+                var change = (Math.random() - 0.5) * 0.02; // ±1% change
+                var newPrice = base * (1 + change);
                 
                 if (id === 'sol-price') {
                     element.textContent = '$' + newPrice.toFixed(2);
                 } else {
                     element.textContent = '$' + newPrice.toLocaleString();
                 }
-            });
+            }
         }
 
         // Update prices every 5 seconds
         setInterval(updatePrices, 5000);
 
-        // Add some interactivity
+        // Add loading animation to cards
         document.addEventListener('DOMContentLoaded', function() {
-            // Add loading animation to cards
-            const cards = document.querySelectorAll('.crypto-card, .feature-card');
-            cards.forEach((card, index) => {
+            var cards = document.querySelectorAll('.crypto-card, .feature-card');
+            for (var i = 0; i < cards.length; i++) {
+                var card = cards[i];
                 card.style.opacity = '0';
                 card.style.transform = 'translateY(20px)';
                 
-                setTimeout(() => {
-                    card.style.transition = 'all 0.6s ease';
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, index * 100);
-            });
+                (function(card, index) {
+                    setTimeout(function() {
+                        card.style.transition = 'all 0.6s ease';
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, index * 100);
+                })(card, i);
+            }
         });
     </script>
 </body>
