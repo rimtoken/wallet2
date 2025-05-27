@@ -486,63 +486,124 @@
             100% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.8), 0 0 80px rgba(255, 215, 0, 0.5); }
         }
         
-        /* حركات انيميشن للصفحة */
+        /* حركات انيميشن قوية للصفحة */
         .hero-title {
-            animation: slideInFromTop 1s ease-out;
+            animation: powerSlideDown 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform: translateY(-200px);
+            opacity: 0;
+            animation-fill-mode: forwards;
         }
         
         .hero-subtitle {
-            animation: slideInFromTop 1.2s ease-out 0.2s both;
+            animation: powerSlideDown 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s;
+            transform: translateY(-150px);
+            opacity: 0;
+            animation-fill-mode: forwards;
         }
         
         .hero-buttons {
-            animation: slideInFromTop 1.4s ease-out 0.4s both;
+            animation: powerSlideDown 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s;
+            transform: translateY(-100px);
+            opacity: 0;
+            animation-fill-mode: forwards;
         }
         
         .stats-grid {
-            animation: slideInFromBottom 1s ease-out 0.6s both;
+            animation: powerSlideUp 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.9s;
+            transform: translateY(100px);
+            opacity: 0;
+            animation-fill-mode: forwards;
         }
         
         .registration-card {
-            animation: slideInFromRight 1.2s ease-out 0.8s both;
+            animation: powerSlideRight 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.2s;
+            transform: translateX(150px);
+            opacity: 0;
+            animation-fill-mode: forwards;
         }
         
-        @keyframes slideInFromTop {
+        .floating-rim-logo {
+            animation: rimFloat 4s ease-in-out infinite, rimGlow 2s ease-in-out infinite alternate, rimEntrance 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.5s;
+            transform: scale(0) rotate(180deg);
+            animation-fill-mode: forwards;
+        }
+        
+        @keyframes powerSlideDown {
             0% {
                 opacity: 0;
-                transform: translateY(-100px);
+                transform: translateY(-200px) scale(0.8);
+            }
+            60% {
+                opacity: 0.8;
+                transform: translateY(20px) scale(1.05);
             }
             100% {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
             }
         }
         
-        @keyframes slideInFromBottom {
+        @keyframes powerSlideUp {
             0% {
                 opacity: 0;
-                transform: translateY(50px);
+                transform: translateY(150px) scale(0.8);
+            }
+            60% {
+                opacity: 0.8;
+                transform: translateY(-20px) scale(1.05);
             }
             100% {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
             }
         }
         
-        @keyframes slideInFromRight {
+        @keyframes powerSlideRight {
             0% {
                 opacity: 0;
-                transform: translateX(100px);
+                transform: translateX(200px) rotateY(45deg);
+            }
+            60% {
+                opacity: 0.8;
+                transform: translateX(-20px) rotateY(-5deg);
             }
             100% {
                 opacity: 1;
-                transform: translateX(0);
+                transform: translateX(0) rotateY(0deg);
+            }
+        }
+        
+        @keyframes rimEntrance {
+            0% {
+                opacity: 0;
+                transform: scale(0) rotate(360deg);
+            }
+            60% {
+                opacity: 0.8;
+                transform: scale(1.2) rotate(10deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
             }
         }
         
         /* Features Section */
         .features-section {
-            padding: 80px 0;
+            padding: 120px 0;
+            margin-top: 60px;
+        }
+        
+        /* Prices Section */
+        .prices-section {
+            padding: 120px 0;
+            margin-top: 80px;
+        }
+        
+        /* Contact Section */
+        .contact-section {
+            padding: 120px 0;
+            margin-top: 80px;
         }
         
         .features-grid {
@@ -1078,21 +1139,38 @@
         // Update prices every 5 seconds
         setInterval(updatePrices, 5000);
 
-        // Add loading animation to cards
+        // Add powerful loading animations to all sections
         document.addEventListener('DOMContentLoaded', function() {
+            // Cards animation
             var cards = document.querySelectorAll('.crypto-card, .feature-card');
             for (var i = 0; i < cards.length; i++) {
                 var card = cards[i];
                 card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
+                card.style.transform = 'translateY(50px) scale(0.8)';
                 
                 (function(card, index) {
                     setTimeout(function() {
-                        card.style.transition = 'all 0.6s ease';
+                        card.style.transition = 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
                         card.style.opacity = '1';
-                        card.style.transform = 'translateY(0)';
-                    }, index * 100);
+                        card.style.transform = 'translateY(0) scale(1)';
+                    }, 2000 + (index * 200));
                 })(card, i);
+            }
+            
+            // Section titles animation
+            var sectionTitles = document.querySelectorAll('.section-title');
+            for (var i = 0; i < sectionTitles.length; i++) {
+                var title = sectionTitles[i];
+                title.style.opacity = '0';
+                title.style.transform = 'translateY(-50px)';
+                
+                (function(title, index) {
+                    setTimeout(function() {
+                        title.style.transition = 'all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                        title.style.opacity = '1';
+                        title.style.transform = 'translateY(0)';
+                    }, 1500 + (index * 300));
+                })(title, i);
             }
         });
     </script>
