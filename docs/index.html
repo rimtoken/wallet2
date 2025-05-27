@@ -456,6 +456,90 @@
             font-weight: bold;
         }
         
+        /* الشعار الذهبي العائم */
+        .floating-rim-logo {
+            width: 80px;
+            height: 80px;
+            background: #000000;
+            border: 3px solid #FFD700;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFD700;
+            font-size: 2.5rem;
+            font-weight: bold;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.6), 
+                        0 0 60px rgba(255, 215, 0, 0.3);
+            animation: rimFloat 4s ease-in-out infinite, rimGlow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes rimFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(3deg); }
+            50% { transform: translateY(0px) rotate(0deg); }
+            75% { transform: translateY(-10px) rotate(-3deg); }
+        }
+        
+        @keyframes rimGlow {
+            0% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.6), 0 0 60px rgba(255, 215, 0, 0.3); }
+            100% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.8), 0 0 80px rgba(255, 215, 0, 0.5); }
+        }
+        
+        /* حركات انيميشن للصفحة */
+        .hero-title {
+            animation: slideInFromTop 1s ease-out;
+        }
+        
+        .hero-subtitle {
+            animation: slideInFromTop 1.2s ease-out 0.2s both;
+        }
+        
+        .hero-buttons {
+            animation: slideInFromTop 1.4s ease-out 0.4s both;
+        }
+        
+        .stats-grid {
+            animation: slideInFromBottom 1s ease-out 0.6s both;
+        }
+        
+        .registration-card {
+            animation: slideInFromRight 1.2s ease-out 0.8s both;
+        }
+        
+        @keyframes slideInFromTop {
+            0% {
+                opacity: 0;
+                transform: translateY(-100px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInFromBottom {
+            0% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInFromRight {
+            0% {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
         /* Features Section */
         .features-section {
             padding: 80px 0;
@@ -654,10 +738,13 @@
     <!-- Hero Section -->
     <section id="home" class="hero-section">
         <!-- Floating Elements -->
+        <div class="floating-crypto rim-logo" style="top: 15%; right: 10%;">
+            <div class="floating-rim-logo">R</div>
+        </div>
         <div class="floating-crypto" style="top: 10%; left: 10%;">
             <span style="font-size: 4rem;">₿</span>
         </div>
-        <div class="floating-crypto" style="top: 20%; right: 15%; animation-delay: -2s;">
+        <div class="floating-crypto" style="top: 30%; right: 25%; animation-delay: -2s;">
             <span style="font-size: 3rem;">Ξ</span>
         </div>
         <div class="floating-crypto" style="bottom: 30%; left: 20%; animation-delay: -4s;">
