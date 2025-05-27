@@ -226,7 +226,7 @@ Distribution:
 - **Education**: Master's in Computer Science
 - **Achievements**: Developed 3 successful trading platforms
 
-#### Sara Ahmed - Marketing & Relations Director
+#### Ibrahim Al-Radadi - Marketing & Relations Director
 - **Experience**: 6 years in tech product marketing
 - **Education**: Master's in Business Administration
 - **Achievements**: Led marketing campaigns with $50M+ budget
@@ -238,7 +238,7 @@ Distribution:
 
 ### Technical Team
 
-#### Fatima Khalid - UI/UX Developer
+#### Munir Ali - UI/UX Developer
 - **Experience**: 5 years in UX/UI development
 - **Education**: Bachelor's in Digital Design
 - **Specialty**: Exceptional user experience design
@@ -253,15 +253,7 @@ Distribution:
 - **Specialty**: Cloud infrastructure
 - **Skills**: Kubernetes, Docker, Microservices
 
-#### Layla Mohammed - Data Analyst
-- **Experience**: 4 years in financial data analysis
-- **Education**: Master's in Applied Statistics
-- **Specialty**: Market analysis and artificial intelligence
 
-#### Omar Al-Aswad - Operations Manager
-- **Experience**: 8 years in operations management
-- **Education**: Master's in Business Administration
-- **Achievements**: Led teams of 100+ employees
 
 ---
 
