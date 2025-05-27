@@ -435,6 +435,27 @@
         .change-positive { color: #4caf50; }
         .change-negative { color: #f44336; }
         
+        /* عملة RimToken المميزة */
+        .featured-token {
+            position: relative;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05));
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 8px 32px rgba(255, 215, 0, 0.15);
+        }
+        
+        .featured-token::before {
+            content: '⭐ العملة الرئيسية';
+            position: absolute;
+            top: -10px;
+            right: 15px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
         /* Features Section */
         .features-section {
             padding: 80px 0;
@@ -674,6 +695,10 @@
                             <div class="stat-label">حجم التداول</div>
                         </div>
                         <div>
+                            <div class="stat-number">$12.45</div>
+                            <div class="stat-label">سعر RIM</div>
+                        </div>
+                        <div>
                             <div class="stat-number">1000+</div>
                             <div class="stat-label">عملة مدعومة</div>
                         </div>
@@ -724,6 +749,21 @@
             <p class="section-subtitle">تابع أسعار العملات المشفرة في الوقت الفعلي</p>
             
             <div class="crypto-grid">
+                <!-- RimToken - العملة الرئيسية -->
+                <div class="crypto-card featured-token">
+                    <div class="crypto-header">
+                        <div class="crypto-logo" style="background: #000000; border: 2px solid #FFD700; color: #FFD700;">
+                            R
+                        </div>
+                        <div class="crypto-info">
+                            <h4>RimToken</h4>
+                            <div class="crypto-symbol">RIM</div>
+                        </div>
+                    </div>
+                    <div class="crypto-price" id="rim-price">$12.45</div>
+                    <div class="crypto-change change-positive">+8.3% ↗</div>
+                </div>
+                
                 <div class="crypto-card">
                     <div class="crypto-header">
                         <div class="crypto-logo" style="background: #f7931a; color: white;">
@@ -918,6 +958,7 @@
         // Simulate price updates
         function updatePrices() {
             var prices = {
+                'rim-price': { element: document.getElementById('rim-price'), base: 12.45 },
                 'btc-price': { element: document.getElementById('btc-price'), base: 43250 },
                 'eth-price': { element: document.getElementById('eth-price'), base: 2580 },
                 'sol-price': { element: document.getElementById('sol-price'), base: 125.40 },
@@ -931,8 +972,16 @@
                 var change = (Math.random() - 0.5) * 0.02; // ±1% change
                 var newPrice = base * (1 + change);
                 
-                if (id === 'sol-price') {
+                if (id === 'rim-price' || id === 'sol-price') {
                     element.textContent = '$' + newPrice.toFixed(2);
+                    
+                    // تحديث سعر RIM في الإحصائيات
+                    if (id === 'rim-price') {
+                        var statElements = document.querySelectorAll('.stat-number');
+                        if (statElements[2]) {
+                            statElements[2].textContent = '$' + newPrice.toFixed(2);
+                        }
+                    }
                 } else {
                     element.textContent = '$' + newPrice.toLocaleString();
                 }
