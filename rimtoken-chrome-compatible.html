@@ -136,6 +136,28 @@
             padding: 8px;
         }
         
+        /* صور فريق العمل */
+        .team-photo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid #FFD700;
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+        }
+        
+        .member-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover .member-photo {
+            transform: scale(1.1);
+        }
+        
         .cta-button {
             background: linear-gradient(135deg, #ff6b6b, #ee5a24);
             border: none;
@@ -1058,8 +1080,8 @@
             
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon" style="background: linear-gradient(45deg, #667eea, #764ba2);">
-                        👨‍💻
+                    <div class="team-photo">
+                        <img src="attached_assets/hacen.jpg" alt="أحمد محمد" class="member-photo">
                     </div>
                     <h3>أحمد محمد</h3>
                     <p>المؤسس ومطور البلوك تشين</p>
@@ -1067,8 +1089,8 @@
                 </div>
                 
                 <div class="feature-card">
-                    <div class="feature-icon" style="background: linear-gradient(45deg, #ff6b6b, #ee5a24);">
-                        👩‍💼
+                    <div class="team-photo">
+                        <img src="attached_assets/rim.jpg" alt="سارة أحمد" class="member-photo">
                     </div>
                     <h3>سارة أحمد</h3>
                     <p>مديرة التسويق والعلاقات</p>
@@ -1076,8 +1098,8 @@
                 </div>
                 
                 <div class="feature-card">
-                    <div class="feature-icon" style="background: linear-gradient(45deg, #4ecdc4, #44a08d);">
-                        🔒
+                    <div class="team-photo">
+                        <img src="attached_assets/othmankamra.jpg" alt="محمد علي" class="member-photo">
                     </div>
                     <h3>محمد علي</h3>
                     <p>خبير الأمن السيبراني</p>
