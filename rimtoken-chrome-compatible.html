@@ -107,6 +107,35 @@
             color: #ffd700;
         }
         
+        /* محدد اللغات */
+        .language-selector {
+            margin-right: 20px;
+        }
+        
+        .language-dropdown {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            color: white;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        .language-dropdown:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #ffd700;
+        }
+        
+        .language-dropdown option {
+            background: #2c3e50;
+            color: white;
+            padding: 8px;
+        }
+        
         .cta-button {
             background: linear-gradient(135deg, #ff6b6b, #ee5a24);
             border: none;
@@ -786,7 +815,17 @@
                     <li><a href="#home">الرئيسية</a></li>
                     <li><a href="#prices">الأسعار</a></li>
                     <li><a href="#features">المميزات</a></li>
+                    <li><a href="#team">فريق العمل</a></li>
+                    <li><a href="#learn">تعلم</a></li>
                     <li><a href="#contact">تواصل معنا</a></li>
+                    <li class="language-selector">
+                        <select class="language-dropdown">
+                            <option value="ar">🇸🇦 العربية</option>
+                            <option value="en">🇺🇸 English</option>
+                            <option value="fr">🇫🇷 Français</option>
+                            <option value="es">🇪🇸 Español</option>
+                        </select>
+                    </li>
                 </ul>
                 
                 <button class="cta-button" onclick="scrollToRegistration()">
@@ -1006,6 +1045,85 @@
                     <p class="feature-description">
                         دعم للعديد من الشبكات بما في ذلك Ethereum و Solana و BSC و Polygon مع إمكانية التنقل السلس
                     </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="features-section">
+        <div class="container">
+            <h2 class="section-title">فريق العمل</h2>
+            <p class="section-subtitle">تعرف على الفريق المتميز وراء منصة RimToken</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: linear-gradient(45deg, #667eea, #764ba2);">
+                        👨‍💻
+                    </div>
+                    <h3>أحمد محمد</h3>
+                    <p>المؤسس ومطور البلوك تشين</p>
+                    <small>خبرة 8 سنوات في تطوير العملات المشفرة</small>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: linear-gradient(45deg, #ff6b6b, #ee5a24);">
+                        👩‍💼
+                    </div>
+                    <h3>سارة أحمد</h3>
+                    <p>مديرة التسويق والعلاقات</p>
+                    <small>متخصصة في نمو المنصات الرقمية</small>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: linear-gradient(45deg, #4ecdc4, #44a08d);">
+                        🔒
+                    </div>
+                    <h3>محمد علي</h3>
+                    <p>خبير الأمن السيبراني</p>
+                    <small>ضمان أمان المعاملات والمحافظ</small>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learn Section -->
+    <section id="learn" class="features-section" style="background: rgba(255, 255, 255, 0.05);">
+        <div class="container">
+            <h2 class="section-title">تعلم</h2>
+            <p class="section-subtitle">ادخل عالم العملات المشفرة مع دروسنا التعليمية</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: linear-gradient(45deg, #FFD700, #FFA500);">
+                        📚
+                    </div>
+                    <h3>أساسيات البلوك تشين</h3>
+                    <p>تعلم مفاهيم البلوك تشين والعملات المشفرة من الصفر</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: linear-gradient(45deg, #667eea, #764ba2);">
+                        📈
+                    </div>
+                    <h3>استراتيجيات التداول</h3>
+                    <p>اكتشف أفضل طرق التداول وإدارة المخاطر</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: linear-gradient(45deg, #4ecdc4, #44a08d);">
+                        🛡️
+                    </div>
+                    <h3>الأمان والحماية</h3>
+                    <p>حافظ على أموالك آمنة مع نصائح الأمان</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon" style="background: linear-gradient(45deg, #ff6b6b, #ee5a24);">
+                        🎯
+                    </div>
+                    <h3>تحليل السوق</h3>
+                    <p>تعلم قراءة الرسوم البيانية وتحليل الاتجاهات</p>
                 </div>
             </div>
         </div>
