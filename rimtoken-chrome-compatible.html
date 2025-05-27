@@ -71,8 +71,8 @@
         .crypto-icon {
             width: 40px;
             height: 40px;
-            border-radius: 8px;
-            background: #000000;
+            border-radius: 50%;
+            overflow: hidden;
             display: -webkit-box;
             display: -ms-flexbox;
             display: flex;
@@ -82,11 +82,28 @@
             -webkit-box-pack: center;
             -ms-flex-pack: center;
             justify-content: center;
-            color: #FFD700;
-            font-size: 1.5rem;
-            font-weight: bold;
             border: 2px solid #FFD700;
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        }
+        
+        .logo-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .logo-animated {
+            animation: logoSpin 4s linear infinite, logoGlow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes logoSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes logoGlow {
+            0% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.5); }
+            100% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.8); }
         }
         
         .nav-links {
@@ -511,18 +528,21 @@
         .floating-rim-logo {
             width: 80px;
             height: 80px;
-            background: #000000;
             border: 3px solid #FFD700;
-            border-radius: 12px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #FFD700;
-            font-size: 2.5rem;
-            font-weight: bold;
+            overflow: hidden;
             box-shadow: 0 0 30px rgba(255, 215, 0, 0.6), 
                         0 0 60px rgba(255, 215, 0, 0.3);
             animation: rimFloat 4s ease-in-out infinite, rimGlow 2s ease-in-out infinite alternate;
+        }
+        
+        .floating-logo-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         
         @keyframes rimFloat {
@@ -829,7 +849,9 @@
         <div class="container">
             <div class="nav-content">
                 <div class="logo">
-                    <div class="crypto-icon">R</div>
+                    <div class="crypto-icon logo-animated">
+                        <img src="attached_assets/rim.jpg" alt="RimToken Logo" class="logo-image">
+                    </div>
                     <span>RimToken</span>
                 </div>
                 
@@ -861,7 +883,9 @@
     <section id="home" class="hero-section">
         <!-- Floating Elements -->
         <div class="floating-crypto rim-logo" style="top: 15%; right: 10%;">
-            <div class="floating-rim-logo">R</div>
+            <div class="floating-rim-logo">
+                <img src="attached_assets/rim.jpg" alt="RimToken Logo" class="floating-logo-image">
+            </div>
         </div>
         <div class="floating-crypto" style="top: 10%; left: 10%;">
             <span style="font-size: 4rem;">₿</span>
@@ -1078,7 +1102,7 @@
             <h2 class="section-title">فريق العمل</h2>
             <p class="section-subtitle">تعرف على الفريق المتميز وراء منصة RimToken</p>
             
-            <div class="features-grid">
+            <div class="features-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
                 <div class="feature-card">
                     <div class="team-photo">
                         <img src="attached_assets/hacen.jpg" alt="أحمد محمد" class="member-photo">
@@ -1090,7 +1114,7 @@
                 
                 <div class="feature-card">
                     <div class="team-photo">
-                        <img src="attached_assets/rim.jpg" alt="سارة أحمد" class="member-photo">
+                        <img src="attached_assets/joen.jpg" alt="سارة أحمد" class="member-photo">
                     </div>
                     <h3>سارة أحمد</h3>
                     <p>مديرة التسويق والعلاقات</p>
@@ -1104,6 +1128,51 @@
                     <h3>محمد علي</h3>
                     <p>خبير الأمن السيبراني</p>
                     <small>ضمان أمان المعاملات والمحافظ</small>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="team-photo">
+                        <img src="attached_assets/hamido.jpg" alt="فاطمة خالد" class="member-photo">
+                    </div>
+                    <h3>فاطمة خالد</h3>
+                    <p>مطورة واجهات المستخدم</p>
+                    <small>تصميم تجربة مستخدم استثنائية</small>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="team-photo">
+                        <img src="attached_assets/anbarzan.jpg" alt="خالد أحمد" class="member-photo">
+                    </div>
+                    <h3>خالد أحمد</h3>
+                    <p>مدير المنتج</p>
+                    <small>قيادة رؤية المنتج والاستراتيجية</small>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="team-photo">
+                        <img src="attached_assets/hatan.jpg" alt="نور الدين" class="member-photo">
+                    </div>
+                    <h3>نور الدين</h3>
+                    <p>مطور النظم الخلفية</p>
+                    <small>بناء أنظمة قوية وقابلة للتوسع</small>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="team-photo">
+                        <img src="attached_assets/zc.jpg" alt="ليلى محمد" class="member-photo">
+                    </div>
+                    <h3>ليلى محمد</h3>
+                    <p>محللة البيانات</p>
+                    <small>تحليل السوق واتخاذ القرارات الذكية</small>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="team-photo">
+                        <img src="attached_assets/kkii.jpg" alt="عمر الأسود" class="member-photo">
+                    </div>
+                    <h3>عمر الأسود</h3>
+                    <p>مدير العمليات</p>
+                    <small>تنسيق العمليات اليومية والنمو</small>
                 </div>
             </div>
         </div>
