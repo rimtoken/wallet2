@@ -11,11 +11,15 @@ class RimTokenHandler(SimpleHTTPRequestHandler):
             self.end_headers()
             
             try:
-                with open('crypto-template.html', 'r', encoding='utf-8') as f:
+                with open('rimtoken-chrome-compatible.html', 'r', encoding='utf-8') as f:
                     html_content = f.read()
             except FileNotFoundError:
-                with open('index.html', 'r', encoding='utf-8') as f:
-                    html_content = f.read()
+                try:
+                    with open('docs/index.html', 'r', encoding='utf-8') as f:
+                        html_content = f.read()
+                except FileNotFoundError:
+                    with open('crypto-template.html', 'r', encoding='utf-8') as f:
+                        html_content = f.read()
             
             self.wfile.write(html_content.encode('utf-8'))
             return
