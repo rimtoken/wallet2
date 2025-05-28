@@ -24,6 +24,35 @@
             overflow-x: hidden;
         }
         
+        /* Text direction classes for language switching */
+        .ltr-layout {
+            direction: ltr !important;
+        }
+        
+        .ltr-layout * {
+            text-align: left !important;
+        }
+        
+        .ltr-layout .nav-links {
+            direction: ltr;
+        }
+        
+        .ltr-layout .hero-content,
+        .ltr-layout .section-title,
+        .ltr-layout .section-subtitle,
+        .ltr-layout .feature-description,
+        .ltr-layout p,
+        .ltr-layout h1,
+        .ltr-layout h2,
+        .ltr-layout h3,
+        .ltr-layout h4 {
+            text-align: left !important;
+        }
+        
+        .rtl-layout * {
+            text-align: right !important;
+        }
+        
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -1490,6 +1519,10 @@
                 document.documentElement.lang = 'en';
                 document.documentElement.dir = 'ltr';
                 
+                // Add CSS class for English text direction
+                document.body.classList.remove('rtl-layout');
+                document.body.classList.add('ltr-layout');
+                
                 // Update navigation
                 var navLinks = document.querySelectorAll('.nav-links a');
                 var englishNavTexts = ['Home', 'Prices', 'Features', 'Team', 'Learn', 'Contact'];
@@ -1644,9 +1677,13 @@
                 document.documentElement.lang = 'ar';
                 document.documentElement.dir = 'rtl';
                 
+                // Add CSS class for Arabic text direction
+                document.body.classList.remove('ltr-layout');
+                document.body.classList.add('rtl-layout');
+                
                 // Update navigation
                 var navLinks = document.querySelectorAll('.nav-links a');
-                var arabicNavTexts = ['الرئيسية', 'الأسعار', 'المميزات', 'فريق العمل', 'تعلم', 'تواصل معنا'];
+                var arabicNavTexts = ['الرئيسية', 'التداول', 'التنزيلات', 'تعلم', 'فريق العمل', 'تواصل معنا'];
                 navLinks.forEach(function(link, index) {
                     if (arabicNavTexts[index]) {
                         link.textContent = arabicNavTexts[index];
