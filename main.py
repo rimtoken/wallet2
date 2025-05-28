@@ -87,6 +87,44 @@ class RimTokenHandler(SimpleHTTPRequestHandler):
                 self.wfile.write(b'// Service worker file not found')
                 return
         
+        # Handle manifest.json and other public files
+        if self.path == '/manifest.json':
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            try:
+                with open('client/public/manifest.json', 'r', encoding='utf-8') as f:
+                    self.wfile.write(f.read().encode('utf-8'))
+                return
+            except FileNotFoundError:
+                self.wfile.write(b'{}')
+                return
+        
+        # Handle icons and other assets from public folder
+        if self.path.startswith('/icons/') or self.path.startswith('/assets/'):
+            file_path = f'client/public{self.path}'
+            if os.path.exists(file_path):
+                if self.path.endswith('.png'):
+                    content_type = 'image/png'
+                elif self.path.endswith('.svg'):
+                    content_type = 'image/svg+xml'
+                elif self.path.endswith('.jpg') or self.path.endswith('.jpeg'):
+                    content_type = 'image/jpeg'
+                else:
+                    content_type = 'text/plain'
+                
+                self.send_response(200)
+                self.send_header('Content-type', content_type)
+                self.end_headers()
+                
+                if content_type.startswith('image/'):
+                    with open(file_path, 'rb') as f:
+                        self.wfile.write(f.read())
+                else:
+                    with open(file_path, 'r', encoding='utf-8') as f:
+                        self.wfile.write(f.read().encode('utf-8'))
+                return
+        
         # Handle other requests normally
         super().do_GET()
 
