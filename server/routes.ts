@@ -80,6 +80,55 @@ export async function registerRoutes(app: Express): Promise<Server> {
     return res.json(enrichedTransactions);
   });
 
+  // Send cryptocurrency transaction
+  app.post("/api/transactions", async (req: Request, res: Response) => {
+    try {
+      const transactionData = insertTransactionSchema.safeParse(req.body);
+      if (!transactionData.success) {
+        return res.status(400).json({ message: fromZodError(transactionData.error).message });
+      }
+
+      // Check if user has sufficient balance for send transactions
+      if (transactionData.data.type === 'send') {
+        const wallet = await storage.getWalletByUserAndAsset(
+          transactionData.data.userId, 
+          transactionData.data.assetId
+        );
+        
+        if (!wallet || parseFloat(wallet.balance) < parseFloat(transactionData.data.amount)) {
+          return res.status(400).json({ message: "رصيد غير كافي" });
+        }
+
+        // Update wallet balance
+        const newBalance = parseFloat(wallet.balance) - parseFloat(transactionData.data.amount);
+        await storage.updateWalletBalance(wallet.id, newBalance);
+      } else if (transactionData.data.type === 'receive') {
+        // For receive transactions, add to wallet balance
+        const wallet = await storage.getWalletByUserAndAsset(
+          transactionData.data.userId, 
+          transactionData.data.assetId
+        );
+        
+        if (wallet) {
+          const newBalance = parseFloat(wallet.balance) + parseFloat(transactionData.data.amount);
+          await storage.updateWalletBalance(wallet.id, newBalance);
+        } else {
+          // Create new wallet if doesn't exist
+          await storage.createWallet({
+            userId: transactionData.data.userId,
+            assetId: transactionData.data.assetId,
+            balance: transactionData.data.amount
+          });
+        }
+      }
+
+      const transaction = await storage.createTransaction(transactionData.data);
+      return res.status(201).json(transaction);
+    } catch (error: any) {
+      return res.status(500).json({ message: error.message });
+    }
+  });
+
   app.post("/api/transactions", async (req: Request, res: Response) => {
     try {
       const transactionData = insertTransactionSchema.safeParse(req.body);
