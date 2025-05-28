@@ -12,15 +12,21 @@ class RimTokenHandler(SimpleHTTPRequestHandler):
             self.send_header('Cache-Control', 'no-cache')
             self.end_headers()
             
-            # Always serve the static HTML file that works
+            # Always serve the working HTML file
             try:
-                with open('rimtoken-chrome-compatible.html', 'r', encoding='utf-8') as f:
+                with open('index-simple.html', 'r', encoding='utf-8') as f:
                     html_content = f.read()
                 self.wfile.write(html_content.encode('utf-8'))
                 return
             except FileNotFoundError:
-                # Fallback to simple HTML
-                html_content = """<!DOCTYPE html>
+                try:
+                    with open('rimtoken-chrome-compatible.html', 'r', encoding='utf-8') as f:
+                        html_content = f.read()
+                    self.wfile.write(html_content.encode('utf-8'))
+                    return
+                except FileNotFoundError:
+                    # Fallback to simple HTML
+                    html_content = """<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -43,8 +49,8 @@ class RimTokenHandler(SimpleHTTPRequestHandler):
     </div>
 </body>
 </html>"""
-                self.wfile.write(html_content.encode('utf-8'))
-                return
+                    self.wfile.write(html_content.encode('utf-8'))
+                    return
         
         # Handle all static files and assets
         if self.path.startswith('/src/') or self.path.startswith('/assets/') or self.path.startswith('/node_modules/'):
