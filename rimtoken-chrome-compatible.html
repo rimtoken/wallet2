@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RimToken - منصة العملات المشفرة الحديثة</title>
+    <title>RimToken - Modern Cryptocurrency Platform</title>
     <!-- استخدام CDN بديل لـ Font Awesome -->
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <style>
@@ -20,7 +20,7 @@
         body {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            direction: rtl;
+            direction: ltr;
             overflow-x: hidden;
         }
         
@@ -914,12 +914,12 @@
                 </div>
                 
                 <ul class="nav-links">
-                    <li><a href="#home">الرئيسية</a></li>
-                    <li><a href="#features">التداول</a></li>
-                    <li><a href="#prices">التنزيلات</a></li>
-                    <li><a href="#learn">تعلم</a></li>
-                    <li><a href="#team">فريق العمل</a></li>
-                    <li><a href="#contact">تواصل معنا</a></li>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#features">Trading</a></li>
+                    <li><a href="#prices">Downloads</a></li>
+                    <li><a href="#learn">Learn</a></li>
+                    <li><a href="#team">Team</a></li>
+                    <li><a href="#contact">Contact</a></li>
                     <li class="language-selector">
                         <button class="lang-btn" onclick="switchLanguage('ar')">🇸🇦 العربية</button>
                         <button class="lang-btn" onclick="switchLanguage('en')">🇺🇸 English</button>
@@ -927,7 +927,7 @@
                 </ul>
                 
                 <button class="cta-button" onclick="scrollToRegistration()">
-                    ابدأ الآن ⭐
+                    Start Now ⭐
                 </button>
             </div>
         </div>
@@ -955,20 +955,20 @@
             <div class="hero-content">
                 <div class="hero-text">
                     <h1 class="hero-title">
-                        مستقبل <span class="gradient-text">العملات المشفرة</span> في يديك
+                        The Future of <span class="gradient-text">Cryptocurrency</span> in Your Hands
                     </h1>
                     
                     <p class="hero-subtitle">
-                        منصة شاملة لإدارة وتداول العملات المشفرة مع دعم متعدد الشبكات وأمان عالي المستوى
+                        Comprehensive platform for managing and trading cryptocurrencies with multi-network support and high-level security
                     </p>
                     
                     <div class="hero-buttons">
                         <button class="cta-button" onclick="scrollToRegistration()">
-                            ابدأ التداول الآن ←
+                            Start Trading Now →
                         </button>
                         
                         <button class="secondary-button">
-                            شاهد الفيديو التعريفي ▶
+                            Watch Demo Video ▶
                         </button>
                     </div>
                     
@@ -1757,8 +1757,11 @@
             console.log('Language switched to:', lang);
         }
         
-        // Add event listeners to language buttons
+        // Add event listeners to language buttons and set default language
         document.addEventListener('DOMContentLoaded', function() {
+            // Set English as default language on page load
+            switchLanguage('en');
+            
             var langButtons = document.querySelectorAll('.lang-btn');
             langButtons.forEach(function(btn) {
                 btn.addEventListener('click', function(e) {
