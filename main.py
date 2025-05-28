@@ -146,8 +146,9 @@ if __name__ == '__main__':
     server = HTTPServer(('0.0.0.0', port), RimTokenHandler)
     
     print(f'🎉 RimToken Website is running at http://localhost:{port}')
-    print(f'🌐 Preview URL: https://{os.environ.get("REPL_SLUG", "preview")}-{port}.{os.environ.get("REPL_OWNER", "user")}.repl.co')
+    print(f'🌐 Preview URL: http://{os.environ.get("REPL_SLUG", "preview")}-{port}.{os.environ.get("REPL_OWNER", "user")}.repl.co')
     print('✨ Your beautiful crypto website is ready!')
     print('📱 Click the Preview button to see your site!')
+    print(f'🔗 Direct HTTP access: http://0.0.0.0:{port}')
     
     server.serve_forever()
