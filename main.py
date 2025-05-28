@@ -28,24 +28,38 @@ class RimTokenHandler(SimpleHTTPRequestHandler):
                 self.wfile.write(html_content.encode('utf-8'))
                 return
         
-        # Handle static files for React app
-        if self.path.startswith('/src/') or self.path.startswith('/assets/'):
+        # Handle all static files and assets
+        if self.path.startswith('/src/') or self.path.startswith('/assets/') or self.path.startswith('/node_modules/'):
             file_path = f'client{self.path}'
             if os.path.exists(file_path):
-                if self.path.endswith('.tsx') or self.path.endswith('.ts'):
-                    self.send_response(200)
-                    self.send_header('Content-type', 'application/javascript')
-                    self.end_headers()
-                    with open(file_path, 'r', encoding='utf-8') as f:
-                        self.wfile.write(f.read().encode('utf-8'))
-                    return
+                # Determine content type
+                if self.path.endswith('.tsx') or self.path.endswith('.ts') or self.path.endswith('.js'):
+                    content_type = 'application/javascript'
                 elif self.path.endswith('.css'):
-                    self.send_response(200)
-                    self.send_header('Content-type', 'text/css')
-                    self.end_headers()
+                    content_type = 'text/css'
+                elif self.path.endswith('.json'):
+                    content_type = 'application/json'
+                elif self.path.endswith('.svg'):
+                    content_type = 'image/svg+xml'
+                elif self.path.endswith('.png'):
+                    content_type = 'image/png'
+                elif self.path.endswith('.jpg') or self.path.endswith('.jpeg'):
+                    content_type = 'image/jpeg'
+                else:
+                    content_type = 'text/plain'
+                
+                self.send_response(200)
+                self.send_header('Content-type', content_type)
+                self.end_headers()
+                
+                # Handle binary files
+                if content_type.startswith('image/'):
+                    with open(file_path, 'rb') as f:
+                        self.wfile.write(f.read())
+                else:
                     with open(file_path, 'r', encoding='utf-8') as f:
                         self.wfile.write(f.read().encode('utf-8'))
-                    return
+                return
         
         # Handle register-sw.js and other public files
         if self.path == '/register-sw.js':
@@ -58,6 +72,19 @@ class RimTokenHandler(SimpleHTTPRequestHandler):
                 return
             except FileNotFoundError:
                 self.wfile.write(b'// Service worker registration file not found')
+                return
+        
+        # Handle service-worker.js
+        if self.path == '/service-worker.js':
+            self.send_response(200)
+            self.send_header('Content-type', 'application/javascript')
+            self.end_headers()
+            try:
+                with open('client/public/service-worker.js', 'r', encoding='utf-8') as f:
+                    self.wfile.write(f.read().encode('utf-8'))
+                return
+            except FileNotFoundError:
+                self.wfile.write(b'// Service worker file not found')
                 return
         
         # Handle other requests normally
