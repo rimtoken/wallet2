@@ -28,6 +28,38 @@ class RimTokenHandler(SimpleHTTPRequestHandler):
                 self.wfile.write(html_content.encode('utf-8'))
                 return
         
+        # Handle static files for React app
+        if self.path.startswith('/src/') or self.path.startswith('/assets/'):
+            file_path = f'client{self.path}'
+            if os.path.exists(file_path):
+                if self.path.endswith('.tsx') or self.path.endswith('.ts'):
+                    self.send_response(200)
+                    self.send_header('Content-type', 'application/javascript')
+                    self.end_headers()
+                    with open(file_path, 'r', encoding='utf-8') as f:
+                        self.wfile.write(f.read().encode('utf-8'))
+                    return
+                elif self.path.endswith('.css'):
+                    self.send_response(200)
+                    self.send_header('Content-type', 'text/css')
+                    self.end_headers()
+                    with open(file_path, 'r', encoding='utf-8') as f:
+                        self.wfile.write(f.read().encode('utf-8'))
+                    return
+        
+        # Handle register-sw.js and other public files
+        if self.path == '/register-sw.js':
+            self.send_response(200)
+            self.send_header('Content-type', 'application/javascript')
+            self.end_headers()
+            try:
+                with open('client/public/register-sw.js', 'r', encoding='utf-8') as f:
+                    self.wfile.write(f.read().encode('utf-8'))
+                return
+            except FileNotFoundError:
+                self.wfile.write(b'// Service worker registration file not found')
+                return
+        
         # Handle other requests normally
         super().do_GET()
 
