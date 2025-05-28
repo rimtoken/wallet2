@@ -71,13 +71,14 @@ function App() {
           <Route path="/" component={SimpleHome} />
           <Route path="/wallet" component={WalletPage} />
           <Route path="/trading" component={TradingPage} />
+          <Route path="/enhanced-trading" component={EnhancedTradingPage} />
           <Route path="/staking" component={StakingPage} />
           <Route path="/mobile" component={MobileWalletPage} />
           <Route>
             <div className="container mx-auto p-6 text-center">
-              <h1 className="text-2xl font-bold">الصفحة غير موجودة</h1>
+              <h1 className="text-2xl font-bold">Page Not Found</h1>
               <Link href="/">
-                <Button className="mt-4">العودة للرئيسية</Button>
+                <Button className="mt-4">Back to Home</Button>
               </Link>
             </div>
           </Route>
