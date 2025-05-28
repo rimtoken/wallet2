@@ -192,6 +192,35 @@
             box-shadow: 0 15px 40px rgba(238, 90, 36, 0.5);
         }
         
+        /* Language Buttons Styling */
+        .language-selector {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 8px;
+            padding: 8px 12px;
+            color: white;
+            font-size: 0.9rem;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .lang-btn:hover {
+            border-color: #FFD700;
+            background: rgba(255, 215, 0, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .lang-btn.active {
+            background: rgba(255, 215, 0, 0.3);
+            border-color: #FFD700;
+        }
+        
         /* Hero Section - Grid متوافق */
         .hero-section {
             min-height: 100vh;
@@ -863,12 +892,8 @@
                     <li><a href="#learn">تعلم</a></li>
                     <li><a href="#contact">تواصل معنا</a></li>
                     <li class="language-selector">
-                        <select class="language-dropdown">
-                            <option value="ar">🇸🇦 العربية</option>
-                            <option value="en">🇺🇸 English</option>
-                            <option value="fr">🇫🇷 Français</option>
-                            <option value="es">🇪🇸 Español</option>
-                        </select>
+                        <button class="lang-btn" onclick="switchLanguage('ar')">🇸🇦 العربية</button>
+                        <button class="lang-btn" onclick="switchLanguage('en')">🇺🇸 English</button>
                     </li>
                 </ul>
                 
@@ -1423,26 +1448,37 @@
         
         // Language switching functionality
         function switchLanguage(lang) {
-            var currentLang = document.documentElement.lang || 'ar';
+            console.log('Switching to language:', lang);
             
-            if (lang === 'en' && currentLang === 'ar') {
+            // Update active button state
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            if (lang === 'en') {
                 // Switch to English
                 document.documentElement.lang = 'en';
                 document.documentElement.dir = 'ltr';
                 
                 // Update navigation
-                document.querySelector('a[href="#home"]').textContent = 'Home';
-                document.querySelector('a[href="#prices"]').textContent = 'Prices';
-                document.querySelector('a[href="#features"]').textContent = 'Features';
-                document.querySelector('a[href="#team"]').textContent = 'Team';
-                document.querySelector('a[href="#learn"]').textContent = 'Learn';
-                document.querySelector('a[href="#contact"]').textContent = 'Contact';
+                var navLinks = document.querySelectorAll('.nav-links a');
+                var englishNavTexts = ['Home', 'Prices', 'Features', 'Team', 'Learn', 'Contact'];
+                navLinks.forEach(function(link, index) {
+                    if (englishNavTexts[index]) {
+                        link.textContent = englishNavTexts[index];
+                    }
+                });
                 
                 // Update hero section
-                document.querySelector('.hero-title').innerHTML = 'The Future of <span class="gradient-text">Cryptocurrency</span>';
-                document.querySelector('.hero-subtitle').textContent = 'Trade smart with RimToken platform and enjoy advanced cryptocurrency experience';
-                document.querySelector('.cta-button').textContent = 'Start Trading';
-                document.querySelector('.secondary-button').textContent = 'Learn More';
+                var heroTitle = document.querySelector('.hero-title');
+                var heroSubtitle = document.querySelector('.hero-subtitle');
+                var ctaButton = document.querySelector('.hero-section .cta-button');
+                var secondaryButton = document.querySelector('.secondary-button');
+                
+                if (heroTitle) heroTitle.innerHTML = 'The Future of <span class="gradient-text">Cryptocurrency</span>';
+                if (heroSubtitle) heroSubtitle.textContent = 'Trade smart with RimToken platform and enjoy advanced cryptocurrency experience';
+                if (ctaButton) ctaButton.textContent = 'Start Trading';
+                if (secondaryButton) secondaryButton.textContent = 'Learn More';
                 
                 // Update sections
                 var sections = document.querySelectorAll('.section-title');
@@ -1454,34 +1490,49 @@
                 });
                 
                 // Update contact form
-                document.querySelector('input[placeholder="الاسم الكامل"]').placeholder = 'Full Name';
-                document.querySelector('input[placeholder="البريد الإلكتروني"]').placeholder = 'Email Address';
-                document.querySelector('input[placeholder="رقم الهاتف"]').placeholder = 'Phone Number';
-                document.querySelector('textarea[placeholder="رسالتك"]').placeholder = 'Your Message';
-                document.querySelector('button[type="submit"]').textContent = 'Send Message';
+                var nameInput = document.querySelector('input[name="name"]');
+                var emailInput = document.querySelector('input[name="email"]');
+                var phoneInput = document.querySelector('input[name="phone"]');
+                var messageInput = document.querySelector('textarea[name="message"]');
+                var submitBtn = document.querySelector('button[type="submit"]');
                 
-            } else if (lang === 'ar' && currentLang === 'en') {
+                if (nameInput) nameInput.placeholder = 'Full Name';
+                if (emailInput) emailInput.placeholder = 'Email Address';
+                if (phoneInput) phoneInput.placeholder = 'Phone Number';
+                if (messageInput) messageInput.placeholder = 'Your Message';
+                if (submitBtn) submitBtn.textContent = 'Send Message';
+                
+                // Mark English button as active
+                document.querySelector('.lang-btn[onclick*="en"]').classList.add('active');
+                
+            } else if (lang === 'ar') {
                 // Switch to Arabic
                 document.documentElement.lang = 'ar';
                 document.documentElement.dir = 'rtl';
                 
                 // Update navigation
-                document.querySelector('a[href="#home"]').textContent = 'الرئيسية';
-                document.querySelector('a[href="#prices"]').textContent = 'الأسعار';
-                document.querySelector('a[href="#features"]').textContent = 'المميزات';
-                document.querySelector('a[href="#team"]').textContent = 'فريق العمل';
-                document.querySelector('a[href="#learn"]').textContent = 'تعلم';
-                document.querySelector('a[href="#contact"]').textContent = 'اتصل بنا';
+                var navLinks = document.querySelectorAll('.nav-links a');
+                var arabicNavTexts = ['الرئيسية', 'الأسعار', 'المميزات', 'فريق العمل', 'تعلم', 'تواصل معنا'];
+                navLinks.forEach(function(link, index) {
+                    if (arabicNavTexts[index]) {
+                        link.textContent = arabicNavTexts[index];
+                    }
+                });
                 
                 // Update hero section
-                document.querySelector('.hero-title').innerHTML = 'مستقبل <span class="gradient-text">العملات المشفرة</span>';
-                document.querySelector('.hero-subtitle').textContent = 'تداول بذكاء مع منصة RimToken واستمتع بتجربة عملات مشفرة متطورة';
-                document.querySelector('.cta-button').textContent = 'ابدأ التداول';
-                document.querySelector('.secondary-button').textContent = 'اعرف أكثر';
+                var heroTitle = document.querySelector('.hero-title');
+                var heroSubtitle = document.querySelector('.hero-subtitle');
+                var ctaButton = document.querySelector('.hero-section .cta-button');
+                var secondaryButton = document.querySelector('.secondary-button');
+                
+                if (heroTitle) heroTitle.innerHTML = 'مستقبل <span class="gradient-text">العملات المشفرة</span>';
+                if (heroSubtitle) heroSubtitle.textContent = 'تداول بذكاء مع منصة RimToken واستمتع بتجربة عملات مشفرة متطورة';
+                if (ctaButton) ctaButton.textContent = 'ابدأ التداول';
+                if (secondaryButton) secondaryButton.textContent = 'اعرف أكثر';
                 
                 // Update sections
                 var sections = document.querySelectorAll('.section-title');
-                var arabicTitles = ['أسعار العملات المشفرة المباشرة', 'مميزات المنصة', 'فريق العمل', 'تعلم معنا', 'اتصل بنا'];
+                var arabicTitles = ['أسعار العملات المشفرة المباشرة', 'مميزات المنصة', 'فريق العمل', 'تعلم معنا', 'تواصل معنا'];
                 sections.forEach(function(section, index) {
                     if (arabicTitles[index]) {
                         section.textContent = arabicTitles[index];
@@ -1489,12 +1540,23 @@
                 });
                 
                 // Update contact form
-                document.querySelector('input[placeholder="Full Name"]').placeholder = 'الاسم الكامل';
-                document.querySelector('input[placeholder="Email Address"]').placeholder = 'البريد الإلكتروني';
-                document.querySelector('input[placeholder="Phone Number"]').placeholder = 'رقم الهاتف';
-                document.querySelector('textarea[placeholder="Your Message"]').placeholder = 'رسالتك';
-                document.querySelector('button[type="submit"]').textContent = 'إرسال الرسالة';
+                var nameInput = document.querySelector('input[name="name"]');
+                var emailInput = document.querySelector('input[name="email"]');
+                var phoneInput = document.querySelector('input[name="phone"]');
+                var messageInput = document.querySelector('textarea[name="message"]');
+                var submitBtn = document.querySelector('button[type="submit"]');
+                
+                if (nameInput) nameInput.placeholder = 'الاسم الكامل';
+                if (emailInput) emailInput.placeholder = 'البريد الإلكتروني';
+                if (phoneInput) phoneInput.placeholder = 'رقم الهاتف';
+                if (messageInput) messageInput.placeholder = 'رسالتك';
+                if (submitBtn) submitBtn.textContent = 'إرسال الرسالة';
+                
+                // Mark Arabic button as active
+                document.querySelector('.lang-btn[onclick*="ar"]').classList.add('active');
             }
+            
+            console.log('Language switched to:', lang);
         }
         
         // Add event listeners to language buttons
