@@ -4,8 +4,11 @@ import { Toaster } from "@/components/ui/toaster";
 import { Route, Switch } from "wouter";
 import SimpleHome from "@/pages/simple-home";
 import WalletPage from "@/pages/wallet-page";
+import TradingPage from "@/pages/trading-page";
+import StakingPage from "@/pages/staking-page";
+import MobileWalletPage from "@/pages/mobile-wallet-page";
 import { Button } from "@/components/ui/button";
-import { Wallet, Home } from "lucide-react";
+import { Wallet, Home, BarChart3, Coins, Smartphone } from "lucide-react";
 import { Link } from "wouter";
 
 function NavBar() {
@@ -15,17 +18,35 @@ function NavBar() {
         <div className="flex items-center space-x-4">
           <h1 className="text-xl font-bold text-primary">RimToken</h1>
         </div>
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-2 gap-1">
           <Link href="/">
-            <Button variant="ghost" className="flex items-center gap-2">
+            <Button variant="ghost" size="sm" className="flex items-center gap-2">
               <Home className="h-4 w-4" />
               الرئيسية
             </Button>
           </Link>
           <Link href="/wallet">
-            <Button variant="ghost" className="flex items-center gap-2">
+            <Button variant="ghost" size="sm" className="flex items-center gap-2">
               <Wallet className="h-4 w-4" />
               المحفظة
+            </Button>
+          </Link>
+          <Link href="/trading">
+            <Button variant="ghost" size="sm" className="flex items-center gap-2">
+              <BarChart3 className="h-4 w-4" />
+              التداول
+            </Button>
+          </Link>
+          <Link href="/staking">
+            <Button variant="ghost" size="sm" className="flex items-center gap-2">
+              <Coins className="h-4 w-4" />
+              التحصيص
+            </Button>
+          </Link>
+          <Link href="/mobile">
+            <Button variant="ghost" size="sm" className="flex items-center gap-2">
+              <Smartphone className="h-4 w-4" />
+              التطبيق
             </Button>
           </Link>
         </div>
@@ -42,6 +63,9 @@ function App() {
         <Switch>
           <Route path="/" component={SimpleHome} />
           <Route path="/wallet" component={WalletPage} />
+          <Route path="/trading" component={TradingPage} />
+          <Route path="/staking" component={StakingPage} />
+          <Route path="/mobile" component={MobileWalletPage} />
           <Route>
             <div className="container mx-auto p-6 text-center">
               <h1 className="text-2xl font-bold">الصفحة غير موجودة</h1>
