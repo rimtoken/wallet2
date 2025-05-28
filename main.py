@@ -5,24 +5,28 @@ import os
 
 class RimTokenHandler(SimpleHTTPRequestHandler):
     def do_GET(self):
-        if self.path == '/' or self.path == '/index.html':
+        # Serve React app for SPA routes
+        if self.path in ['/', '/enhanced-trading', '/trading', '/wallet', '/staking', '/mobile'] or self.path == '/index.html':
             self.send_response(200)
             self.send_header('Content-type', 'text/html')
             self.end_headers()
             
             try:
-                with open('rimtoken-chrome-compatible.html', 'r', encoding='utf-8') as f:
+                with open('client/index.html', 'r', encoding='utf-8') as f:
                     html_content = f.read()
+                self.wfile.write(html_content.encode('utf-8'))
+                return
             except FileNotFoundError:
+                # Fallback to static HTML
                 try:
-                    with open('docs/index.html', 'r', encoding='utf-8') as f:
+                    with open('rimtoken-chrome-compatible.html', 'r', encoding='utf-8') as f:
                         html_content = f.read()
                 except FileNotFoundError:
                     with open('crypto-template.html', 'r', encoding='utf-8') as f:
                         html_content = f.read()
-            
-            self.wfile.write(html_content.encode('utf-8'))
-            return
+                
+                self.wfile.write(html_content.encode('utf-8'))
+                return
         
         # Handle other requests normally
         super().do_GET()
