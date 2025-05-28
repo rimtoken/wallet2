@@ -1420,6 +1420,94 @@
                 })(title, i);
             }
         });
+        
+        // Language switching functionality
+        function switchLanguage(lang) {
+            var currentLang = document.documentElement.lang || 'ar';
+            
+            if (lang === 'en' && currentLang === 'ar') {
+                // Switch to English
+                document.documentElement.lang = 'en';
+                document.documentElement.dir = 'ltr';
+                
+                // Update navigation
+                document.querySelector('a[href="#home"]').textContent = 'Home';
+                document.querySelector('a[href="#prices"]').textContent = 'Prices';
+                document.querySelector('a[href="#features"]').textContent = 'Features';
+                document.querySelector('a[href="#team"]').textContent = 'Team';
+                document.querySelector('a[href="#learn"]').textContent = 'Learn';
+                document.querySelector('a[href="#contact"]').textContent = 'Contact';
+                
+                // Update hero section
+                document.querySelector('.hero-title').innerHTML = 'The Future of <span class="gradient-text">Cryptocurrency</span>';
+                document.querySelector('.hero-subtitle').textContent = 'Trade smart with RimToken platform and enjoy advanced cryptocurrency experience';
+                document.querySelector('.cta-button').textContent = 'Start Trading';
+                document.querySelector('.secondary-button').textContent = 'Learn More';
+                
+                // Update sections
+                var sections = document.querySelectorAll('.section-title');
+                var englishTitles = ['Live Cryptocurrency Prices', 'Platform Features', 'Our Team', 'Learn With Us', 'Contact Us'];
+                sections.forEach(function(section, index) {
+                    if (englishTitles[index]) {
+                        section.textContent = englishTitles[index];
+                    }
+                });
+                
+                // Update contact form
+                document.querySelector('input[placeholder="الاسم الكامل"]').placeholder = 'Full Name';
+                document.querySelector('input[placeholder="البريد الإلكتروني"]').placeholder = 'Email Address';
+                document.querySelector('input[placeholder="رقم الهاتف"]').placeholder = 'Phone Number';
+                document.querySelector('textarea[placeholder="رسالتك"]').placeholder = 'Your Message';
+                document.querySelector('button[type="submit"]').textContent = 'Send Message';
+                
+            } else if (lang === 'ar' && currentLang === 'en') {
+                // Switch to Arabic
+                document.documentElement.lang = 'ar';
+                document.documentElement.dir = 'rtl';
+                
+                // Update navigation
+                document.querySelector('a[href="#home"]').textContent = 'الرئيسية';
+                document.querySelector('a[href="#prices"]').textContent = 'الأسعار';
+                document.querySelector('a[href="#features"]').textContent = 'المميزات';
+                document.querySelector('a[href="#team"]').textContent = 'فريق العمل';
+                document.querySelector('a[href="#learn"]').textContent = 'تعلم';
+                document.querySelector('a[href="#contact"]').textContent = 'اتصل بنا';
+                
+                // Update hero section
+                document.querySelector('.hero-title').innerHTML = 'مستقبل <span class="gradient-text">العملات المشفرة</span>';
+                document.querySelector('.hero-subtitle').textContent = 'تداول بذكاء مع منصة RimToken واستمتع بتجربة عملات مشفرة متطورة';
+                document.querySelector('.cta-button').textContent = 'ابدأ التداول';
+                document.querySelector('.secondary-button').textContent = 'اعرف أكثر';
+                
+                // Update sections
+                var sections = document.querySelectorAll('.section-title');
+                var arabicTitles = ['أسعار العملات المشفرة المباشرة', 'مميزات المنصة', 'فريق العمل', 'تعلم معنا', 'اتصل بنا'];
+                sections.forEach(function(section, index) {
+                    if (arabicTitles[index]) {
+                        section.textContent = arabicTitles[index];
+                    }
+                });
+                
+                // Update contact form
+                document.querySelector('input[placeholder="Full Name"]').placeholder = 'الاسم الكامل';
+                document.querySelector('input[placeholder="Email Address"]').placeholder = 'البريد الإلكتروني';
+                document.querySelector('input[placeholder="Phone Number"]').placeholder = 'رقم الهاتف';
+                document.querySelector('textarea[placeholder="Your Message"]').placeholder = 'رسالتك';
+                document.querySelector('button[type="submit"]').textContent = 'إرسال الرسالة';
+            }
+        }
+        
+        // Add event listeners to language buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            var langButtons = document.querySelectorAll('.lang-btn');
+            langButtons.forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var lang = this.textContent.includes('🇺🇸') ? 'en' : 'ar';
+                    switchLanguage(lang);
+                });
+            });
+        });
     </script>
 </body>
 </html>
