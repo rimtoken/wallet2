@@ -131,18 +131,8 @@ class RimTokenHandler(SimpleHTTPRequestHandler):
 if __name__ == '__main__':
     import socket
     
-    # البحث عن بورت متاح
-    def find_port():
-        for p in [3000, 8080, 8000, 5000, 4000]:
-            try:
-                with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-                    s.bind(('0.0.0.0', p))
-                    return p
-            except:
-                continue
-        return 3000
-    
-    port = find_port()
+    # استخدم المنفذ 3000 مباشرة للنشر
+    port = 3000
     server = HTTPServer(('0.0.0.0', port), RimTokenHandler)
     
     print(f'🎉 RimToken Website is running at http://localhost:{port}')
