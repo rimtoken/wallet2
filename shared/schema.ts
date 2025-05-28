@@ -149,6 +149,47 @@ export type MarketAsset = {
   sparklineData: number[];
 };
 
+// Wallet Addresses schema
+export const walletAddresses = pgTable("wallet_addresses", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => users.id),
+  address: text("address").notNull(),
+  network: text("network").notNull(), // 'ethereum', 'bsc', 'polygon', 'solana'
+  isActive: boolean("is_active").notNull().default(true),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const insertWalletAddressSchema = createInsertSchema(walletAddresses).omit({
+  id: true,
+  createdAt: true,
+});
+
+// DeFi Positions schema (for staking, yield farming, etc.)
+export const defiPositions = pgTable("defi_positions", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => users.id),
+  protocol: text("protocol").notNull(), // 'uniswap', 'compound', etc.
+  type: text("type").notNull(), // 'liquidity', 'staking', 'lending'
+  amount: numeric("amount", { precision: 18, scale: 8 }).notNull(),
+  assetId: integer("asset_id").notNull().references(() => assets.id),
+  apy: numeric("apy", { precision: 10, scale: 2 }),
+  startDate: timestamp("start_date").defaultNow().notNull(),
+  endDate: timestamp("end_date"),
+  status: text("status").notNull().default("active"), // 'active', 'completed', 'withdrawn'
+});
+
+export const insertDefiPositionSchema = createInsertSchema(defiPositions).omit({
+  id: true,
+  startDate: true,
+});
+
+// Export types for new tables
+export type WalletAddress = typeof walletAddresses.$inferSelect;
+export type InsertWalletAddress = z.infer<typeof insertWalletAddressSchema>;
+
+export type DefiPosition = typeof defiPositions.$inferSelect;
+export type InsertDefiPosition = z.infer<typeof insertDefiPositionSchema>;
+
 // Export custom type for achievement display with progress
 export type AchievementWithProgress = {
   id: number;

@@ -1,450 +1,431 @@
-import { useState, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { Skeleton } from "@/components/ui/skeleton";
-import { useToast } from "@/hooks/use-toast";
-import { useAuth } from "@/contexts/auth-context";
-import { useLanguage } from "@/contexts/language-context";
-import ConnectWallet from "@/components/wallet/connect-wallet";
-import { Plus, ArrowUpDown, Clock, RefreshCw, Wallet, ExternalLink, ChevronRight } from "lucide-react";
-import PriceChart from "@/components/charts/price-chart";
-import PriceAlerts from "@/components/alerts/price-alerts";
+import React, { useState, useEffect } from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
+import { useToast } from '@/hooks/use-toast';
+import { 
+  Wallet, 
+  Send, 
+  Download, 
+  Eye, 
+  EyeOff, 
+  Copy, 
+  Plus,
+  ArrowUpRight,
+  ArrowDownRight,
+  Shield,
+  Coins
+} from 'lucide-react';
 
-// مكون نظرة عامة على المحفظة
-const WalletOverview = () => {
-  const { user } = useAuth();
-  const { getText } = useLanguage();
-  
-  // استعلام لجلب ملخص المحفظة
-  const { data: portfolioSummary, isLoading } = useQuery({
-    queryKey: ["/api/portfolio", user?.id],
-    queryFn: async () => {
-      const res = await fetch(`/api/portfolio/${user?.id}`);
-      if (!res.ok) throw new Error("Failed to fetch portfolio data");
-      return res.json();
-    },
-    enabled: !!user,
-  });
-
-  if (isLoading) {
-    return (
-      <div className="space-y-3">
-        <Skeleton className="h-10 w-[250px]" />
-        <Skeleton className="h-20 w-full" />
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Skeleton className="h-28 w-full" />
-          <Skeleton className="h-28 w-full" />
-          <Skeleton className="h-28 w-full" />
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="space-y-4">
-      <div className="flex flex-col lg:flex-row justify-between lg:items-center gap-4">
-        <div>
-          <h2 className="text-3xl font-bold tracking-tight">${portfolioSummary?.totalValue?.toFixed(2) || "0.00"}</h2>
-          <div className="flex items-center gap-2 mt-1">
-            <span className={portfolioSummary?.change24h >= 0 ? "text-green-500" : "text-red-500"}>
-              {portfolioSummary?.change24h >= 0 ? "+" : ""}{portfolioSummary?.change24h?.toFixed(2) || "0.00"} ({portfolioSummary?.changePercentage24h >= 0 ? "+" : ""}{portfolioSummary?.changePercentage24h?.toFixed(2) || "0.00"}%)
-            </span>
-            <span className="text-sm text-muted-foreground">{getText("last24Hours")}</span>
-          </div>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <Button variant="outline" size="sm">
-            <Plus className="mr-2 h-4 w-4" /> {getText("deposit")}
-          </Button>
-          <Button variant="outline" size="sm">
-            <ArrowUpDown className="mr-2 h-4 w-4" /> {getText("swap")}
-          </Button>
-          <Button variant="outline" size="sm">
-            <RefreshCw className="mr-2 h-4 w-4" /> {getText("refresh")}
-          </Button>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card>
-          <CardHeader className="p-4">
-            <CardDescription>{getText("assetsCount")}</CardDescription>
-            <CardTitle>{portfolioSummary?.assetCount || 0}</CardTitle>
-          </CardHeader>
-        </Card>
-        <Card>
-          <CardHeader className="p-4">
-            <CardDescription>{getText("volume24h")}</CardDescription>
-            <CardTitle>${portfolioSummary?.volume24h?.toFixed(2) || "0.00"}</CardTitle>
-          </CardHeader>
-        </Card>
-        <Card>
-          <CardHeader className="p-4">
-            <CardDescription>{getText("totalProfit")}</CardDescription>
-            <CardTitle className={portfolioSummary?.totalProfit >= 0 ? "text-green-500" : "text-red-500"}>
-              {portfolioSummary?.totalProfit >= 0 ? "+" : ""}{portfolioSummary?.totalProfit?.toFixed(2) || "0.00"}
-            </CardTitle>
-          </CardHeader>
-        </Card>
-      </div>
-    </div>
-  );
-};
-
-// مكون عرض الأصول
-const AssetsTab = () => {
-  const { user } = useAuth();
-  const { getText } = useLanguage();
-  
-  // استعلام لجلب أصول المحفظة
-  const { data: walletAssets, isLoading } = useQuery({
-    queryKey: ["/api/wallets", user?.id],
-    queryFn: async () => {
-      const res = await fetch(`/api/wallets/${user?.id}`);
-      if (!res.ok) throw new Error("Failed to fetch wallet assets");
-      return res.json();
-    },
-    enabled: !!user,
-  });
-
-  if (isLoading) {
-    return (
-      <div className="space-y-4">
-        <Skeleton className="h-10 w-[250px]" />
-        <Skeleton className="h-[72px] w-full" />
-        <Skeleton className="h-[72px] w-full" />
-        <Skeleton className="h-[72px] w-full" />
-      </div>
-    );
-  }
-
-  if (!walletAssets || walletAssets.length === 0) {
-    return (
-      <div className="text-center py-12">
-        <Wallet className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
-        <h3 className="text-lg font-medium">{getText("noAssetsFound")}</h3>
-        <p className="text-muted-foreground mb-6">{getText("noAssetsDescription")}</p>
-        <div className="flex flex-wrap justify-center gap-4">
-          <Button>
-            <Plus className="mr-2 h-4 w-4" /> {getText("deposit")}
-          </Button>
-          <Button variant="outline">
-            <ExternalLink className="mr-2 h-4 w-4" /> {getText("connectWallet")}
-          </Button>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h3 className="text-lg font-medium">{getText("yourAssets")}</h3>
-        <Button variant="ghost" size="sm">
-          <RefreshCw className="mr-2 h-4 w-4" /> {getText("refresh")}
-        </Button>
-      </div>
-      
-      <div className="space-y-2">
-        {walletAssets.map((asset: any) => (
-          <div key={asset.id} className="flex items-center justify-between p-4 rounded-lg border bg-card hover:bg-accent/50 transition-colors">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden">
-                <img src={asset.icon} alt={asset.name} className="w-6 h-6" onError={(e) => {
-                  e.currentTarget.src = `https://ui-avatars.com/api/?name=${asset.symbol}&background=random`;
-                }} />
-              </div>
-              <div>
-                <div className="font-medium">{asset.name}</div>
-                <div className="text-sm text-muted-foreground">{asset.symbol}</div>
-              </div>
-            </div>
-            <div className="flex flex-col items-end">
-              <div className="font-medium">{asset.balance} {asset.symbol}</div>
-              <div className="text-sm flex items-center gap-1">
-                <span className="text-muted-foreground">${(asset.balance * asset.price).toFixed(2)}</span>
-                <span className={asset.priceChangePercentage24h >= 0 ? "text-green-500" : "text-red-500"}>
-                  {asset.priceChangePercentage24h >= 0 ? "+" : ""}{asset.priceChangePercentage24h.toFixed(2)}%
-                </span>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-// مكون سجل المعاملات
-const TransactionsTab = () => {
-  const { user } = useAuth();
-  const { getText } = useLanguage();
-  
-  // استعلام لجلب سجل المعاملات
-  const { data: transactions, isLoading } = useQuery({
-    queryKey: ["/api/transactions", user?.id],
-    queryFn: async () => {
-      const res = await fetch(`/api/transactions/${user?.id}`);
-      if (!res.ok) throw new Error("Failed to fetch transactions");
-      return res.json();
-    },
-    enabled: !!user,
-  });
-
-  if (isLoading) {
-    return (
-      <div className="space-y-4">
-        <Skeleton className="h-10 w-[250px]" />
-        <Skeleton className="h-[72px] w-full" />
-        <Skeleton className="h-[72px] w-full" />
-        <Skeleton className="h-[72px] w-full" />
-      </div>
-    );
-  }
-
-  if (!transactions || transactions.length === 0) {
-    return (
-      <div className="text-center py-12">
-        <Clock className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
-        <h3 className="text-lg font-medium">{getText("noTransactionsFound")}</h3>
-        <p className="text-muted-foreground mb-6">{getText("noTransactionsDescription")}</p>
-        <div className="flex flex-wrap justify-center gap-4">
-          <Button>
-            <ArrowUpDown className="mr-2 h-4 w-4" /> {getText("makeTransaction")}
-          </Button>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h3 className="text-lg font-medium">{getText("recentTransactions")}</h3>
-        <Button variant="link" size="sm">
-          {getText("viewAll")} <ChevronRight className="ml-1 h-4 w-4" />
-        </Button>
-      </div>
-      
-      <div className="space-y-2">
-        {transactions.map((tx: any) => (
-          <div key={tx.id} className="flex items-center justify-between p-4 rounded-lg border bg-card hover:bg-accent/50 transition-colors">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                {tx.type === 'deposit' && <Plus className="h-5 w-5 text-green-500" />}
-                {tx.type === 'withdrawal' && <ArrowUpDown className="h-5 w-5 text-red-500" />}
-                {tx.type === 'swap' && <ArrowUpDown className="h-5 w-5 text-blue-500" />}
-              </div>
-              <div>
-                <div className="font-medium">
-                  {tx.type === 'deposit' && getText("deposit")}
-                  {tx.type === 'withdrawal' && getText("withdrawal")}
-                  {tx.type === 'swap' && getText("swap")}
-                </div>
-                <div className="text-sm text-muted-foreground">
-                  {new Date(tx.createdAt).toLocaleDateString()}
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-col items-end">
-              <div className="font-medium">
-                {tx.type === 'deposit' && `+${tx.amount} ${tx.symbol}`}
-                {tx.type === 'withdrawal' && `-${tx.amount} ${tx.symbol}`}
-                {tx.type === 'swap' && `${tx.amount} ${tx.symbol} → ${tx.targetAmount} ${tx.targetSymbol}`}
-              </div>
-              <div className="text-sm text-muted-foreground">
-                ${tx.usdValue.toFixed(2)}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-// مكون المحافظ المتصلة
-const ConnectedWalletsTab = () => {
-  const { user } = useAuth();
-  const { getText } = useLanguage();
-  
-  // استعلام لجلب المحافظ المتصلة (عندما تصبح متاحة)
-  const { data: connectedWallets, isLoading } = useQuery({
-    queryKey: ["/api/connected-wallets", user?.id],
-    queryFn: async () => {
-      try {
-        const res = await fetch(`/api/connected-wallets/${user?.id}`);
-        if (!res.ok) return [];
-        return res.json();
-      } catch (error) {
-        console.error("Error fetching connected wallets:", error);
-        return [];
-      }
-    },
-    enabled: !!user,
-  });
-
-  return (
-    <div className="space-y-6">
-      <ConnectWallet />
-      
-      {isLoading ? (
-        <div className="space-y-4">
-          <Skeleton className="h-10 w-[250px]" />
-          <Skeleton className="h-[72px] w-full" />
-          <Skeleton className="h-[72px] w-full" />
-        </div>
-      ) : connectedWallets && connectedWallets.length > 0 ? (
-        <div className="space-y-4">
-          <h3 className="text-lg font-medium">{getText("connectedWallets")}</h3>
-          <div className="space-y-2">
-            {connectedWallets.map((wallet: any) => (
-              <div key={wallet.id} className="flex items-center justify-between p-4 rounded-lg border bg-card hover:bg-accent/50 transition-colors">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                    {wallet.wallet_type === 'metamask' && 'M'}
-                    {wallet.wallet_type === 'walletconnect' && 'W'}
-                    {wallet.wallet_type === 'phantom' && 'P'}
-                    {wallet.wallet_type === 'binance' && 'B'}
-                  </div>
-                  <div>
-                    <div className="font-medium">{wallet.name || wallet.wallet_type}</div>
-                    <div className="text-sm text-muted-foreground">
-                      {wallet.wallet_address.substring(0, 6)}...{wallet.wallet_address.substring(wallet.wallet_address.length - 4)}
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Button variant="ghost" size="sm">
-                    <ExternalLink className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      ) : null}
-    </div>
-  );
-};
-
-// تعريف خصائص صفحة المحفظة
-interface WalletPageProps {
-  userId?: number;
+interface WalletBalance {
+  symbol: string;
+  name: string;
+  balance: number;
+  usdValue: number;
+  icon: string;
+  network: string;
 }
 
-// الصفحة الرئيسية للمحفظة
-export default function WalletPage({ userId }: WalletPageProps) {
-  const { user, isLoading } = useAuth();
-  const { getText } = useLanguage();
-  const { toast } = useToast();
+interface Transaction {
+  id: string;
+  type: 'send' | 'receive';
+  amount: number;
+  symbol: string;
+  from: string;
+  to: string;
+  timestamp: Date;
+  status: 'completed' | 'pending' | 'failed';
+  hash: string;
+}
 
-  // التحقق من تسجيل الدخول
+export default function WalletPage() {
+  const { toast } = useToast();
+  const [balances, setBalances] = useState<WalletBalance[]>([]);
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [walletAddress, setWalletAddress] = useState('');
+  const [showPrivateKey, setShowPrivateKey] = useState(false);
+  const [sendAmount, setSendAmount] = useState('');
+  const [sendAddress, setSendAddress] = useState('');
+  const [selectedCurrency, setSelectedCurrency] = useState('RIM');
+
+  // Initialize wallet data
   useEffect(() => {
-    if (!isLoading && !user) {
+    initializeWallet();
+  }, []);
+
+  const initializeWallet = () => {
+    // Generate wallet address (this would normally be done securely)
+    const address = '0x' + Math.random().toString(16).substr(2, 40);
+    setWalletAddress(address);
+
+    // Mock balances data
+    const mockBalances: WalletBalance[] = [
+      {
+        symbol: 'RIM',
+        name: 'RimToken',
+        balance: 2500.50,
+        usdValue: 31256.25,
+        icon: '🟡',
+        network: 'Ethereum'
+      },
+      {
+        symbol: 'ETH',
+        name: 'Ethereum',
+        balance: 5.25,
+        usdValue: 13545.00,
+        icon: '⟠',
+        network: 'Ethereum'
+      },
+      {
+        symbol: 'BTC',
+        name: 'Bitcoin',
+        balance: 0.5,
+        usdValue: 21625.00,
+        icon: '₿',
+        network: 'Bitcoin'
+      },
+      {
+        symbol: 'BNB',
+        name: 'BNB',
+        balance: 10.0,
+        usdValue: 3152.00,
+        icon: '🟨',
+        network: 'BSC'
+      }
+    ];
+
+    const mockTransactions: Transaction[] = [
+      {
+        id: '1',
+        type: 'receive',
+        amount: 100,
+        symbol: 'RIM',
+        from: '0x1234...5678',
+        to: address,
+        timestamp: new Date(Date.now() - 86400000),
+        status: 'completed',
+        hash: '0xabc123...def456'
+      },
+      {
+        id: '2',
+        type: 'send',
+        amount: 0.1,
+        symbol: 'ETH',
+        from: address,
+        to: '0x9876...5432',
+        timestamp: new Date(Date.now() - 172800000),
+        status: 'completed',
+        hash: '0x789abc...123def'
+      },
+      {
+        id: '3',
+        type: 'receive',
+        amount: 500,
+        symbol: 'RIM',
+        from: '0x5555...9999',
+        to: address,
+        timestamp: new Date(Date.now() - 259200000),
+        status: 'completed',
+        hash: '0x456789...abcdef'
+      }
+    ];
+
+    setBalances(mockBalances);
+    setTransactions(mockTransactions);
+  };
+
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+    toast({
+      title: "تم النسخ!",
+      description: "تم نسخ العنوان إلى الحافظة",
+    });
+  };
+
+  const handleSend = () => {
+    if (!sendAmount || !sendAddress) {
       toast({
-        title: getText("authRequired"),
-        description: getText("pleaseLoginFirst"),
+        title: "خطأ",
+        description: "يرجى إدخال جميع البيانات المطلوبة",
         variant: "destructive",
       });
-      // يمكن إضافة إعادة توجيه إلى صفحة تسجيل الدخول هنا
+      return;
     }
-  }, [user, isLoading, toast, getText]);
 
-  if (isLoading) {
-    return (
-      <div className="container py-8 space-y-6">
-        <Skeleton className="h-12 w-[250px]" />
-        <Skeleton className="h-40 w-full" />
-        <Skeleton className="h-[400px] w-full" />
-      </div>
-    );
-  }
+    // Mock send transaction
+    const newTransaction: Transaction = {
+      id: Date.now().toString(),
+      type: 'send',
+      amount: parseFloat(sendAmount),
+      symbol: selectedCurrency,
+      from: walletAddress,
+      to: sendAddress,
+      timestamp: new Date(),
+      status: 'pending',
+      hash: '0x' + Math.random().toString(16).substr(2, 64)
+    };
 
-  if (!user) {
-    return (
-      <div className="container py-8 text-center">
-        <h1 className="text-2xl font-bold mb-4">{getText("walletAccessDenied")}</h1>
-        <p className="mb-6">{getText("pleaseLoginToAccessWallet")}</p>
-        <Button asChild>
-          <a href="/auth">{getText("login")}</a>
-        </Button>
-      </div>
-    );
-  }
+    setTransactions([newTransaction, ...transactions]);
+    setSendAmount('');
+    setSendAddress('');
+
+    toast({
+      title: "تم إرسال المعاملة",
+      description: `تم إرسال ${sendAmount} ${selectedCurrency} بنجاح`,
+    });
+  };
+
+  const getTotalBalance = () => {
+    return balances.reduce((total, balance) => total + balance.usdValue, 0);
+  };
+
+  const formatAddress = (address: string) => {
+    return `${address.slice(0, 6)}...${address.slice(-4)}`;
+  };
+
+  const formatNumber = (num: number) => {
+    return new Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }).format(num);
+  };
 
   return (
-    <div className="container py-8 space-y-6">
-      <h1 className="text-3xl font-bold">{getText("myWallet")}</h1>
-      
-      <WalletOverview />
-      
-      {/* إضافة مخطط بياني للمحفظة */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="space-y-4">
-          <h2 className="text-xl font-bold">{getText("portfolioChart")}</h2>
-          <PriceChart 
-            assetId={0} 
-            symbol="Portfolio" 
-            name={getText("portfolioChart")} 
-            color="#6366f1"
-          />
-        </div>
-        
-        <div className="space-y-4">
-          <div className="flex justify-between items-center">
-            <h2 className="text-xl font-bold">{getText("topAssets")}</h2>
-            <Button variant="link" size="sm">
-              {getText("viewAll")} <ChevronRight className="ml-1 h-4 w-4" />
-            </Button>
+    <div className="container mx-auto p-6 max-w-6xl">
+      <div className="space-y-6">
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold flex items-center gap-2">
+              <Wallet className="h-8 w-8 text-primary" />
+              محفظة RimToken
+            </h1>
+            <p className="text-muted-foreground mt-2">
+              إدارة عملاتك المشفرة بأمان وسهولة
+            </p>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <PriceChart 
-              assetId={1} 
-              symbol="BTC" 
-              name="Bitcoin" 
-              color="#F7931A" 
-              height={180} 
-              showControls={false}
-            />
-            <PriceChart 
-              assetId={2} 
-              symbol="ETH" 
-              name="Ethereum" 
-              color="#627EEA" 
-              height={180} 
-              showControls={false}
-            />
-          </div>
+          <Button className="flex items-center gap-2">
+            <Plus className="h-4 w-4" />
+            إنشاء محفظة جديدة
+          </Button>
         </div>
+
+        {/* Wallet Overview */}
+        <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+          <CardHeader>
+            <CardTitle className="flex items-center justify-between">
+              <span>إجمالي الرصيد</span>
+              <Shield className="h-5 w-5" />
+            </CardTitle>
+            <CardDescription className="text-blue-100">
+              عنوان المحفظة: {formatAddress(walletAddress)}
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => copyToClipboard(walletAddress)}
+                className="ml-2 text-white hover:bg-white/20"
+              >
+                <Copy className="h-4 w-4" />
+              </Button>
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="text-4xl font-bold mb-2">
+              ${formatNumber(getTotalBalance())}
+            </div>
+            <div className="text-blue-100">
+              {balances.length} عملة مختلفة
+            </div>
+          </CardContent>
+        </Card>
+
+        <Tabs defaultValue="balances" className="w-full">
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="balances" className="flex items-center gap-2">
+              <Coins className="h-4 w-4" />
+              الأرصدة
+            </TabsTrigger>
+            <TabsTrigger value="send" className="flex items-center gap-2">
+              <Send className="h-4 w-4" />
+              إرسال
+            </TabsTrigger>
+            <TabsTrigger value="transactions" className="flex items-center gap-2">
+              <ArrowUpRight className="h-4 w-4" />
+              المعاملات
+            </TabsTrigger>
+          </TabsList>
+
+          {/* Balances Tab */}
+          <TabsContent value="balances" className="space-y-4">
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {balances.map((balance) => (
+                <Card key={balance.symbol} className="hover:shadow-lg transition-shadow">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="flex items-center justify-between text-lg">
+                      <div className="flex items-center gap-2">
+                        <span className="text-2xl">{balance.icon}</span>
+                        <div>
+                          <div>{balance.symbol}</div>
+                          <div className="text-sm font-normal text-muted-foreground">
+                            {balance.name}
+                          </div>
+                        </div>
+                      </div>
+                      <Badge variant="secondary">{balance.network}</Badge>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-2">
+                      <div className="text-2xl font-bold">
+                        {formatNumber(balance.balance)} {balance.symbol}
+                      </div>
+                      <div className="text-lg text-muted-foreground">
+                        ${formatNumber(balance.usdValue)}
+                      </div>
+                    </div>
+                    <div className="flex gap-2 mt-4">
+                      <Button size="sm" className="flex-1">
+                        <Send className="h-4 w-4 mr-1" />
+                        إرسال
+                      </Button>
+                      <Button size="sm" variant="outline" className="flex-1">
+                        <Download className="h-4 w-4 mr-1" />
+                        استقبال
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </TabsContent>
+
+          {/* Send Tab */}
+          <TabsContent value="send" className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>إرسال العملات المشفرة</CardTitle>
+                <CardDescription>
+                  أرسل عملاتك المشفرة إلى عنوان آخر بأمان
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">اختر العملة</label>
+                  <select 
+                    className="w-full p-2 border rounded-md"
+                    value={selectedCurrency}
+                    onChange={(e) => setSelectedCurrency(e.target.value)}
+                  >
+                    {balances.map((balance) => (
+                      <option key={balance.symbol} value={balance.symbol}>
+                        {balance.symbol} - {balance.name} ({formatNumber(balance.balance)} متاح)
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">المبلغ</label>
+                  <Input
+                    type="number"
+                    placeholder="0.00"
+                    value={sendAmount}
+                    onChange={(e) => setSendAmount(e.target.value)}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">عنوان المستقبل</label>
+                  <Input
+                    placeholder="0x..."
+                    value={sendAddress}
+                    onChange={(e) => setSendAddress(e.target.value)}
+                  />
+                </div>
+
+                <Separator />
+
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                  <div className="flex items-center gap-2 text-yellow-800">
+                    <Shield className="h-4 w-4" />
+                    <span className="font-medium">تنبيه أمني</span>
+                  </div>
+                  <p className="text-yellow-700 text-sm mt-1">
+                    تأكد من صحة عنوان المستقبل. المعاملات غير قابلة للإلغاء.
+                  </p>
+                </div>
+
+                <Button onClick={handleSend} className="w-full" size="lg">
+                  إرسال المعاملة
+                </Button>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Transactions Tab */}
+          <TabsContent value="transactions" className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>تاريخ المعاملات</CardTitle>
+                <CardDescription>
+                  جميع معاملاتك الواردة والصادرة
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {transactions.map((transaction) => (
+                    <div key={transaction.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50">
+                      <div className="flex items-center gap-3">
+                        <div className={`p-2 rounded-full ${
+                          transaction.type === 'send' 
+                            ? 'bg-red-100 text-red-600' 
+                            : 'bg-green-100 text-green-600'
+                        }`}>
+                          {transaction.type === 'send' ? 
+                            <ArrowUpRight className="h-4 w-4" /> : 
+                            <ArrowDownRight className="h-4 w-4" />
+                          }
+                        </div>
+                        <div>
+                          <div className="font-medium">
+                            {transaction.type === 'send' ? 'إرسال' : 'استقبال'} {transaction.symbol}
+                          </div>
+                          <div className="text-sm text-muted-foreground">
+                            {transaction.type === 'send' 
+                              ? `إلى ${formatAddress(transaction.to)}`
+                              : `من ${formatAddress(transaction.from)}`
+                            }
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            {transaction.timestamp.toLocaleDateString('ar')} - {transaction.timestamp.toLocaleTimeString('ar')}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className={`font-medium ${
+                          transaction.type === 'send' ? 'text-red-600' : 'text-green-600'
+                        }`}>
+                          {transaction.type === 'send' ? '-' : '+'}{formatNumber(transaction.amount)} {transaction.symbol}
+                        </div>
+                        <Badge 
+                          variant={transaction.status === 'completed' ? 'default' : 
+                                  transaction.status === 'pending' ? 'secondary' : 'destructive'}
+                        >
+                          {transaction.status === 'completed' ? 'مكتملة' :
+                           transaction.status === 'pending' ? 'في الانتظار' : 'فاشلة'}
+                        </Badge>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </div>
-      
-      <Separator className="my-6" />
-      
-      <Tabs defaultValue="assets">
-        <TabsList className="mb-4">
-          <TabsTrigger value="assets">{getText("assets")}</TabsTrigger>
-          <TabsTrigger value="transactions">{getText("transactions")}</TabsTrigger>
-          <TabsTrigger value="connectedWallets">{getText("connectedWallets")}</TabsTrigger>
-          <TabsTrigger value="priceAlerts">{getText("priceAlerts")}</TabsTrigger>
-        </TabsList>
-        <TabsContent value="assets">
-          <AssetsTab />
-        </TabsContent>
-        <TabsContent value="transactions">
-          <TransactionsTab />
-        </TabsContent>
-        <TabsContent value="connectedWallets">
-          <ConnectedWalletsTab />
-        </TabsContent>
-        <TabsContent value="priceAlerts">
-          <PriceAlerts />
-        </TabsContent>
-      </Tabs>
     </div>
   );
 }
