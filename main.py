@@ -5,26 +5,44 @@ import os
 
 class RimTokenHandler(SimpleHTTPRequestHandler):
     def do_GET(self):
-        # Serve React app for SPA routes
+        # Force serving the main HTML file for all routes
         if self.path in ['/', '/enhanced-trading', '/trading', '/wallet', '/staking', '/mobile'] or self.path == '/index.html':
             self.send_response(200)
             self.send_header('Content-type', 'text/html')
+            self.send_header('Cache-Control', 'no-cache')
             self.end_headers()
             
+            # Always serve the static HTML file that works
             try:
-                with open('client/index.html', 'r', encoding='utf-8') as f:
+                with open('rimtoken-chrome-compatible.html', 'r', encoding='utf-8') as f:
                     html_content = f.read()
                 self.wfile.write(html_content.encode('utf-8'))
                 return
             except FileNotFoundError:
-                # Fallback to static HTML
-                try:
-                    with open('rimtoken-chrome-compatible.html', 'r', encoding='utf-8') as f:
-                        html_content = f.read()
-                except FileNotFoundError:
-                    with open('crypto-template.html', 'r', encoding='utf-8') as f:
-                        html_content = f.read()
-                
+                # Fallback to simple HTML
+                html_content = """<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RimToken - محفظة العملات الرقمية</title>
+    <style>
+        body { font-family: Arial; text-align: center; padding: 50px; background: linear-gradient(45deg, #4f46e5, #7c3aed); color: white; }
+        .container { background: rgba(255,255,255,0.1); padding: 40px; border-radius: 20px; max-width: 600px; margin: auto; }
+        h1 { font-size: 3em; margin-bottom: 20px; }
+        .btn { background: #10b981; color: white; padding: 15px 30px; text-decoration: none; border-radius: 10px; font-weight: bold; margin: 10px; display: inline-block; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 RimToken</h1>
+        <p>محفظة العملات الرقمية الآمنة والمتطورة</p>
+        <a href="/enhanced-trading" class="btn">💱 التداول</a>
+        <a href="/wallet" class="btn">👛 المحفظة</a>
+        <a href="/staking" class="btn">📈 الستاكينغ</a>
+    </div>
+</body>
+</html>"""
                 self.wfile.write(html_content.encode('utf-8'))
                 return
         
