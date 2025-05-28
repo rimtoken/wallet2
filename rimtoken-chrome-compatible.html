@@ -1525,7 +1525,7 @@
                 
                 // Update navigation
                 var navLinks = document.querySelectorAll('.nav-links a');
-                var englishNavTexts = ['Home', 'Prices', 'Features', 'Team', 'Learn', 'Contact'];
+                var englishNavTexts = ['Home', 'Trading', 'Downloads', 'Learn', 'Team', 'Contact'];
                 navLinks.forEach(function(link, index) {
                     if (englishNavTexts[index]) {
                         link.textContent = englishNavTexts[index];
@@ -1563,7 +1563,7 @@
                 
                 // Update sections
                 var sections = document.querySelectorAll('.section-title');
-                var englishTitles = ['Live Prices', 'Why RimToken?', 'Our Team', 'Learn With Us', 'Contact Us'];
+                var englishTitles = ['Downloads & Applications', 'Advanced Trading Platform', 'Our Team', 'Learn With Us', 'Contact Us'];
                 sections.forEach(function(section, index) {
                     if (englishTitles[index]) {
                         section.textContent = englishTitles[index];
@@ -1573,8 +1573,8 @@
                 // Update section subtitles
                 var subtitles = document.querySelectorAll('.section-subtitle');
                 var englishSubtitles = [
-                    'Follow cryptocurrency prices in real time',
-                    'Advanced features that make us the first choice for investors',
+                    'Download RimToken app on all your devices and enjoy trading anywhere',
+                    'Trade cryptocurrencies easily and securely with advanced professional tools',
                     'Meet the distinguished team behind RimToken platform',
                     'Enter the world of cryptocurrencies and artificial intelligence with our specialized educational content',
                     'Ready to start your journey? Contact us'
@@ -1585,15 +1585,24 @@
                     }
                 });
                 
-                // Update feature cards
+                // Update downloads section (crypto cards in downloads section)
+                var downloadTitles = document.querySelectorAll('#prices .crypto-info h4');
+                var englishDownloadTitles = ['Android', 'iPhone', 'Web App', 'Direct APK', 'Browser Extension'];
+                downloadTitles.forEach(function(title, index) {
+                    if (englishDownloadTitles[index]) {
+                        title.textContent = englishDownloadTitles[index];
+                    }
+                });
+                
+                // Update feature cards (trading section)
                 var featureTitles = document.querySelectorAll('.feature-title');
                 var englishFeatureTitles = [
-                    'Advanced Secure Wallet',
-                    'Multi-Network Support',
-                    'Smart Trading',
-                    'Lightning Fast Transactions',
-                    'Advanced AI Analytics',
-                    'Comprehensive Technical Support'
+                    'Advanced Live Trading',
+                    'Diverse Trading Pairs',
+                    'Fast Execution & Low Fees',
+                    'Advanced Technical Analysis',
+                    'Mobile Trading',
+                    'Advanced Security'
                 ];
                 featureTitles.forEach(function(title, index) {
                     if (englishFeatureTitles[index]) {
@@ -1604,12 +1613,12 @@
                 // Update feature descriptions
                 var featureDescriptions = document.querySelectorAll('.feature-description');
                 var englishDescriptions = [
-                    'High-level protection for your digital assets with advanced encryption, two-factor authentication and local private key storage',
-                    'Full support for major networks: Ethereum, Binance Smart Chain, Polygon, and Solana with seamless switching',
-                    'Use artificial intelligence to analyze markets and make smart trading decisions with automated strategies',
-                    'Ultra-fast transaction confirmation within seconds with the lowest fees in the market',
-                    'Advanced analytics and reports to track your portfolio performance and make data-driven decisions',
-                    'Expert technical support team available 24/7 to assist you at every step'
+                    'Professional trading platform with live prices and advanced order book with market and limit orders for all trading pairs',
+                    'Trade RIM/USDT, BTC/USDT, ETH/USDT and BNB/USDT with high liquidity and tight spreads',
+                    'Instant order execution with competitive trading fees starting from 0.1% and rewards system for active traders',
+                    'Comprehensive technical analysis tools with advanced indicators and interactive charts for informed trading decisions',
+                    'Advanced mobile app for trading on the go with instant notifications and portfolio management from anywhere',
+                    'Multi-layer protection with advanced encryption, two-factor authentication and cold wallet storage for funds'
                 ];
                 featureDescriptions.forEach(function(desc, index) {
                     if (englishDescriptions[index]) {
