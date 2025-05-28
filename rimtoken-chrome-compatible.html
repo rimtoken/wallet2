@@ -1472,20 +1472,124 @@
                 // Update hero section
                 var heroTitle = document.querySelector('.hero-title');
                 var heroSubtitle = document.querySelector('.hero-subtitle');
-                var ctaButton = document.querySelector('.hero-section .cta-button');
+                var ctaButtons = document.querySelectorAll('.cta-button');
                 var secondaryButton = document.querySelector('.secondary-button');
                 
-                if (heroTitle) heroTitle.innerHTML = 'The Future of <span class="gradient-text">Cryptocurrency</span>';
-                if (heroSubtitle) heroSubtitle.textContent = 'Trade smart with RimToken platform and enjoy advanced cryptocurrency experience';
-                if (ctaButton) ctaButton.textContent = 'Start Trading';
-                if (secondaryButton) secondaryButton.textContent = 'Learn More';
+                if (heroTitle) heroTitle.innerHTML = 'The Future of <span class="gradient-text">Cryptocurrency</span> in Your Hands';
+                if (heroSubtitle) heroSubtitle.textContent = 'Comprehensive platform for managing and trading cryptocurrencies with multi-network support and high-level security';
+                
+                // Update all CTA buttons
+                ctaButtons.forEach(function(btn) {
+                    if (btn.textContent.includes('ابدأ') || btn.textContent.includes('التداول')) {
+                        btn.innerHTML = 'Start Trading Now →';
+                    } else if (btn.textContent.includes('الآن')) {
+                        btn.innerHTML = 'Start Now ⭐';
+                    }
+                });
+                
+                if (secondaryButton) secondaryButton.innerHTML = 'Watch Demo Video ▶';
+                
+                // Update stats
+                var statLabels = document.querySelectorAll('.stat-label');
+                var englishStats = ['Active Users', 'Supported Currencies', 'Daily Volume', 'Countries Served'];
+                statLabels.forEach(function(label, index) {
+                    if (englishStats[index]) {
+                        label.textContent = englishStats[index];
+                    }
+                });
                 
                 // Update sections
                 var sections = document.querySelectorAll('.section-title');
-                var englishTitles = ['Live Cryptocurrency Prices', 'Platform Features', 'Our Team', 'Learn With Us', 'Contact Us'];
+                var englishTitles = ['Live Prices', 'Why RimToken?', 'Our Team', 'Learn With Us', 'Contact Us'];
                 sections.forEach(function(section, index) {
                     if (englishTitles[index]) {
                         section.textContent = englishTitles[index];
+                    }
+                });
+                
+                // Update section subtitles
+                var subtitles = document.querySelectorAll('.section-subtitle');
+                var englishSubtitles = [
+                    'Follow cryptocurrency prices in real time',
+                    'Advanced features that make us the first choice for investors',
+                    'Meet the distinguished team behind RimToken platform',
+                    'Enter the world of cryptocurrencies and artificial intelligence with our specialized educational content',
+                    'Ready to start your journey? Contact us'
+                ];
+                subtitles.forEach(function(subtitle, index) {
+                    if (englishSubtitles[index]) {
+                        subtitle.textContent = englishSubtitles[index];
+                    }
+                });
+                
+                // Update feature cards
+                var featureTitles = document.querySelectorAll('.feature-title');
+                var englishFeatureTitles = [
+                    'Advanced Secure Wallet',
+                    'Multi-Network Support',
+                    'Smart Trading',
+                    'Lightning Fast Transactions',
+                    'Advanced AI Analytics',
+                    'Comprehensive Technical Support'
+                ];
+                featureTitles.forEach(function(title, index) {
+                    if (englishFeatureTitles[index]) {
+                        title.textContent = englishFeatureTitles[index];
+                    }
+                });
+                
+                // Update feature descriptions
+                var featureDescriptions = document.querySelectorAll('.feature-description');
+                var englishDescriptions = [
+                    'High-level protection for your digital assets with advanced encryption, two-factor authentication and local private key storage',
+                    'Full support for major networks: Ethereum, Binance Smart Chain, Polygon, and Solana with seamless switching',
+                    'Use artificial intelligence to analyze markets and make smart trading decisions with automated strategies',
+                    'Ultra-fast transaction confirmation within seconds with the lowest fees in the market',
+                    'Advanced analytics and reports to track your portfolio performance and make data-driven decisions',
+                    'Expert technical support team available 24/7 to assist you at every step'
+                ];
+                featureDescriptions.forEach(function(desc, index) {
+                    if (englishDescriptions[index]) {
+                        desc.textContent = englishDescriptions[index];
+                    }
+                });
+                
+                // Update team member names and roles
+                var teamCards = document.querySelectorAll('#team .feature-card h3');
+                var englishTeamNames = ['Ahmed Mohammed', 'Ibrahim Al-Radadi', 'Mohammed Ali', 'Munir Ali', 'Khalid Ahmed', 'Nour Aldin'];
+                teamCards.forEach(function(name, index) {
+                    if (englishTeamNames[index]) {
+                        name.textContent = englishTeamNames[index];
+                    }
+                });
+                
+                var teamRoles = document.querySelectorAll('#team .feature-card p');
+                var englishRoles = [
+                    'Founder & Blockchain Developer',
+                    'Marketing & Relations Director', 
+                    'Cybersecurity Expert',
+                    'UI/UX Developer',
+                    'Product Manager',
+                    'Backend Systems Developer'
+                ];
+                teamRoles.forEach(function(role, index) {
+                    if (englishRoles[index]) {
+                        role.textContent = englishRoles[index];
+                    }
+                });
+                
+                var teamDescriptions = document.querySelectorAll('#team .feature-card small');
+                var englishTeamDesc = [
+                    '8 years experience in cryptocurrency development',
+                    'Specialist in digital platform growth',
+                    'Ensuring transaction and wallet security',
+                    'Exceptional user experience design',
+                    'Product vision and strategy leadership',
+                    'Building robust and scalable systems'
+                ];
+                teamDescriptions.forEach(function(desc, index) {
+                    if (englishTeamDesc[index]) {
+                        desc.textContent = englishTeamDesc[index];
                     }
                 });
                 
@@ -1522,13 +1626,31 @@
                 // Update hero section
                 var heroTitle = document.querySelector('.hero-title');
                 var heroSubtitle = document.querySelector('.hero-subtitle');
-                var ctaButton = document.querySelector('.hero-section .cta-button');
+                var ctaButtons = document.querySelectorAll('.cta-button');
                 var secondaryButton = document.querySelector('.secondary-button');
                 
-                if (heroTitle) heroTitle.innerHTML = 'مستقبل <span class="gradient-text">العملات المشفرة</span>';
-                if (heroSubtitle) heroSubtitle.textContent = 'تداول بذكاء مع منصة RimToken واستمتع بتجربة عملات مشفرة متطورة';
-                if (ctaButton) ctaButton.textContent = 'ابدأ التداول';
-                if (secondaryButton) secondaryButton.textContent = 'اعرف أكثر';
+                if (heroTitle) heroTitle.innerHTML = 'مستقبل <span class="gradient-text">العملات المشفرة</span> في يديك';
+                if (heroSubtitle) heroSubtitle.textContent = 'منصة شاملة لإدارة وتداول العملات المشفرة مع دعم متعدد الشبكات وأمان عالي المستوى';
+                
+                // Update all CTA buttons
+                ctaButtons.forEach(function(btn) {
+                    if (btn.textContent.includes('Start') || btn.textContent.includes('Trading')) {
+                        btn.innerHTML = 'ابدأ التداول الآن ←';
+                    } else if (btn.textContent.includes('Now')) {
+                        btn.innerHTML = 'ابدأ الآن ⭐';
+                    }
+                });
+                
+                if (secondaryButton) secondaryButton.innerHTML = 'شاهد الفيديو التعريفي ▶';
+                
+                // Update stats
+                var statLabels = document.querySelectorAll('.stat-label');
+                var arabicStats = ['مستخدم نشط', 'عملة مدعومة', 'حجم التداول اليومي', 'دولة مخدومة'];
+                statLabels.forEach(function(label, index) {
+                    if (arabicStats[index]) {
+                        label.textContent = arabicStats[index];
+                    }
+                });
                 
                 // Update sections
                 var sections = document.querySelectorAll('.section-title');
