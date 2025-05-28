@@ -5,6 +5,7 @@ import { Route, Switch } from "wouter";
 import SimpleHome from "@/pages/simple-home";
 import WalletPage from "@/pages/wallet-page";
 import TradingPage from "@/pages/trading-page";
+import EnhancedTradingPage from "@/pages/enhanced-trading-page";
 import StakingPage from "@/pages/staking-page";
 import MobileWalletPage from "@/pages/mobile-wallet-page";
 import { Button } from "@/components/ui/button";
@@ -22,31 +23,37 @@ function NavBar() {
           <Link href="/">
             <Button variant="ghost" size="sm" className="flex items-center gap-2">
               <Home className="h-4 w-4" />
-              الرئيسية
+              Home
             </Button>
           </Link>
           <Link href="/wallet">
             <Button variant="ghost" size="sm" className="flex items-center gap-2">
               <Wallet className="h-4 w-4" />
-              المحفظة
+              Wallet
             </Button>
           </Link>
           <Link href="/trading">
             <Button variant="ghost" size="sm" className="flex items-center gap-2">
               <BarChart3 className="h-4 w-4" />
-              التداول
+              Trading
+            </Button>
+          </Link>
+          <Link href="/enhanced-trading">
+            <Button variant="ghost" size="sm" className="flex items-center gap-2">
+              <BarChart3 className="h-4 w-4" />
+              Swap
             </Button>
           </Link>
           <Link href="/staking">
             <Button variant="ghost" size="sm" className="flex items-center gap-2">
               <Coins className="h-4 w-4" />
-              التحصيص
+              Staking
             </Button>
           </Link>
           <Link href="/mobile">
             <Button variant="ghost" size="sm" className="flex items-center gap-2">
               <Smartphone className="h-4 w-4" />
-              التطبيق
+              Mobile
             </Button>
           </Link>
         </div>

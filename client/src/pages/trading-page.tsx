@@ -174,8 +174,8 @@ export default function TradingPage() {
   const handleTrade = () => {
     if (!amount || (!price && orderType === 'limit')) {
       toast({
-        title: "خطأ",
-        description: "يرجى إدخال جميع البيانات المطلوبة",
+        title: "Error",
+        description: "Please enter all required data",
         variant: "destructive",
       });
       return;
@@ -196,8 +196,8 @@ export default function TradingPage() {
     setPrice('');
 
     toast({
-      title: "تم تنفيذ الأمر",
-      description: `تم ${tradeType === 'buy' ? 'شراء' : 'بيع'} ${amount} ${selectedPair?.baseAsset} بنجاح`,
+      title: "Order Executed",
+      description: `Successfully ${tradeType === 'buy' ? 'bought' : 'sold'} ${amount} ${selectedPair?.baseAsset}`,
     });
   };
 
@@ -225,20 +225,20 @@ export default function TradingPage() {
           <div>
             <h1 className="text-3xl font-bold flex items-center gap-2">
               <BarChart3 className="h-8 w-8 text-primary" />
-              منصة التداول المباشر
+              RimToken Trading
             </h1>
             <p className="text-muted-foreground mt-2">
-              تداول العملات المشفرة مع أدوات متقدمة وأسعار لحظية
+              Trade cryptocurrencies with advanced tools and real-time prices
             </p>
           </div>
           <div className="flex items-center gap-4">
             <Badge variant="secondary" className="flex items-center gap-1">
               <Activity className="h-3 w-3" />
-              متصل
+              Connected
             </Badge>
             <Badge variant="outline" className="flex items-center gap-1">
               <Zap className="h-3 w-3" />
-              تداول فوري
+              Instant Trading
             </Badge>
           </div>
         </div>
@@ -246,7 +246,7 @@ export default function TradingPage() {
         {/* Trading Pairs Selection */}
         <Card>
           <CardHeader>
-            <CardTitle>أزواج التداول المتاحة</CardTitle>
+            <CardTitle>Available Trading Pairs</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -274,7 +274,7 @@ export default function TradingPage() {
                         {pair.change24h >= 0 ? '+' : ''}{formatNumber(pair.change24h)}%
                       </div>
                       <p className="text-sm text-muted-foreground">
-                        الحجم: {formatVolume(pair.volume24h)}
+                        Volume: {formatVolume(pair.volume24h)}
                       </p>
                     </div>
                   </div>
@@ -291,97 +291,145 @@ export default function TradingPage() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Target className="h-5 w-5" />
-                  تنفيذ الأوامر
+                  Place Order
                 </CardTitle>
                 <CardDescription>
                   {selectedPair?.symbol} - ${formatNumber(selectedPair?.price || 0, 2)}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                {/* Buy/Sell Toggle */}
-                <div className="grid grid-cols-2 gap-2">
-                  <Button
-                    variant={tradeType === 'buy' ? 'default' : 'outline'}
-                    onClick={() => setTradeType('buy')}
-                    className="bg-green-600 hover:bg-green-700 text-white"
-                  >
-                    شراء
-                  </Button>
-                  <Button
-                    variant={tradeType === 'sell' ? 'default' : 'outline'}
-                    onClick={() => setTradeType('sell')}
-                    className="bg-red-600 hover:bg-red-700 text-white"
-                  >
-                    بيع
-                  </Button>
-                </div>
+                {/* Swap/Limit Toggle */}
+                <Tabs value={orderType} onValueChange={(value) => setOrderType(value as 'market' | 'limit')} className="w-full">
+                  <TabsList className="grid w-full grid-cols-2">
+                    <TabsTrigger value="market">Swap</TabsTrigger>
+                    <TabsTrigger value="limit">Limit</TabsTrigger>
+                  </TabsList>
+                  
+                  <TabsContent value="market" className="space-y-4 mt-4">
+                    {/* You pay section */}
+                    <div className="space-y-2">
+                      <div className="flex justify-between items-center">
+                        <label className="text-sm font-medium">You pay</label>
+                        <span className="text-xs text-muted-foreground">Balance: -${formatNumber(2642.19, 2)}</span>
+                      </div>
+                      <div className="flex items-center space-x-2 p-3 border rounded-lg bg-background">
+                        <div className="flex items-center space-x-2 flex-1">
+                          <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                            E
+                          </div>
+                          <div>
+                            <div className="font-semibold">ETH</div>
+                            <div className="text-xs text-muted-foreground">on Ethereum</div>
+                          </div>
+                        </div>
+                        <Input
+                          type="number"
+                          placeholder="1"
+                          value={amount}
+                          onChange={(e) => setAmount(e.target.value)}
+                          className="text-right border-none shadow-none text-lg font-mono w-24"
+                        />
+                      </div>
+                    </div>
 
-                {/* Order Type */}
-                <div className="grid grid-cols-2 gap-2">
-                  <Button
-                    variant={orderType === 'market' ? 'default' : 'outline'}
-                    onClick={() => setOrderType('market')}
-                  >
-                    أمر سوقي
-                  </Button>
-                  <Button
-                    variant={orderType === 'limit' ? 'default' : 'outline'}
-                    onClick={() => setOrderType('limit')}
-                  >
-                    أمر محدود
-                  </Button>
-                </div>
+                    {/* Swap direction */}
+                    <div className="flex justify-center">
+                      <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                        <ArrowUpDown className="h-4 w-4" />
+                      </Button>
+                    </div>
 
-                {/* Amount Input */}
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">
-                    الكمية ({selectedPair?.baseAsset})
-                  </label>
-                  <Input
-                    type="number"
-                    placeholder="0.00"
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                  />
-                </div>
+                    {/* You receive section */}
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">You receive</label>
+                      <div className="flex items-center space-x-2 p-3 border rounded-lg bg-background">
+                        <div className="flex items-center space-x-2 flex-1">
+                          <div className="w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                            $
+                          </div>
+                          <div>
+                            <div className="font-semibold">USDS</div>
+                            <div className="text-xs text-muted-foreground">on Ethereum</div>
+                          </div>
+                        </div>
+                        <div className="text-right text-lg font-mono text-muted-foreground">
+                          {amount ? formatNumber(parseFloat(amount) * (selectedPair?.price || 0), 2) : "0.00"}
+                        </div>
+                      </div>
+                    </div>
 
-                {/* Price Input (for limit orders) */}
-                {orderType === 'limit' && (
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">
-                      السعر ({selectedPair?.quoteAsset})
-                    </label>
-                    <Input
-                      type="number"
-                      placeholder="0.00"
-                      value={price}
-                      onChange={(e) => setPrice(e.target.value)}
-                    />
-                  </div>
-                )}
+                    <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3">
+                      Connect wallet
+                    </Button>
+                  </TabsContent>
 
-                {/* Total */}
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">المجموع</label>
-                  <div className="p-2 bg-muted rounded">
-                    {amount && (orderType === 'market' ? selectedPair?.price : price) ? 
-                      `${formatNumber(
-                        parseFloat(amount) * (orderType === 'market' ? selectedPair?.price || 0 : parseFloat(price || '0'))
-                      )} ${selectedPair?.quoteAsset}` : 
-                      `0.00 ${selectedPair?.quoteAsset}`
-                    }
-                  </div>
-                </div>
+                  <TabsContent value="limit" className="space-y-4 mt-4">
+                    {/* Buy/Sell Toggle */}
+                    <div className="grid grid-cols-2 gap-2">
+                      <Button
+                        variant={tradeType === 'buy' ? 'default' : 'outline'}
+                        onClick={() => setTradeType('buy')}
+                        className={tradeType === 'buy' ? "bg-green-600 hover:bg-green-700 text-white" : ""}
+                      >
+                        Buy
+                      </Button>
+                      <Button
+                        variant={tradeType === 'sell' ? 'default' : 'outline'}
+                        onClick={() => setTradeType('sell')}
+                        className={tradeType === 'sell' ? "bg-red-600 hover:bg-red-700 text-white" : ""}
+                      >
+                        Sell
+                      </Button>
+                    </div>
 
-                {/* Execute Button */}
-                <Button 
-                  onClick={handleTrade} 
-                  className={`w-full ${
-                    tradeType === 'buy' ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700'
-                  }`}
-                >
-                  {tradeType === 'buy' ? 'شراء' : 'بيع'} {selectedPair?.baseAsset}
-                </Button>
+                    {/* Amount Input */}
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">
+                        Amount ({selectedPair?.baseAsset})
+                      </label>
+                      <Input
+                        type="number"
+                        placeholder="0.00"
+                        value={amount}
+                        onChange={(e) => setAmount(e.target.value)}
+                      />
+                    </div>
+
+                    {/* Price Input */}
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">
+                        Price ({selectedPair?.quoteAsset})
+                      </label>
+                      <Input
+                        type="number"
+                        placeholder="0.00"
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)}
+                      />
+                    </div>
+
+                    {/* Total */}
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Total</label>
+                      <div className="p-2 bg-muted rounded">
+                        {amount && price ? 
+                          `${formatNumber(parseFloat(amount) * parseFloat(price || '0'))} ${selectedPair?.quoteAsset}` : 
+                          `0.00 ${selectedPair?.quoteAsset}`
+                        }
+                      </div>
+                    </div>
+
+                    {/* Execute Button */}
+                    <Button 
+                      onClick={handleTrade} 
+                      className={`w-full ${
+                        tradeType === 'buy' ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700'
+                      }`}
+                    >
+                      {tradeType === 'buy' ? 'Buy' : 'Sell'} {selectedPair?.baseAsset}
+                    </Button>
+                  </TabsContent>
+                </Tabs>
               </CardContent>
             </Card>
           </div>
@@ -390,25 +438,25 @@ export default function TradingPage() {
           <div className="lg:col-span-2">
             <Tabs defaultValue="orderbook" className="w-full">
               <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="orderbook">دفتر الأوامر</TabsTrigger>
-                <TabsTrigger value="history">تاريخ الأوامر</TabsTrigger>
+                <TabsTrigger value="orderbook">Order Book</TabsTrigger>
+                <TabsTrigger value="history">Order History</TabsTrigger>
               </TabsList>
 
               <TabsContent value="orderbook">
                 <Card>
                   <CardHeader>
-                    <CardTitle>دفتر الأوامر - {selectedPair?.symbol}</CardTitle>
+                    <CardTitle>Order Book - {selectedPair?.symbol}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="grid grid-cols-2 gap-4">
                       {/* Buy Orders */}
                       <div>
-                        <h4 className="font-semibold text-green-600 mb-2">أوامر الشراء</h4>
+                        <h4 className="font-semibold text-green-600 mb-2">Buy Orders</h4>
                         <div className="space-y-1">
                           <div className="grid grid-cols-3 gap-2 text-xs font-medium text-muted-foreground">
-                            <div>السعر</div>
-                            <div>الكمية</div>
-                            <div>المجموع</div>
+                            <div>Price</div>
+                            <div>Amount</div>
+                            <div>Total</div>
                           </div>
                           {buyOrders.slice(0, 8).map((order, index) => (
                             <div key={index} className="grid grid-cols-3 gap-2 text-sm hover:bg-green-50 p-1 rounded">
@@ -428,12 +476,12 @@ export default function TradingPage() {
 
                       {/* Sell Orders */}
                       <div>
-                        <h4 className="font-semibold text-red-600 mb-2">أوامر البيع</h4>
+                        <h4 className="font-semibold text-red-600 mb-2">Sell Orders</h4>
                         <div className="space-y-1">
                           <div className="grid grid-cols-3 gap-2 text-xs font-medium text-muted-foreground">
-                            <div>السعر</div>
-                            <div>الكمية</div>
-                            <div>المجموع</div>
+                            <div>Price</div>
+                            <div>Amount</div>
+                            <div>Total</div>
                           </div>
                           {sellOrders.slice(0, 8).map((order, index) => (
                             <div key={index} className="grid grid-cols-3 gap-2 text-sm hover:bg-red-50 p-1 rounded">
@@ -458,7 +506,7 @@ export default function TradingPage() {
               <TabsContent value="history">
                 <Card>
                   <CardHeader>
-                    <CardTitle>تاريخ أوامرك</CardTitle>
+                    <CardTitle>Your Order History</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-2">
