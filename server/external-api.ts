@@ -4,6 +4,7 @@ import { apiConfig, isServiceConfigured } from "./config";
 // Secure API client for external services
 class ExternalAPIService {
   private coinGeckoClient: AxiosInstance;
+  private coinMarketCapClient: AxiosInstance;
   
   constructor() {
     // Initialize CoinGecko client with authentication if API key is available
@@ -17,19 +18,70 @@ class ExternalAPIService {
         })
       }
     });
+
+    // Initialize CoinMarketCap client
+    this.coinMarketCapClient = axios.create({
+      baseURL: "https://pro-api.coinmarketcap.com/v1",
+      timeout: 10000,
+      headers: {
+        "Accept": "application/json",
+        ...(process.env.COINMARKETCAP_API_KEY && {
+          "X-CMC_PRO_API_KEY": process.env.COINMARKETCAP_API_KEY
+        })
+      }
+    });
   }
 
-  // Get cryptocurrency prices with proper authentication
-  async getCryptoPrices(coinIds: string[], vsCurrency: string = "usd") {
-    try {
-      const endpoint = isServiceConfigured("COINGECKO_API_KEY") 
-        ? "/simple/price" // Pro endpoint with API key
-        : "/simple/price"; // Public endpoint
+  // Get cryptocurrency prices from CoinMarketCap or CoinGecko
+  async getCryptoPrices(symbols: string[] = ["BTC", "ETH", "BNB", "SOL", "DOGE", "USDC"], vsCurrency: string = "USD") {
+    // Try CoinMarketCap first if API key is available
+    if (process.env.COINMARKETCAP_API_KEY) {
+      try {
+        const response = await this.coinMarketCapClient.get("/cryptocurrency/quotes/latest", {
+          params: {
+            symbol: symbols.join(","),
+            convert: vsCurrency
+          }
+        });
         
-      const response = await this.coinGeckoClient.get(endpoint, {
+        const formattedData: any = {};
+        
+        // Convert CoinMarketCap format to our expected format
+        Object.values(response.data.data).forEach((coin: any) => {
+          const symbol = coin.symbol.toLowerCase();
+          const quote = coin.quote[vsCurrency];
+          
+          formattedData[symbol] = {
+            [vsCurrency.toLowerCase()]: quote.price,
+            [`${vsCurrency.toLowerCase()}_24h_change`]: quote.percent_change_24h,
+            [`${vsCurrency.toLowerCase()}_market_cap`]: quote.market_cap,
+            [`${vsCurrency.toLowerCase()}_24h_vol`]: quote.volume_24h
+          };
+        });
+        
+        return formattedData;
+      } catch (error: any) {
+        console.warn("CoinMarketCap API failed, falling back to CoinGecko:", error.message);
+      }
+    }
+
+    // Fallback to CoinGecko
+    try {
+      const coinIdMap: Record<string, string> = {
+        'BTC': 'bitcoin',
+        'ETH': 'ethereum', 
+        'USDC': 'usd-coin',
+        'SOL': 'solana',
+        'DOGE': 'dogecoin',
+        'BNB': 'binancecoin'
+      };
+      
+      const coinIds = symbols.map(symbol => coinIdMap[symbol]).filter(Boolean);
+      
+      const response = await this.coinGeckoClient.get("/simple/price", {
         params: {
           ids: coinIds.join(","),
-          vs_currencies: vsCurrency,
+          vs_currencies: vsCurrency.toLowerCase(),
           include_24hr_change: true,
           include_market_cap: true,
           include_24hr_vol: true
@@ -39,10 +91,7 @@ class ExternalAPIService {
       return response.data;
     } catch (error: any) {
       if (error.response?.status === 429) {
-        throw new Error("Rate limit exceeded. Please configure COINGECKO_API_KEY for higher limits.");
-      }
-      if (error.response?.status === 401) {
-        throw new Error("Invalid CoinGecko API key. Please check your COINGECKO_API_KEY configuration.");
+        throw new Error("Rate limit exceeded. Please provide API credentials for higher limits.");
       }
       throw new Error(`Failed to fetch crypto prices: ${error.message}`);
     }

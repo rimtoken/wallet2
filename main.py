@@ -1,12 +1,91 @@
 #!/usr/bin/env python3
+import os
+import json
+import requests
 from http.server import HTTPServer, BaseHTTPRequestHandler
+from datetime import datetime
+
+class CryptoAPIService:
+    def __init__(self):
+        self.api_key = os.environ.get('COINMARKETCAP_API_KEY')
+        self.base_url = 'https://pro-api.coinmarketcap.com/v1'
+        self.headers = {
+            'X-CMC_PRO_API_KEY': self.api_key,
+            'Accept': 'application/json'
+        }
+    
+    def get_real_time_prices(self):
+        try:
+            symbols = ['BTC', 'ETH', 'BNB', 'SOL', 'DOGE', 'USDC']
+            
+            response = requests.get(
+                f'{self.base_url}/cryptocurrency/quotes/latest',
+                headers=self.headers,
+                params={
+                    'symbol': ','.join(symbols),
+                    'convert': 'USD'
+                },
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                crypto_data = []
+                
+                for symbol in symbols:
+                    if symbol in data['data']:
+                        coin = data['data'][symbol]
+                        quote = coin['quote']['USD']
+                        
+                        crypto_data.append({
+                            'symbol': symbol,
+                            'name': coin['name'],
+                            'price': round(quote['price'], 6),
+                            'change_24h': round(quote['percent_change_24h'], 2)
+                        })
+                
+                return crypto_data
+            else:
+                return []
+                
+        except Exception as e:
+            print(f"Error fetching data: {e}")
+            return []
 
 class TradingHandler(BaseHTTPRequestHandler):
+    def __init__(self, *args, **kwargs):
+        self.crypto_service = CryptoAPIService()
+        super().__init__(*args, **kwargs)
     def do_GET(self):
+        if self.path == '/api/crypto/prices':
+            self.handle_crypto_api()
+        else:
+            self.handle_main_page()
+    
+    def handle_crypto_api(self):
+        self.send_response(200)
+        self.send_header('Content-Type', 'application/json; charset=utf-8')
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.end_headers()
+        
+        crypto_data = self.crypto_service.get_real_time_prices()
+        response_data = {
+            'success': True,
+            'data': crypto_data,
+            'source': 'CoinMarketCap'
+        }
+        
+        self.wfile.write(json.dumps(response_data, ensure_ascii=False).encode('utf-8'))
+    
+    def handle_main_page(self):
         self.send_response(200)
         self.send_header('Content-Type', 'text/html; charset=utf-8')
         self.send_header('Cache-Control', 'no-cache')
         self.end_headers()
+        
+        # Get real-time cryptocurrency data
+        crypto_data = self.crypto_service.get_real_time_prices()
+        crypto_js_data = json.dumps(crypto_data, ensure_ascii=False)
         
         html_content = '''<!DOCTYPE html>
 <html lang="ar" dir="rtl">
