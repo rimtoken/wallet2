@@ -8,11 +8,8 @@ class RimTokenHandler(BaseHTTPRequestHandler):
         self.send_header('Cache-Control', 'no-cache')
         self.end_headers()
         
-        try:
-            with open('rimtoken-complete.html', 'r', encoding='utf-8') as f:
-                html_content = f.read()
-        except:
-            html_content = '''<!DOCTYPE html>
+        # صفحة التداول المتقدمة RimToken
+        html_content = '''<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -128,7 +125,7 @@ class RimTokenHandler(BaseHTTPRequestHandler):
         self.wfile.write(html_content.encode('utf-8'))
 
 if __name__ == '__main__':
-    port = 8080
+    port = 5000
     server = HTTPServer(('0.0.0.0', port), RimTokenHandler)
     print(f'RimToken Website is running at http://localhost:{port}')
     print('موقع RimToken جاهز!')
