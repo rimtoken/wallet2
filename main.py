@@ -3,6 +3,7 @@ import os
 import json
 import requests
 import secrets
+import datetime
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from socketserver import ThreadingMixIn
 
@@ -160,7 +161,7 @@ class RimTokenHandler(BaseHTTPRequestHandler):
             'data': crypto_data,
             'source': 'CoinMarketCap API' if self.config.coinmarketcap_api_key else 'No API configured',
             'count': len(crypto_data),
-            'timestamp': requests.utils.formatdate(usegmt=True)
+            'timestamp': datetime.datetime.utcnow().isoformat() + 'Z'
         }
         
         self.wfile.write(json.dumps(response_data, ensure_ascii=False).encode('utf-8'))
