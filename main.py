@@ -154,23 +154,23 @@ class LandingPageHandler(BaseHTTPRequestHandler):
         * {{ margin: 0; padding: 0; box-sizing: border-box; }}
         
         body {{ 
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; 
-            background: #0a0e27;
-            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
             line-height: 1.6;
             overflow-x: hidden;
         }}
         
         /* Header */
         .header {{
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(10, 14, 39, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            z-index: 1000;
-            padding: 1rem 0;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 1rem 2rem;
+            margin: 2rem auto;
+            max-width: 1200px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }}
         
         .nav {{
@@ -183,12 +183,25 @@ class LandingPageHandler(BaseHTTPRequestHandler):
         }}
         
         .logo {{
-            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: white;
+            text-decoration: none;
+        }}
+        
+        .logo-icon {{
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #667eea;
+            font-weight: bold;
         }}
         
         .nav-links {{
@@ -849,15 +862,20 @@ class LandingPageHandler(BaseHTTPRequestHandler):
         * {{ margin: 0; padding: 0; box-sizing: border-box; }}
         body {{ 
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f8fafc;
-            color: #1e293b;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
             line-height: 1.6;
         }}
         
         .header {{
-            background: white;
-            border-bottom: 1px solid #e2e8f0;
-            padding: 1rem 0;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 1rem 2rem;
+            margin: 2rem auto;
+            max-width: 1200px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }}
         
         .nav {{
@@ -878,22 +896,22 @@ class LandingPageHandler(BaseHTTPRequestHandler):
         .logo {{
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            font-size: 1.25rem;
+            gap: 0.75rem;
+            font-size: 1.5rem;
             font-weight: 700;
-            color: #1e293b;
+            color: white;
             text-decoration: none;
         }}
         
         .logo-icon {{
-            width: 32px;
-            height: 32px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 8px;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
+            color: #667eea;
             font-weight: bold;
         }}
         
@@ -904,17 +922,15 @@ class LandingPageHandler(BaseHTTPRequestHandler):
         }}
         
         .nav-item {{
-            color: #64748b;
+            color: white;
             text-decoration: none;
             font-weight: 500;
-            padding: 0.5rem 0;
-            border-bottom: 2px solid transparent;
-            transition: all 0.2s ease;
+            opacity: 0.8;
+            transition: opacity 0.2s ease;
         }}
         
         .nav-item:hover, .nav-item.active {{
-            color: #1e293b;
-            border-bottom-color: #3b82f6;
+            opacity: 1;
         }}
         
         .dropdown-arrow {{
