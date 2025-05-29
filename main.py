@@ -813,13 +813,29 @@ class LandingPageHandler(BaseHTTPRequestHandler):
         
         self.wfile.write(html_content.encode('utf-8'))
 
+class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
+    """Handle requests in a separate thread for better performance"""
+    allow_reuse_address = True
+    daemon_threads = True
+
 def main():
-    server_address = ('0.0.0.0', 3000)
-    httpd = HTTPServer(server_address, LandingPageHandler)
-    print("🚀 RimToken Landing Page Server")
-    print("🌐 Running on http://localhost:3000")
-    print("✨ Modern landing page with visitor exploration")
-    httpd.serve_forever()
+    import socket
+    
+    # Find available port
+    for port in [3000, 8000, 8080, 5000]:
+        try:
+            server_address = ('0.0.0.0', port)
+            httpd = ThreadedHTTPServer(server_address, LandingPageHandler)
+            print(f"🚀 RimToken Landing Page Server")
+            print(f"🌐 Running on http://localhost:{port}")
+            print("✨ Modern landing page with visitor exploration")
+            httpd.serve_forever()
+            break
+        except OSError as e:
+            if e.errno == 98:  # Address already in use
+                continue
+            else:
+                raise
 
 if __name__ == "__main__":
     main()
