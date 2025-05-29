@@ -1262,42 +1262,51 @@ class LandingPageHandler(BaseHTTPRequestHandler):
         self.wfile.write(html_content.encode('utf-8'))
 
     def handle_wallet_page(self):
-        """Wallet page for portfolio management"""
+        """Wallet page with mobile-first design and user portfolio"""
         self.send_response(200)
         self.send_header('Content-Type', 'text/html; charset=utf-8')
         self.end_headers()
         
         crypto_data = self.crypto_service.get_real_time_prices()
         
-        # Generate portfolio items (mock user data)
+        # User portfolio data (when logged in)
+        user_balances = {
+            'BTC': {'amount': 0.001524896, 'icon': '₿'},
+            'ETH': {'amount': 0.15642, 'icon': 'Ξ'},
+            'BNB': {'amount': 2.48632, 'icon': 'BNB'},
+            'SOL': {'amount': 5.8741, 'icon': 'SOL'},
+            'USDT': {'amount': 1847.23, 'icon': 'T'},
+            'ADA': {'amount': 328.47, 'icon': 'ADA'}
+        }
+        
+        # Generate portfolio items
         portfolio_items = ""
-        mock_balances = [0.25, 1.5, 450.0, 12.5, 850.0, 25.0]
         total_value = 0
         
-        for i, coin in enumerate(crypto_data):
-            if i < len(mock_balances):
-                balance = mock_balances[i]
+        for coin in crypto_data:
+            if coin['symbol'] in user_balances:
+                user_data = user_balances[coin['symbol']]
+                balance = user_data['amount']
                 value = balance * coin['price']
                 total_value += value
                 change_class = "positive" if coin['change_24h'] >= 0 else "negative"
                 change_symbol = "+" if coin['change_24h'] >= 0 else ""
                 
                 portfolio_items += f"""
-                    <div class="wallet-item">
-                        <div class="coin-info">
-                            <div class="coin-details">
-                                <h3>{coin['symbol']}</h3>
-                                <p>{coin['name']}</p>
-                            </div>
+                    <div class="coin-item">
+                        <div class="coin-icon">
+                            <div class="icon-circle">{user_data['icon']}</div>
                         </div>
-                        <div class="balance-info">
-                            <div class="balance">{balance} {coin['symbol']}</div>
-                            <div class="value">${value:,.2f}</div>
-                            <div class="change {change_class}">{change_symbol}{coin['change_24h']:.2f}%</div>
+                        <div class="coin-details">
+                            <div class="coin-name">{coin['name']}</div>
+                            <div class="coin-symbol">{coin['symbol']}</div>
                         </div>
-                        <div class="actions">
-                            <button class="action-btn send">Send</button>
-                            <button class="action-btn receive">Receive</button>
+                        <div class="coin-balance">
+                            <div class="balance-amount">${value:,.2f}</div>
+                            <div class="balance-tokens">{balance:.6f} {coin['symbol']}</div>
+                        </div>
+                        <div class="coin-change {change_class}">
+                            {change_symbol}{coin['change_24h']:.2f}%
                         </div>
                     </div>
                 """
@@ -1307,253 +1316,451 @@ class LandingPageHandler(BaseHTTPRequestHandler):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wallet - RimToken</title>
+    <title>RimToken Crypto Wallet</title>
     <style>
         * {{ margin: 0; padding: 0; box-sizing: border-box; }}
         body {{ 
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; 
-            background: #0a0e27;
-            color: #ffffff;
-            line-height: 1.6;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
         }}
+        
+        .wallet-container {{
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }}
+        
         .header {{
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(10, 14, 39, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            z-index: 1000;
-            padding: 1rem 0;
-        }}
-        .nav {{
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 1rem 2rem;
+            margin-bottom: 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
         }}
+        
         .logo {{
-            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: white;
             text-decoration: none;
         }}
-        .nav-links {{
+        
+        .logo-icon {{
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #667eea;
+            font-weight: bold;
+        }}
+        
+        .nav-menu {{
             display: flex;
             gap: 2rem;
             align-items: center;
         }}
-        .nav-link {{
-            color: #a0a9c0;
+        
+        .nav-item {{
+            color: white;
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s ease;
+            opacity: 0.8;
+            transition: opacity 0.2s ease;
         }}
-        .nav-link:hover, .nav-link.active {{
-            color: #667eea;
+        
+        .nav-item:hover, .nav-item.active {{
+            opacity: 1;
         }}
-        .auth-buttons {{
-            display: flex;
-            gap: 1rem;
-        }}
-        .btn {{
-            padding: 0.75rem 1.5rem;
+        
+        .download-btn {{
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.5rem 1rem;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: all 0.2s ease;
         }}
-        .btn-outline {{
-            background: transparent;
-            border: 2px solid #667eea;
-            color: #667eea;
+        
+        .download-btn:hover {{
+            background: rgba(255,255,255,0.3);
         }}
-        .btn-primary {{
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        
+        .announcement {{
+            background: #ff6b35;
+            padding: 0.75rem 2rem;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 3rem;
+            font-weight: 500;
+        }}
+        
+        .announcement a {{
             color: white;
+            text-decoration: underline;
         }}
-        .container {{
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 100px 2rem 2rem;
-        }}
-        .page-title {{
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 2rem;
-            text-align: center;
-        }}
-        .portfolio-summary {{
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: center;
-        }}
-        .total-value {{
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }}
-        .portfolio-stats {{
+        
+        .hero-section {{
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-bottom: 4rem;
         }}
-        .stat-item {{
+        
+        .hero-content h1 {{
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }}
+        
+        .hero-content .subtitle {{
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }}
+        
+        .social-links {{
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }}
+        
+        .social-link {{
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: background 0.2s ease;
+        }}
+        
+        .social-link:hover {{
+            background: rgba(255,255,255,0.3);
+        }}
+        
+        .download-buttons {{
+            display: flex;
+            gap: 1rem;
+        }}
+        
+        .store-btn {{
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.2s ease;
+        }}
+        
+        .store-btn:hover {{
+            background: rgba(0,0,0,0.9);
+        }}
+        
+        .phones-mockup {{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }}
+        
+        .phone {{
+            width: 280px;
+            height: 560px;
+            background: white;
+            border-radius: 25px;
+            padding: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            position: relative;
+            margin: 0 -40px;
+        }}
+        
+        .phone.center {{
+            z-index: 2;
+            transform: scale(1.1);
+        }}
+        
+        .phone-screen {{
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }}
+        
+        .wallet-balance {{
             text-align: center;
+            margin-bottom: 2rem;
         }}
-        .stat-label {{
-            color: #a0a9c0;
+        
+        .balance-amount {{
+            font-size: 2rem;
+            font-weight: 700;
             margin-bottom: 0.5rem;
         }}
-        .stat-value {{
-            font-size: 1.5rem;
-            font-weight: 700;
-        }}
-        .wallet-grid {{
-            display: grid;
-            gap: 1rem;
-        }}
-        .wallet-item {{
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: all 0.3s ease;
-        }}
-        .wallet-item:hover {{
-            transform: translateY(-2px);
-            border-color: #667eea;
-        }}
-        .coin-info {{
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }}
-        .coin-details h3 {{
-            font-size: 1.2rem;
-            margin-bottom: 0.25rem;
-        }}
-        .coin-details p {{
-            color: #a0a9c0;
+        
+        .balance-label {{
+            opacity: 0.8;
             font-size: 0.9rem;
         }}
-        .balance-info {{
+        
+        .wallet-actions {{
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 2rem;
+        }}
+        
+        .action-icon {{
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }}
+        
+        .coins-list {{
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1rem;
+            height: 300px;
+            overflow-y: auto;
+        }}
+        
+        .coin-item {{
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }}
+        
+        .coin-item:last-child {{
+            border-bottom: none;
+        }}
+        
+        .coin-icon {{
+            width: 40px;
+            height: 40px;
+            margin-right: 1rem;
+        }}
+        
+        .icon-circle {{
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }}
+        
+        .coin-details {{
+            flex: 1;
+        }}
+        
+        .coin-name {{
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+        }}
+        
+        .coin-symbol {{
+            opacity: 0.7;
+            font-size: 0.85rem;
+        }}
+        
+        .coin-balance {{
+            text-align: right;
+            margin-right: 1rem;
+        }}
+        
+        .balance-amount {{
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+        }}
+        
+        .balance-tokens {{
+            opacity: 0.7;
+            font-size: 0.8rem;
+        }}
+        
+        .coin-change {{
+            font-size: 0.85rem;
+            font-weight: 600;
+            min-width: 50px;
             text-align: right;
         }}
-        .balance {{
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
+        
+        .coin-change.positive {{
+            color: #4ade80;
         }}
-        .value {{
-            color: #a0a9c0;
-            margin-bottom: 0.25rem;
+        
+        .coin-change.negative {{
+            color: #f87171;
         }}
-        .change.positive {{
-            color: #00d4aa;
-            font-weight: 600;
-        }}
-        .change.negative {{
-            color: #ff4757;
-            font-weight: 600;
-        }}
-        .actions {{
-            display: flex;
-            gap: 0.5rem;
-        }}
-        .action-btn {{
-            padding: 0.5rem 1rem;
-            border: 1px solid #667eea;
-            background: transparent;
-            color: #667eea;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }}
-        .action-btn:hover {{
-            background: #667eea;
-            color: white;
-        }}
-        .action-btn.send {{
-            border-color: #ff4757;
-            color: #ff4757;
-        }}
-        .action-btn.send:hover {{
-            background: #ff4757;
-            color: white;
-        }}
-        .quick-actions {{
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin: 2rem 0;
+        
+        @media (max-width: 768px) {{
+            .hero-section {{
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }}
+            
+            .hero-content h1 {{
+                font-size: 2.5rem;
+            }}
+            
+            .phone {{
+                width: 200px;
+                height: 400px;
+                margin: 0 -20px;
+            }}
+            
+            .wallet-container {{
+                padding: 1rem;
+            }}
         }}
     </style>
 </head>
 <body>
-    <header class="header">
-        <nav class="nav">
-            <a href="/" class="logo">RimToken</a>
-            <div class="nav-links">
-                <a href="/trading" class="nav-link">Trading</a>
-                <a href="/wallet" class="nav-link active">Wallet</a>
-                <a href="/#features" class="nav-link">Features</a>
-                <a href="/#prices" class="nav-link">Live Prices</a>
-                <a href="/#about" class="nav-link">About</a>
-            </div>
-            <div class="auth-buttons">
-                <a href="/login" class="btn btn-outline">Sign In</a>
-                <a href="/signup" class="btn btn-primary">Get Started</a>
-            </div>
-        </nav>
-    </header>
-
-    <div class="container">
-        <h1 class="page-title">My Wallet</h1>
+    <div class="wallet-container">
+        <header class="header">
+            <a href="/" class="logo">
+                <div class="logo-icon">R</div>
+                Wallet
+            </a>
+            <nav class="nav-menu">
+                <a href="#features" class="nav-item">Features</a>
+                <a href="#roadmap" class="nav-item">Roadmap</a>
+                <a href="#support" class="nav-item">Support</a>
+            </nav>
+            <a href="#download" class="download-btn">Download wallet</a>
+        </header>
         
-        <div class="portfolio-summary">
-            <div class="total-value">${total_value:,.2f}</div>
-            <p>Total Portfolio Value</p>
+        <div class="announcement">
+            <strong>rimtoken Wallet token sale is live!</strong> • Go to 
+            <a href="https://rimtokenwallet.com">rimtokenwallet.com</a> to buy $
+        </div>
+        
+        <div class="hero-section">
+            <div class="hero-content">
+                <h1>rimtoken crypto Wallet: Anonymous Bitcoin Wallet</h1>
+                <p class="subtitle">
+                    Wallet is the best Crypto Wallet without Verification, ID or KYC. 
+                    Get the most Secure & Anonymous Non-Custodial Crypto Wallet Now.
+                </p>
+                
+                <div class="social-links">
+                    <a href="#" class="social-link">📧</a>
+                    <a href="#" class="social-link">💬</a>
+                    <a href="#" class="social-link">📱</a>
+                    <a href="#" class="social-link">🌟</a>
+                    <a href="#" class="social-link">📷</a>
+                </div>
+                
+                <div class="download-buttons">
+                    <a href="#" class="store-btn">
+                        <span>📱</span>
+                        <div>
+                            <div style="font-size: 0.8rem;">GET IT ON</div>
+                            <div>Google Play</div>
+                        </div>
+                    </a>
+                    <a href="#" class="store-btn">
+                        <span>🍎</span>
+                        <div>
+                            <div style="font-size: 0.8rem;">Download on the</div>
+                            <div>App Store</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
             
-            <div class="portfolio-stats">
-                <div class="stat-item">
-                    <div class="stat-label">24h Change</div>
-                    <div class="stat-value" style="color: #00d4aa;">+$1,234.56</div>
+            <div class="phones-mockup">
+                <div class="phone">
+                    <div class="phone-screen">
+                        <div class="wallet-balance">
+                            <div style="font-size: 0.9rem; opacity: 0.8;">Portfolio Value</div>
+                            <div class="balance-amount">${total_value:,.0f}</div>
+                        </div>
+                        <div class="wallet-actions">
+                            <div class="action-icon">↗</div>
+                            <div class="action-icon">↙</div>
+                            <div class="action-icon">🔄</div>
+                            <div class="action-icon">📊</div>
+                        </div>
+                        <div class="coins-list">
+                            {portfolio_items}
+                        </div>
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-label">Total Assets</div>
-                    <div class="stat-value">{len(crypto_data)}</div>
+                
+                <div class="phone center">
+                    <div class="phone-screen">
+                        <div class="wallet-balance">
+                            <div class="balance-amount">${total_value:,.2f}</div>
+                            <div class="balance-label">Total Balance</div>
+                        </div>
+                        <div class="wallet-actions">
+                            <div class="action-icon">+</div>
+                            <div class="action-icon">-</div>
+                            <div class="action-icon">⇄</div>
+                            <div class="action-icon">=</div>
+                        </div>
+                        <div class="coins-list">
+                            {portfolio_items}
+                        </div>
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <div class="stat-label">Available Balance</div>
-                    <div class="stat-value">${total_value * 0.95:,.2f}</div>
+                
+                <div class="phone">
+                    <div class="phone-screen">
+                        <div class="wallet-balance">
+                            <div style="font-size: 0.9rem; opacity: 0.8;">Assets</div>
+                            <div class="balance-amount">{len([coin for coin in crypto_data if coin['symbol'] in user_balances])}</div>
+                        </div>
+                        <div class="wallet-actions">
+                            <div class="action-icon">📈</div>
+                            <div class="action-icon">📉</div>
+                            <div class="action-icon">🔍</div>
+                            <div class="action-icon">⚙</div>
+                        </div>
+                        <div class="coins-list">
+                            {portfolio_items}
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        
-        <div class="quick-actions">
-            <button class="btn btn-primary">Add Funds</button>
-            <button class="btn btn-outline">Withdraw</button>
-            <button class="btn btn-outline">Transaction History</button>
-        </div>
-        
-        <div class="wallet-grid">
-            {portfolio_items}
         </div>
     </div>
 
@@ -1563,7 +1770,7 @@ class LandingPageHandler(BaseHTTPRequestHandler):
             fetch('/api/crypto/prices')
                 .then(response => response.json())
                 .then(data => {{
-                    console.log('Portfolio data updated');
+                    console.log('Portfolio updated with live data');
                 }})
                 .catch(error => console.log('Update failed'));
         }}, 30000);
