@@ -3,7 +3,6 @@ import os
 import json
 import requests
 from http.server import HTTPServer, BaseHTTPRequestHandler
-from datetime import datetime
 
 class CryptoAPIService:
     def __init__(self):
@@ -56,6 +55,7 @@ class TradingHandler(BaseHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         self.crypto_service = CryptoAPIService()
         super().__init__(*args, **kwargs)
+
     def do_GET(self):
         if self.path == '/api/crypto/prices':
             self.handle_crypto_api()
@@ -85,9 +85,20 @@ class TradingHandler(BaseHTTPRequestHandler):
         
         # Get real-time cryptocurrency data
         crypto_data = self.crypto_service.get_real_time_prices()
-        crypto_js_data = json.dumps(crypto_data, ensure_ascii=False)
         
-        html_content = '''<!DOCTYPE html>
+        # Generate price ticker with real data
+        price_ticker_html = ""
+        for coin in crypto_data:
+            change_class = "positive" if coin['change_24h'] >= 0 else "negative"
+            change_symbol = "+" if coin['change_24h'] >= 0 else ""
+            price_ticker_html += f'''
+                <div class="price-item">
+                    <span>{coin['symbol']}</span>
+                    <span class="price-change {change_class}">${coin['price']:,.6f} ({change_symbol}{coin['change_24h']:.2f}%)</span>
+                </div>
+            '''
+        
+        html_content = f'''<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -150,10 +161,10 @@ class TradingHandler(BaseHTTPRequestHandler):
             display: inline-block; 
             animation: scroll-left 20s linear infinite; 
         }
-        @keyframes scroll-left {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
+        @keyframes scroll-left {{
+            0% {{ transform: translateX(100%); }}
+            100% {{ transform: translateX(-100%); }}
+        }}
         .ticker-item { 
             display: inline-block; 
             margin: 0 2rem; 
