@@ -8,143 +8,45 @@ class RimTokenHandler(BaseHTTPRequestHandler):
         self.send_header('Content-type', 'text/html; charset=utf-8')
         self.end_headers()
         
-        html = '''<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+        html = """<!DOCTYPE html>
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RimToken - محفظة العملات الرقمية</title>
+    <title>RimToken</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            font-family: Arial;
+            background: #4f46e5;
             color: white;
-        }
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .header {
             text-align: center;
-            padding: 40px 0;
+            padding: 50px;
+            margin: 0;
         }
-        .logo {
-            font-size: 4rem;
-            font-weight: bold;
+        h1 {
+            font-size: 3rem;
             margin-bottom: 20px;
         }
-        .tagline {
-            font-size: 1.5rem;
-            margin-bottom: 30px;
-            opacity: 0.9;
-        }
-        .nav {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin: 30px 0;
-            flex-wrap: wrap;
-        }
-        .nav-btn {
-            padding: 12px 25px;
-            background: rgba(255,255,255,0.2);
-            border: none;
-            border-radius: 25px;
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-        .nav-btn:hover {
-            background: rgba(255,255,255,0.3);
-            transform: translateY(-2px);
-        }
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 40px 0;
-        }
-        .feature {
-            background: rgba(255,255,255,0.1);
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-        }
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
+        p {
+            font-size: 1.2rem;
+            margin: 20px 0;
         }
         .status {
-            position: fixed;
-            top: 20px;
-            left: 20px;
             background: #10b981;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 8px;
-            font-weight: bold;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            display: inline-block;
         }
     </style>
 </head>
 <body>
-    <div class="status">الموقع يعمل بنجاح</div>
-    
-    <div class="container">
-        <header class="header">
-            <div class="logo">RimToken</div>
-            <div class="tagline">محفظة العملات الرقمية الآمنة والمتطورة</div>
-        </header>
-
-        <nav class="nav">
-            <a href="#" class="nav-btn">الرئيسية</a>
-            <a href="#" class="nav-btn">التداول</a>
-            <a href="#" class="nav-btn">المحفظة</a>
-            <a href="#" class="nav-btn">الستاكينغ</a>
-            <a href="#" class="nav-btn">التنزيلات</a>
-        </nav>
-
-        <div class="features">
-            <div class="feature">
-                <div class="feature-icon">🔒</div>
-                <h3>الأمان المتقدم</h3>
-                <p>حماية كاملة لأصولك الرقمية مع أحدث تقنيات التشفير</p>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">⚡</div>
-                <h3>التداول السريع</h3>
-                <p>معاملات فورية برسوم منخفضة على جميع الشبكات</p>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">🌐</div>
-                <h3>متعدد البلوك تشين</h3>
-                <p>دعم Ethereum, Solana, BSC, Polygon والمزيد</p>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">📱</div>
-                <h3>تطبيق موبايل</h3>
-                <p>إدارة محفظتك من أي مكان بسهولة تامة</p>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        console.log('تم تحميل RimToken بنجاح');
-        document.title = 'RimToken - يعمل';
-        
-        // إضافة تفاعل للأزرار
-        document.querySelectorAll('.nav-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                console.log('تم النقر على:', this.textContent);
-            });
-        });
-    </script>
+    <div class="status">Website Working</div>
+    <h1>RimToken</h1>
+    <p>Cryptocurrency Wallet Platform</p>
+    <p>The website is running successfully!</p>
 </body>
-</html>'''
+</html>"""
         
         self.wfile.write(html.encode('utf-8'))
 
