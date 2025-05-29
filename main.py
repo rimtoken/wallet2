@@ -820,57 +820,38 @@ class LandingPageHandler(BaseHTTPRequestHandler):
         self.wfile.write(html_content.encode('utf-8'))
 
     def handle_trading_page(self):
-        """Trading page with live market data and trading interface"""
+        """Trading page with swap interface similar to the reference design"""
         self.send_response(200)
         self.send_header('Content-Type', 'text/html; charset=utf-8')
         self.end_headers()
         
         crypto_data = self.crypto_service.get_real_time_prices()
         
-        # Generate trading pairs
-        trading_pairs = ""
-        for coin in crypto_data:
-            change_class = "positive" if coin['change_24h'] >= 0 else "negative"
-            change_symbol = "+" if coin['change_24h'] >= 0 else ""
-            trading_pairs += f"""
-                <tr>
-                    <td class="pair-info">
-                        <strong>{coin['symbol']}/USDT</strong>
-                        <div class="pair-name">{coin['name']}</div>
-                    </td>
-                    <td class="price">${coin['price']:,.2f}</td>
-                    <td class="change {change_class}">{change_symbol}{coin['change_24h']:.2f}%</td>
-                    <td>
-                        <button class="trade-btn buy">Buy</button>
-                        <button class="trade-btn sell">Sell</button>
-                    </td>
-                </tr>
-            """
+        # Get current prices for display
+        eth_price = next((coin['price'] for coin in crypto_data if coin['symbol'] == 'ETH'), 2580.00)
+        btc_price = next((coin['price'] for coin in crypto_data if coin['symbol'] == 'BTC'), 43250.00)
         
         html_content = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trading - RimToken</title>
+    <title>Trade - RimToken</title>
     <style>
         * {{ margin: 0; padding: 0; box-sizing: border-box; }}
         body {{ 
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; 
-            background: #0a0e27;
-            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
             line-height: 1.6;
         }}
+        
         .header {{
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(10, 14, 39, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            z-index: 1000;
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
             padding: 1rem 0;
         }}
+        
         .nav {{
             display: flex;
             justify-content: space-between;
@@ -879,270 +860,392 @@ class LandingPageHandler(BaseHTTPRequestHandler):
             margin: 0 auto;
             padding: 0 2rem;
         }}
+        
+        .logo-section {{
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }}
+        
         .logo {{
-            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.25rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #1e293b;
             text-decoration: none;
         }}
-        .nav-links {{
+        
+        .logo-icon {{
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }}
+        
+        .nav-menu {{
             display: flex;
             gap: 2rem;
             align-items: center;
         }}
-        .nav-link {{
-            color: #a0a9c0;
+        
+        .nav-item {{
+            color: #64748b;
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s ease;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
         }}
-        .nav-link:hover, .nav-link.active {{
-            color: #667eea;
+        
+        .nav-item:hover, .nav-item.active {{
+            color: #1e293b;
+            border-bottom-color: #3b82f6;
         }}
-        .auth-buttons {{
-            display: flex;
-            gap: 1rem;
+        
+        .dropdown-arrow {{
+            margin-left: 0.25rem;
+            font-size: 0.8rem;
         }}
-        .btn {{
-            padding: 0.75rem 1.5rem;
+        
+        .connect-wallet {{
+            background: #3b82f6;
+            color: white;
+            padding: 0.625rem 1.25rem;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
+            transition: background 0.2s ease;
         }}
-        .btn-outline {{
-            background: transparent;
-            border: 2px solid #667eea;
-            color: #667eea;
+        
+        .connect-wallet:hover {{
+            background: #2563eb;
         }}
-        .btn-primary {{
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }}
-        .container {{
+        
+        .main-content {{
             max-width: 1200px;
             margin: 0 auto;
-            padding: 100px 2rem 2rem;
+            padding: 3rem 2rem;
+            display: flex;
+            justify-content: center;
         }}
-        .page-title {{
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 2rem;
-            text-align: center;
-        }}
-        .trading-grid {{
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 2rem;
-            margin-top: 2rem;
-        }}
-        .trading-table {{
-            background: rgba(255, 255, 255, 0.05);
+        
+        .swap-container {{
+            background: white;
             border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             padding: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }}
-        .table-title {{
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            color: #667eea;
-        }}
-        table {{
             width: 100%;
-            border-collapse: collapse;
+            max-width: 480px;
         }}
-        th, td {{
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        
+        .swap-tabs {{
+            display: flex;
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 4px;
+            margin-bottom: 2rem;
         }}
-        th {{
-            color: #a0a9c0;
-            font-weight: 600;
-        }}
-        .pair-info strong {{
-            display: block;
-            font-size: 1.1rem;
-        }}
-        .pair-name {{
-            color: #a0a9c0;
-            font-size: 0.9rem;
-        }}
-        .price {{
-            font-weight: 700;
-            font-size: 1.1rem;
-        }}
-        .change.positive {{
-            color: #00d4aa;
-            font-weight: 600;
-        }}
-        .change.negative {{
-            color: #ff4757;
-            font-weight: 600;
-        }}
-        .trade-btn {{
-            padding: 0.5rem 1rem;
+        
+        .swap-tab {{
+            flex: 1;
+            padding: 0.75rem;
+            text-align: center;
+            background: transparent;
             border: none;
             border-radius: 6px;
             font-weight: 600;
             cursor: pointer;
-            margin-right: 0.5rem;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
+            color: #64748b;
         }}
-        .trade-btn.buy {{
-            background: #00d4aa;
-            color: white;
+        
+        .swap-tab.active {{
+            background: white;
+            color: #1e293b;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }}
-        .trade-btn.sell {{
-            background: #ff4757;
-            color: white;
-        }}
-        .trade-btn:hover {{
-            transform: translateY(-2px);
-        }}
-        .trading-panel {{
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            padding: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            height: fit-content;
-        }}
-        .panel-tabs {{
+        
+        .swap-controls {{
             display: flex;
-            margin-bottom: 2rem;
-        }}
-        .tab {{
-            flex: 1;
-            padding: 1rem;
-            text-align: center;
-            background: transparent;
-            border: none;
-            color: #a0a9c0;
-            cursor: pointer;
-            border-bottom: 2px solid transparent;
-            transition: all 0.3s ease;
-        }}
-        .tab.active {{
-            color: #667eea;
-            border-bottom-color: #667eea;
-        }}
-        .form-group {{
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 1.5rem;
         }}
-        .form-group label {{
-            display: block;
+        
+        .settings-icon {{
+            color: #64748b;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }}
+        
+        .settings-icon:hover {{
+            color: #1e293b;
+        }}
+        
+        .token-input {{
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
             margin-bottom: 0.5rem;
-            color: #a0a9c0;
-            font-weight: 600;
+            transition: border-color 0.2s ease;
         }}
-        .form-group input {{
-            width: 100%;
-            padding: 1rem;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        
+        .token-input:hover {{
+            border-color: #cbd5e1;
+        }}
+        
+        .token-header {{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }}
+        
+        .token-label {{
+            color: #64748b;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }}
+        
+        .token-balance {{
+            color: #64748b;
+            font-size: 0.875rem;
+        }}
+        
+        .token-row {{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }}
+        
+        .token-selector {{
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
             border-radius: 8px;
-            color: white;
-            font-size: 1rem;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }}
-        .form-group input:focus {{
+        
+        .token-selector:hover {{
+            background: #f1f5f9;
+        }}
+        
+        .token-icon {{
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }}
+        
+        .token-info {{
+            display: flex;
+            flex-direction: column;
+        }}
+        
+        .token-symbol {{
+            font-weight: 600;
+            color: #1e293b;
+        }}
+        
+        .token-network {{
+            font-size: 0.75rem;
+            color: #64748b;
+        }}
+        
+        .amount-input {{
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-align: right;
+            color: #1e293b;
+            width: 200px;
+        }}
+        
+        .amount-input:focus {{
             outline: none;
-            border-color: #667eea;
+        }}
+        
+        .amount-input::placeholder {{
+            color: #cbd5e1;
+        }}
+        
+        .swap-arrow {{
+            display: flex;
+            justify-content: center;
+            margin: 0.5rem 0;
+        }}
+        
+        .arrow-btn {{
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }}
+        
+        .arrow-btn:hover {{
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+        }}
+        
+        .connect-wallet-main {{
+            width: 100%;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 1rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            margin-top: 1.5rem;
+        }}
+        
+        .connect-wallet-main:hover {{
+            background: #2563eb;
+        }}
+        
+        @media (max-width: 768px) {{
+            .nav-menu {{
+                gap: 1rem;
+            }}
+            
+            .main-content {{
+                padding: 2rem 1rem;
+            }}
         }}
     </style>
 </head>
 <body>
     <header class="header">
         <nav class="nav">
-            <a href="/" class="logo">RimToken</a>
-            <div class="nav-links">
-                <a href="/trading" class="nav-link active">Trading</a>
-                <a href="/wallet" class="nav-link">Wallet</a>
-                <a href="/#features" class="nav-link">Features</a>
-                <a href="/#prices" class="nav-link">Live Prices</a>
-                <a href="/#about" class="nav-link">About</a>
+            <div class="logo-section">
+                <a href="/" class="logo">
+                    <div class="logo-icon">R</div>
+                    rimtoken
+                </a>
+                <div class="nav-menu">
+                    <a href="/trading" class="nav-item active">Trade <span class="dropdown-arrow">▼</span></a>
+                    <a href="/portfolio" class="nav-item">Portfolio <span class="dropdown-arrow">▼</span></a>
+                    <a href="/dao" class="nav-item">DAO <span class="dropdown-arrow">▼</span></a>
+                    <a href="/buy" class="nav-item">Buy Crypto</a>
+                    <a href="/card" class="nav-item">Card</a>
+                </div>
             </div>
-            <div class="auth-buttons">
-                <a href="/login" class="btn btn-outline">Sign In</a>
-                <a href="/signup" class="btn btn-primary">Get Started</a>
+            <div>
+                <a href="#" class="connect-wallet">Connect wallet</a>
             </div>
         </nav>
     </header>
 
-    <div class="container">
-        <h1 class="page-title">Cryptocurrency Trading</h1>
-        
-        <div class="trading-grid">
-            <div class="trading-table">
-                <h2 class="table-title">Live Market Data</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Pair</th>
-                            <th>Price</th>
-                            <th>24h Change</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {trading_pairs}
-                    </tbody>
-                </table>
+    <main class="main-content">
+        <div class="swap-container">
+            <div class="swap-tabs">
+                <button class="swap-tab active" onclick="switchSwapTab('swap')">Swap</button>
+                <button class="swap-tab" onclick="switchSwapTab('limit')">Limit</button>
             </div>
             
-            <div class="trading-panel">
-                <div class="panel-tabs">
-                    <button class="tab active" onclick="switchTab('buy')">Buy</button>
-                    <button class="tab" onclick="switchTab('sell')">Sell</button>
-                </div>
-                
-                <div class="form-group">
-                    <label>Select Pair</label>
-                    <input type="text" value="BTC/USDT" readonly>
-                </div>
-                
-                <div class="form-group">
-                    <label>Amount</label>
-                    <input type="number" placeholder="0.00" step="0.01">
-                </div>
-                
-                <div class="form-group">
-                    <label>Price</label>
-                    <input type="number" placeholder="Market Price" step="0.01">
-                </div>
-                
-                <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
-                    Place Buy Order
-                </button>
+            <div class="swap-controls">
+                <div></div>
+                <div class="settings-icon">⚙️</div>
             </div>
+            
+            <div class="token-input">
+                <div class="token-header">
+                    <span class="token-label">You pay</span>
+                    <span class="token-balance">~$2,642.19</span>
+                </div>
+                <div class="token-row">
+                    <div class="token-selector" onclick="openTokenSelector('from')">
+                        <div class="token-icon">E</div>
+                        <div class="token-info">
+                            <div class="token-symbol">ETH</div>
+                            <div class="token-network">on Ethereum</div>
+                        </div>
+                        <span>▼</span>
+                    </div>
+                    <input type="text" class="amount-input" placeholder="1" value="1">
+                </div>
+            </div>
+            
+            <div class="swap-arrow">
+                <button class="arrow-btn" onclick="swapTokens()">🔄</button>
+            </div>
+            
+            <div class="token-input">
+                <div class="token-header">
+                    <span class="token-label">You receive</span>
+                    <span class="token-balance"></span>
+                </div>
+                <div class="token-row">
+                    <div class="token-selector" onclick="openTokenSelector('to')">
+                        <div class="token-icon">U</div>
+                        <div class="token-info">
+                            <div class="token-symbol">USDS</div>
+                            <div class="token-network">on Ethereum</div>
+                        </div>
+                        <span>▼</span>
+                    </div>
+                    <input type="text" class="amount-input" placeholder="0" value="${eth_price:,.2f}" readonly>
+                </div>
+            </div>
+            
+            <button class="connect-wallet-main" onclick="connectWallet()">
+                Connect wallet
+            </button>
         </div>
-    </div>
+    </main>
 
     <script>
-        function switchTab(type) {{
-            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+        function switchSwapTab(tab) {{
+            document.querySelectorAll('.swap-tab').forEach(t => t.classList.remove('active'));
             event.target.classList.add('active');
-            
-            const button = document.querySelector('.btn-primary');
-            button.textContent = type === 'buy' ? 'Place Buy Order' : 'Place Sell Order';
-            button.style.background = type === 'buy' ? 
-                'linear-gradient(135deg, #00d4aa 0%, #00b894 100%)' : 
-                'linear-gradient(135deg, #ff4757 0%, #ff3742 100%)';
         }}
         
-        // Update prices every 30 seconds
+        function openTokenSelector(type) {{
+            // Token selector functionality would be implemented here
+            console.log('Opening token selector for:', type);
+        }}
+        
+        function swapTokens() {{
+            // Swap tokens functionality
+            console.log('Swapping tokens');
+        }}
+        
+        function connectWallet() {{
+            // Wallet connection functionality
+            console.log('Connecting wallet');
+        }}
+        
+        // Update exchange rate every 30 seconds
         setInterval(() => {{
             fetch('/api/crypto/prices')
                 .then(response => response.json())
                 .then(data => {{
-                    console.log('Trading data updated');
+                    const ethPrice = data.data.find(coin => coin.symbol === 'ETH')?.price || {eth_price};
+                    document.querySelector('.token-input:last-of-type .amount-input').value = ethPrice.toFixed(2);
                 }})
-                .catch(error => console.log('Update failed'));
+                .catch(error => console.log('Price update failed'));
         }}, 30000);
     </script>
 </body>
