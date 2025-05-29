@@ -19,6 +19,14 @@ COPY . .
 # بناء التطبيق
 RUN npm run build
 
+# إنشاء مستخدم غير مميز للأمان
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S nextjs -u 1001
+
+# تغيير ملكية مجلد التطبيق
+RUN chown -R nextjs:nodejs /app
+USER nextjs
+
 # كشف المنفذ الذي سيستمع عليه التطبيق
 EXPOSE 5000
 
