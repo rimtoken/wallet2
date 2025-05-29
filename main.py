@@ -59,6 +59,89 @@ class TradingHandler(BaseHTTPRequestHandler):
         .price-change.positive { color: #10b981; }
         .price-change.negative { color: #ef4444; }
         
+        .ticker-scroll { 
+            background: rgba(0,0,0,0.2); 
+            padding: 0.5rem; 
+            overflow: hidden; 
+            white-space: nowrap; 
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        .ticker-content { 
+            display: inline-block; 
+            animation: scroll-left 20s linear infinite; 
+        }
+        @keyframes scroll-left {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .ticker-item { 
+            display: inline-block; 
+            margin: 0 2rem; 
+            font-weight: 500;
+        }
+        
+        .cta-section {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        
+        .btn-cta {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary-cta {
+            background: linear-gradient(45deg, #4f46e5, #7c3aed);
+            color: white;
+        }
+        
+        .btn-secondary-cta {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .btn-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .feature-mini {
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .feature-mini-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
         @media (max-width: 768px) {
             .container { grid-template-columns: 1fr; }
             .nav { flex-direction: column; gap: 1rem; }
@@ -110,8 +193,52 @@ class TradingHandler(BaseHTTPRequestHandler):
                 <span class="network" style="background: #627eea;">Ethereum</span>
             </div>
             
+            <div class="ticker-scroll">
+                <div class="ticker-content">
+                    <span class="ticker-item">🪙 BTC: $42,150 (+2.3%)</span>
+                    <span class="ticker-item">💎 ETH: $2,580 (+1.8%)</span>
+                    <span class="ticker-item">⚡ SOL: $125 (-0.5%)</span>
+                    <span class="ticker-item">🟡 BNB: $315 (+3.2%)</span>
+                    <span class="ticker-item">💰 RIM: $0.85 (+12.5%)</span>
+                    <span class="ticker-item">🔷 ADA: $0.48 (+1.2%)</span>
+                    <span class="ticker-item">🔴 DOT: $7.82 (-2.1%)</span>
+                </div>
+            </div>
+            
+            <div class="cta-section">
+                <h2 style="margin-bottom: 1rem;">ابدأ التداول الآن</h2>
+                <p style="opacity: 0.9; margin-bottom: 1.5rem;">انضم إلى أكثر من 500,000 متداول واستفد من أفضل الأسعار</p>
+                <div class="cta-buttons">
+                    <button class="btn-cta btn-primary-cta">🚀 ابدأ التداول</button>
+                    <button class="btn-cta btn-secondary-cta">📱 حمل التطبيق</button>
+                </div>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-mini">
+                    <div class="feature-mini-icon">⚡</div>
+                    <h4>معاملات فورية</h4>
+                    <p style="font-size: 0.8rem; opacity: 0.8;">تنفيذ في أقل من 3 ثوان</p>
+                </div>
+                <div class="feature-mini">
+                    <div class="feature-mini-icon">🔒</div>
+                    <h4>أمان متقدم</h4>
+                    <p style="font-size: 0.8rem; opacity: 0.8;">تشفير عسكري المستوى</p>
+                </div>
+                <div class="feature-mini">
+                    <div class="feature-mini-icon">💰</div>
+                    <h4>رسوم منخفضة</h4>
+                    <p style="font-size: 0.8rem; opacity: 0.8;">أقل من 0.1% لكل معاملة</p>
+                </div>
+                <div class="feature-mini">
+                    <div class="feature-mini-icon">🌍</div>
+                    <h4>دعم 24/7</h4>
+                    <p style="font-size: 0.8rem; opacity: 0.8;">فريق دعم متاح دائماً</p>
+                </div>
+            </div>
+            
             <div class="price-ticker">
-                <div class="ticker-title">أسعار العملات الحية</div>
+                <div class="ticker-title">أزواج التداول الأكثر نشاطاً</div>
                 <div class="price-grid">
                     <div class="price-item">
                         <span>BTC/USDT</span>
@@ -122,12 +249,12 @@ class TradingHandler(BaseHTTPRequestHandler):
                         <span class="price-change positive">$2,580 (+1.8%)</span>
                     </div>
                     <div class="price-item">
-                        <span>SOL/USDT</span>
-                        <span class="price-change negative">$125 (-0.5%)</span>
-                    </div>
-                    <div class="price-item">
                         <span>RIM/USDT</span>
                         <span class="price-change positive">$0.85 (+12.5%)</span>
+                    </div>
+                    <div class="price-item">
+                        <span>SOL/BTC</span>
+                        <span class="price-change negative">0.00297 (-0.5%)</span>
                     </div>
                 </div>
             </div>
@@ -181,7 +308,10 @@ class TradingHandler(BaseHTTPRequestHandler):
         self.wfile.write(html_content.encode('utf-8'))
 
 if __name__ == '__main__':
-    port = 3000
+    import os
+    port = int(os.environ.get('PORT', 3000))
     server = HTTPServer(('0.0.0.0', port), TradingHandler)
     print(f'RimToken Trading Platform running on port {port}')
+    print(f'Access at: http://localhost:{port}')
+    print('✅ Server ready for connections')
     server.serve_forever()
