@@ -395,10 +395,5 @@ app.get("/", (req, res) => {
   `);
 });
 
-const server = createServer(app);
-
-const port = 5000;
-server.listen(port, "0.0.0.0", () => {
-  console.log(`✅ RimToken Server is running on port ${port}`);
-  console.log(`🌐 Access the app at: http://localhost:${port}`);
-});
+// Start the secure server
+startServer();
