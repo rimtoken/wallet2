@@ -87,7 +87,7 @@ class RimTokenHandler(BaseHTTPRequestHandler):
         self.wfile.write(html_content.encode('utf-8'))
 
 if __name__ == '__main__':
-    port = 3000
+    port = 8080
     server = HTTPServer(('0.0.0.0', port), RimTokenHandler)
     print(f'RimToken Website is running at http://localhost:{port}')
     print('موقع RimToken جاهز!')
