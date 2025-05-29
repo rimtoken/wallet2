@@ -1,12 +1,38 @@
 import express from "express";
 import { createServer } from "http";
+import { config } from "./config";
+import { registerRoutes } from "./routes";
 
 const app = express();
 app.use(express.json());
 
+// Initialize secure routes
+async function startServer() {
+  try {
+    console.log("🔐 Initializing RimToken with secure configuration...");
+    console.log(`📊 Environment: ${config.NODE_ENV}`);
+    console.log(`🔑 JWT Secret configured: ${config.JWT_SECRET ? '✅' : '❌'}`);
+    console.log(`🔒 Session Secret configured: ${config.SESSION_SECRET ? '✅' : '❌'}`);
+    
+    // Register all routes with security
+    const server = await registerRoutes(app);
+    
+    const port = config.PORT;
+    server.listen(port, "0.0.0.0", () => {
+      console.log(`✅ RimToken Server running securely on port ${port}`);
+      console.log(`🌐 Access at: http://localhost:${port}`);
+      console.log(`🔍 Health check: http://localhost:${port}/api/system/health`);
+    });
+    
+  } catch (error) {
+    console.error("❌ Failed to start server:", error);
+    process.exit(1);
+  }
+}
+
 // Simple test route
 app.get("/api/test", (req, res) => {
-  res.json({ message: "RimToken Server is working!" });
+  res.json({ message: "RimToken Server is working securely!" });
 });
 
 // Serve a simple HTML page

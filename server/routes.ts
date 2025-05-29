@@ -1,10 +1,11 @@
 import type { Express, Request, Response } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import axios from "axios";
 import { z } from "zod";
 import { insertTransactionSchema, insertUserSchema } from "@shared/schema";
 import { fromZodError } from "zod-validation-error";
+import { externalAPIService } from "./external-api";
+import { config, isServiceConfigured } from "./config";
 // import { setupAuth } from "./auth";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -164,17 +165,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
     return res.json(marketData);
   });
 
-  // CoinGecko API for latest crypto prices
+  // Secure API for latest crypto prices
   app.get("/api/market/refresh", async (_req: Request, res: Response) => {
     try {
       // Get current assets to update
       const assets = await storage.getAssets();
-      const symbols = assets.map(a => a.symbol.toLowerCase()).join(',');
       
-      // Call CoinGecko API (public endpoint, no API key needed)
-      const response = await axios.get(
-        `https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,usd-coin,solana,dogecoin,binancecoin&vs_currencies=usd&include_24hr_change=true`
-      );
+      const coinIds = ['bitcoin', 'ethereum', 'usd-coin', 'solana', 'dogecoin', 'binancecoin'];
+      
+      // Use secure API service
+      const priceData = await externalAPIService.getCryptoPrices(coinIds, 'usd');
       
       const coinMap: Record<string, string> = {
         'bitcoin': 'BTC',
@@ -188,43 +188,91 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const updates = [];
       
       // Process each asset and update its price
-      for (const [coinId, data] of Object.entries(response.data)) {
+      for (const [coinId, data] of Object.entries(priceData)) {
         const symbol = coinMap[coinId];
         if (!symbol) continue;
         
         const asset = assets.find(a => a.symbol === symbol);
         if (!asset) continue;
         
-        const priceData = data as { usd: number, usd_24h_change: number };
+        const marketData = data as { usd: number, usd_24h_change: number, usd_market_cap?: number, usd_24h_vol?: number };
         
         // Update the asset price in storage
         updates.push(
           storage.updateAssetPrice(
             asset.id,
-            priceData.usd.toString(),
-            priceData.usd_24h_change.toString()
+            marketData.usd.toString(),
+            marketData.usd_24h_change.toString()
           )
         );
         
-        // Also add to market data
+        // Also add to market data with real values
         updates.push(
           storage.updateMarketData({
             assetId: asset.id,
-            price: priceData.usd.toString(),
-            volume24h: (Math.random() * 100000000).toString(), // Mock volume
-            marketCap: (Math.random() * 1000000000).toString(), // Mock market cap
-            priceChangePercentage24h: priceData.usd_24h_change.toString()
+            price: marketData.usd.toString(),
+            volume24h: marketData.usd_24h_vol?.toString() || "0",
+            marketCap: marketData.usd_market_cap?.toString() || "0",
+            priceChangePercentage24h: marketData.usd_24h_change.toString()
           })
         );
       }
       
       await Promise.all(updates);
-      return res.json({ message: "Market data refreshed successfully" });
+      
+      const isAuthenticated = isServiceConfigured("COINGECKO_API_KEY");
+      return res.json({ 
+        message: "Market data refreshed successfully",
+        authenticated: isAuthenticated,
+        updatedAssets: updates.length / 2 // Each asset has 2 updates
+      });
     } catch (error: any) {
       console.error("Error refreshing market data:", error);
+      
+      // Check if it's a rate limit or auth error
+      if (error.message.includes("Rate limit exceeded")) {
+        return res.status(429).json({ 
+          message: "Rate limit exceeded. Please configure API credentials for higher limits.",
+          error: error.message,
+          needsAuth: true
+        });
+      }
+      
       return res.status(500).json({ 
         message: "Failed to refresh market data",
         error: error.message 
+      });
+    }
+  });
+
+  // System health and security status endpoint
+  app.get("/api/system/health", async (_req: Request, res: Response) => {
+    try {
+      const healthStatus = await externalAPIService.checkAPIHealth();
+      
+      return res.json({
+        system: "healthy",
+        timestamp: new Date().toISOString(),
+        services: {
+          database: "connected",
+          ...healthStatus
+        },
+        security: {
+          environment: config.NODE_ENV,
+          hasJwtSecret: isServiceConfigured("JWT_SECRET"),
+          hasSessionSecret: isServiceConfigured("SESSION_SECRET"),
+          authenticatedServices: {
+            coinGecko: isServiceConfigured("COINGECKO_API_KEY"),
+            infura: isServiceConfigured("INFURA_API_KEY"),
+            alchemy: isServiceConfigured("ALCHEMY_API_KEY")
+          }
+        }
+      });
+    } catch (error: any) {
+      return res.status(500).json({
+        system: "unhealthy",
+        error: error.message,
+        timestamp: new Date().toISOString()
       });
     }
   });
