@@ -1,48 +1,69 @@
 #!/usr/bin/env python3
 from http.server import HTTPServer, BaseHTTPRequestHandler
 
-class RimTokenHandler(BaseHTTPRequestHandler):
+class TradingHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
         self.send_header('Content-Type', 'text/html; charset=utf-8')
         self.send_header('Cache-Control', 'no-cache')
         self.end_headers()
         
-        # صفحة التداول المتقدمة RimToken
         html_content = '''<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RimToken - منصة العملات الرقمية</title>
+    <title>RimToken - منصة التداول</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
-        body { 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white; min-height: 100vh; line-height: 1.6;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; min-height: 100vh; }
+        
         .header { background: rgba(255,255,255,0.1); padding: 1rem 2rem; backdrop-filter: blur(10px); }
-        .nav { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
-        .logo { font-size: 2rem; font-weight: bold; background: linear-gradient(45deg, #ff6b6b, #4ecdc4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav { display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto; }
+        .logo { font-size: 1.8rem; font-weight: bold; color: white; }
         .nav-links { display: flex; gap: 2rem; list-style: none; }
-        .nav-links a { color: white; text-decoration: none; font-weight: 500; transition: opacity 0.3s; }
-        .nav-links a:hover { opacity: 0.8; }
-        .hero { text-align: center; padding: 4rem 2rem; max-width: 1200px; margin: 0 auto; }
-        .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; background: linear-gradient(45deg, #ff6b6b, #4ecdc4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero p { font-size: 1.25rem; margin-bottom: 2rem; opacity: 0.9; }
-        .status { background: #10b981; padding: 15px 30px; border-radius: 50px; display: inline-block; margin: 20px 0; font-weight: bold; animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
-        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; padding: 2rem; max-width: 1200px; margin: 0 auto; }
-        .feature { background: rgba(255,255,255,0.1); padding: 2rem; border-radius: 20px; text-align: center; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); transition: transform 0.3s; }
-        .feature:hover { transform: translateY(-5px); }
-        .feature-icon { font-size: 3rem; margin-bottom: 1rem; }
-        .feature h3 { font-size: 1.5rem; margin-bottom: 1rem; }
-        .crypto-ticker { background: rgba(0,0,0,0.2); padding: 1rem; overflow: hidden; white-space: nowrap; }
-        .ticker-content { display: inline-block; animation: scroll 30s linear infinite; }
-        @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-        .crypto-item { display: inline-block; margin: 0 2rem; }
-        .footer { text-align: center; padding: 2rem; margin-top: 4rem; background: rgba(0,0,0,0.2); }
-        @media (max-width: 768px) { .nav { flex-direction: column; gap: 1rem; } .hero h1 { font-size: 2.5rem; } }
+        .nav-links a { color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 8px; transition: background 0.3s; }
+        .nav-links a:hover, .nav-links a.active { background: rgba(255,255,255,0.2); }
+        
+        .container { max-width: 1400px; margin: 0 auto; padding: 2rem; display: grid; grid-template-columns: 1fr 400px; gap: 2rem; }
+        
+        .main-section { background: rgba(255,255,255,0.1); border-radius: 20px; padding: 2rem; backdrop-filter: blur(10px); }
+        .sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+        
+        .trading-card { background: rgba(255,255,255,0.95); color: #333; border-radius: 15px; padding: 2rem; }
+        .card-header { text-align: center; margin-bottom: 2rem; }
+        .card-title { font-size: 1.5rem; margin-bottom: 0.5rem; color: #333; }
+        .card-subtitle { color: #666; font-size: 0.9rem; }
+        
+        .form-group { margin-bottom: 1.5rem; }
+        .form-label { display: block; margin-bottom: 0.5rem; font-weight: 500; color: #333; }
+        .form-input { width: 100%; padding: 0.75rem; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 1rem; }
+        .form-input:focus { outline: none; border-color: #4f46e5; }
+        
+        .btn { padding: 0.75rem 1.5rem; border: none; border-radius: 8px; font-size: 1rem; font-weight: 500; cursor: pointer; transition: all 0.3s; }
+        .btn-primary { background: #4f46e5; color: white; width: 100%; }
+        .btn-primary:hover { background: #4338ca; }
+        
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+        .stat-card { background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 12px; text-align: center; }
+        .stat-value { font-size: 2rem; font-weight: bold; margin-bottom: 0.5rem; }
+        .stat-label { font-size: 0.9rem; opacity: 0.8; }
+        
+        .networks { display: flex; gap: 1rem; justify-content: center; margin-top: 1rem; }
+        .network { padding: 0.5rem 1rem; background: rgba(255,255,255,0.2); border-radius: 20px; font-size: 0.8rem; }
+        
+        .price-ticker { background: rgba(0,0,0,0.3); padding: 1rem; margin-bottom: 2rem; border-radius: 10px; }
+        .ticker-title { margin-bottom: 1rem; font-weight: bold; }
+        .price-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+        .price-item { display: flex; justify-content: space-between; padding: 0.5rem; background: rgba(255,255,255,0.1); border-radius: 6px; }
+        .price-change.positive { color: #10b981; }
+        .price-change.negative { color: #ef4444; }
+        
+        @media (max-width: 768px) {
+            .container { grid-template-columns: 1fr; }
+            .nav { flex-direction: column; gap: 1rem; }
+            .stats-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -50,83 +71,117 @@ class RimTokenHandler(BaseHTTPRequestHandler):
         <nav class="nav">
             <div class="logo">RimToken</div>
             <ul class="nav-links">
-                <li><a href="#home">الرئيسية</a></li>
-                <li><a href="#trading">التداول</a></li>
-                <li><a href="#wallet">المحفظة</a></li>
-                <li><a href="#staking">الستاكينغ</a></li>
-                <li><a href="#download">التحميل</a></li>
+                <li><a href="#" class="active">الرئيسية</a></li>
+                <li><a href="#">التداول</a></li>
+                <li><a href="#">المحفظة</a></li>
+                <li><a href="#">الستاكينغ</a></li>
+                <li><a href="#">تحميل التطبيق</a></li>
             </ul>
         </nav>
     </header>
 
-    <div class="crypto-ticker">
-        <div class="ticker-content">
-            <span class="crypto-item">🪙 BTC: $42,150 (+2.3%)</span>
-            <span class="crypto-item">💎 ETH: $2,580 (+1.8%)</span>
-            <span class="crypto-item">⚡ SOL: $125 (-0.5%)</span>
-            <span class="crypto-item">🟡 BNB: $315 (+3.2%)</span>
-            <span class="crypto-item">💰 RIM: $0.85 (+12.5%)</span>
-        </div>
-    </div>
-
-    <main>
-        <section class="hero" id="home">
-            <div class="status">✅ موقع RimToken يعمل بنجاح</div>
-            <h1>مرحباً بك في RimToken</h1>
-            <p>منصة العملات الرقمية الآمنة والمتطورة لإدارة أصولك الرقمية بكل سهولة</p>
+    <div class="container">
+        <main class="main-section">
+            <h1 style="font-size: 2.5rem; margin-bottom: 2rem; text-align: center;">مستقبل العملات المشفرة في يديك</h1>
             
-            <div class="features">
-                <div class="feature">
-                    <div class="feature-icon">🔒</div>
-                    <h3>الأمان المتقدم</h3>
-                    <p>حماية كاملة لأصولك الرقمية مع أحدث تقنيات التشفير والحماية المتقدمة</p>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" style="color: #fbbf24;">+1000</div>
+                    <div class="stat-label">عملة مدعومة</div>
                 </div>
-                
-                <div class="feature">
-                    <div class="feature-icon">⚡</div>
-                    <h3>التداول السريع</h3>
-                    <p>تنفيذ فوري للمعاملات مع رسوم منخفضة على جميع الشبكات المدعومة</p>
+                <div class="stat-card">
+                    <div class="stat-value" style="color: #fbbf24;">$2.5B</div>
+                    <div class="stat-label">حجم التداول</div>
                 </div>
-                
-                <div class="feature">
-                    <div class="feature-icon">🌐</div>
-                    <h3>متعدد البلوك تشين</h3>
-                    <p>دعم شامل لـ Ethereum, Solana, BSC, Polygon وشبكات أخرى</p>
-                </div>
-                
-                <div class="feature">
-                    <div class="feature-icon">📱</div>
-                    <h3>تطبيق موبايل</h3>
-                    <p>إدارة محفظتك من أي مكان مع تطبيقاتنا المتقدمة للهواتف الذكية</p>
-                </div>
-                
-                <div class="feature">
-                    <div class="feature-icon">💰</div>
-                    <h3>الستاكينغ</h3>
-                    <p>اربح عوائد تصل إلى 25% سنوياً من خلال ستاكينغ عملاتك الرقمية</p>
-                </div>
-                
-                <div class="feature">
-                    <div class="feature-icon">🔄</div>
-                    <h3>التبديل السريع</h3>
-                    <p>تبديل العملات الرقمية بسرعة وسهولة مع أفضل الأسعار في السوق</p>
+                <div class="stat-card">
+                    <div class="stat-value" style="color: #fbbf24;">+500K</div>
+                    <div class="stat-label">مستخدم نشط</div>
                 </div>
             </div>
-        </section>
-    </main>
+            
+            <p style="font-size: 1.2rem; text-align: center; margin-bottom: 2rem; opacity: 0.9;">
+                منصة شاملة لإدارة وتداول العملات المشفرة مع دعم متعدد للشبكات ودعم فني على مدار الساعة
+            </p>
+            
+            <div class="networks">
+                <span class="network" style="background: #627eea;">Polygon</span>
+                <span class="network" style="background: #f3ba2f;">BSC</span>
+                <span class="network" style="background: #9945ff;">Solana</span>
+                <span class="network" style="background: #627eea;">Ethereum</span>
+            </div>
+            
+            <div class="price-ticker">
+                <div class="ticker-title">أسعار العملات الحية</div>
+                <div class="price-grid">
+                    <div class="price-item">
+                        <span>BTC/USDT</span>
+                        <span class="price-change positive">$42,150 (+2.3%)</span>
+                    </div>
+                    <div class="price-item">
+                        <span>ETH/USDT</span>
+                        <span class="price-change positive">$2,580 (+1.8%)</span>
+                    </div>
+                    <div class="price-item">
+                        <span>SOL/USDT</span>
+                        <span class="price-change negative">$125 (-0.5%)</span>
+                    </div>
+                    <div class="price-item">
+                        <span>RIM/USDT</span>
+                        <span class="price-change positive">$0.85 (+12.5%)</span>
+                    </div>
+                </div>
+            </div>
+        </main>
 
-    <footer class="footer">
-        <p>&copy; 2025 RimToken. جميع الحقوق محفوظة.</p>
-        <p>منصة العملات الرقمية الآمنة والموثوقة</p>
-    </footer>
+        <aside class="sidebar">
+            <div class="trading-card">
+                <div class="card-header">
+                    <h2 class="card-title">انضم إلى RimToken</h2>
+                    <p class="card-subtitle">ابدأ رحلتك في عالم العملات الرقمية</p>
+                </div>
+                
+                <form>
+                    <div class="form-group">
+                        <label class="form-label">البريد الإلكتروني</label>
+                        <input type="email" class="form-input" placeholder="أدخل بريدك الإلكتروني">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">الاسم الكامل</label>
+                        <input type="text" class="form-input" placeholder="أدخل اسمك الكامل">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">رقم الهاتف</label>
+                        <input type="tel" class="form-input" placeholder="أدخل رقم الهاتف">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">كلمة المرور</label>
+                        <input type="password" class="form-input" placeholder="أدخل كلمة المرور">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">إنشاء حساب مجاناً</button>
+                </form>
+                
+                <p style="text-align: center; margin-top: 1rem; font-size: 0.9rem; color: #666;">
+                    الشبكات المدعومة
+                </p>
+            </div>
+            
+            <div style="text-align: center;">
+                <button class="btn" style="background: #10b981; color: white; margin: 0.5rem;">خدمة العملاء المباشرة</button>
+                <button class="btn" style="background: #ef4444; color: white; margin: 0.5rem;">تطبيق الهاتف</button>
+            </div>
+        </aside>
+    </div>
 </body>
 </html>'''
         
         self.wfile.write(html_content.encode('utf-8'))
 
 if __name__ == '__main__':
-    port = 5000
-    server = HTTPServer(('0.0.0.0', port), RimTokenHandler)
-    print(f'RimToken Website is running at http://localhost:{port}')
-    print('موقع RimToken جاهز!')
+    port = 3000
+    server = HTTPServer(('0.0.0.0', port), TradingHandler)
+    print(f'RimToken Trading Platform running on port {port}')
     server.serve_forever()
