@@ -75,6 +75,14 @@ class LandingPageHandler(BaseHTTPRequestHandler):
             self.handle_trading_page()
         elif self.path == '/wallet':
             self.handle_wallet_page()
+        elif self.path == '/portfolio':
+            self.handle_portfolio_page()
+        elif self.path == '/dao':
+            self.handle_dao_page()
+        elif self.path == '/buy':
+            self.handle_buy_page()
+        elif self.path == '/card':
+            self.handle_card_page()
         else:
             self.send_error(404)
     
@@ -1563,6 +1571,550 @@ class LandingPageHandler(BaseHTTPRequestHandler):
 </body>
 </html>"""
         
+        self.wfile.write(html_content.encode('utf-8'))
+
+    def handle_portfolio_page(self):
+        """Portfolio overview page"""
+        self.send_response(200)
+        self.send_header('Content-Type', 'text/html; charset=utf-8')
+        self.end_headers()
+        
+        html_content = """<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - RimToken</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+        .header {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 1rem 0;
+        }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1e293b;
+            text-decoration: none;
+        }
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        .nav-item {
+            color: #64748b;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+        .nav-item:hover, .nav-item.active {
+            color: #1e293b;
+            border-bottom-color: #3b82f6;
+        }
+        .connect-wallet {
+            background: #3b82f6;
+            color: white;
+            padding: 0.625rem 1.25rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .coming-soon {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        .coming-soon h2 {
+            font-size: 1.5rem;
+            color: #3b82f6;
+            margin-bottom: 1rem;
+        }
+        .coming-soon p {
+            color: #64748b;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a href="/" class="logo">
+                <div class="logo-icon">R</div>
+                rimtoken
+            </a>
+            <div class="nav-menu">
+                <a href="/trading" class="nav-item">Trade</a>
+                <a href="/portfolio" class="nav-item active">Portfolio</a>
+                <a href="/dao" class="nav-item">DAO</a>
+                <a href="/buy" class="nav-item">Buy Crypto</a>
+                <a href="/card" class="nav-item">Card</a>
+            </div>
+            <a href="#" class="connect-wallet">Connect wallet</a>
+        </nav>
+    </header>
+    <main class="main-content">
+        <h1 class="page-title">Portfolio Management</h1>
+        <div class="coming-soon">
+            <h2>Advanced Portfolio Features Coming Soon</h2>
+            <p>We're building comprehensive portfolio analytics and management tools.</p>
+            <a href="/wallet" class="connect-wallet">View Your Wallet</a>
+        </div>
+    </main>
+</body>
+</html>"""
+        self.wfile.write(html_content.encode('utf-8'))
+
+    def handle_dao_page(self):
+        """DAO governance page"""
+        self.send_response(200)
+        self.send_header('Content-Type', 'text/html; charset=utf-8')
+        self.end_headers()
+        
+        html_content = """<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAO - RimToken</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+        .header {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 1rem 0;
+        }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1e293b;
+            text-decoration: none;
+        }
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        .nav-item {
+            color: #64748b;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+        .nav-item:hover, .nav-item.active {
+            color: #1e293b;
+            border-bottom-color: #3b82f6;
+        }
+        .connect-wallet {
+            background: #3b82f6;
+            color: white;
+            padding: 0.625rem 1.25rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .coming-soon {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        .coming-soon h2 {
+            font-size: 1.5rem;
+            color: #3b82f6;
+            margin-bottom: 1rem;
+        }
+        .coming-soon p {
+            color: #64748b;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a href="/" class="logo">
+                <div class="logo-icon">R</div>
+                rimtoken
+            </a>
+            <div class="nav-menu">
+                <a href="/trading" class="nav-item">Trade</a>
+                <a href="/portfolio" class="nav-item">Portfolio</a>
+                <a href="/dao" class="nav-item active">DAO</a>
+                <a href="/buy" class="nav-item">Buy Crypto</a>
+                <a href="/card" class="nav-item">Card</a>
+            </div>
+            <a href="#" class="connect-wallet">Connect wallet</a>
+        </nav>
+    </header>
+    <main class="main-content">
+        <h1 class="page-title">Decentralized Governance</h1>
+        <div class="coming-soon">
+            <h2>DAO Governance Platform</h2>
+            <p>Participate in decentralized decision-making and protocol governance.</p>
+            <a href="/trading" class="connect-wallet">Start Trading</a>
+        </div>
+    </main>
+</body>
+</html>"""
+        self.wfile.write(html_content.encode('utf-8'))
+
+    def handle_buy_page(self):
+        """Buy crypto page"""
+        self.send_response(200)
+        self.send_header('Content-Type', 'text/html; charset=utf-8')
+        self.end_headers()
+        
+        html_content = """<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy Crypto - RimToken</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+        .header {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 1rem 0;
+        }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1e293b;
+            text-decoration: none;
+        }
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        .nav-item {
+            color: #64748b;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+        .nav-item:hover, .nav-item.active {
+            color: #1e293b;
+            border-bottom-color: #3b82f6;
+        }
+        .connect-wallet {
+            background: #3b82f6;
+            color: white;
+            padding: 0.625rem 1.25rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .coming-soon {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        .coming-soon h2 {
+            font-size: 1.5rem;
+            color: #3b82f6;
+            margin-bottom: 1rem;
+        }
+        .coming-soon p {
+            color: #64748b;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a href="/" class="logo">
+                <div class="logo-icon">R</div>
+                rimtoken
+            </a>
+            <div class="nav-menu">
+                <a href="/trading" class="nav-item">Trade</a>
+                <a href="/portfolio" class="nav-item">Portfolio</a>
+                <a href="/dao" class="nav-item">DAO</a>
+                <a href="/buy" class="nav-item active">Buy Crypto</a>
+                <a href="/card" class="nav-item">Card</a>
+            </div>
+            <a href="#" class="connect-wallet">Connect wallet</a>
+        </nav>
+    </header>
+    <main class="main-content">
+        <h1 class="page-title">Buy Cryptocurrency</h1>
+        <div class="coming-soon">
+            <h2>Fiat-to-Crypto Gateway</h2>
+            <p>Purchase cryptocurrency directly with your bank card or bank transfer.</p>
+            <a href="/trading" class="connect-wallet">Trade Now</a>
+        </div>
+    </main>
+</body>
+</html>"""
+        self.wfile.write(html_content.encode('utf-8'))
+
+    def handle_card_page(self):
+        """Crypto card page"""
+        self.send_response(200)
+        self.send_header('Content-Type', 'text/html; charset=utf-8')
+        self.end_headers()
+        
+        html_content = """<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card - RimToken</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+        .header {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 1rem 0;
+        }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1e293b;
+            text-decoration: none;
+        }
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        .nav-item {
+            color: #64748b;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+        .nav-item:hover, .nav-item.active {
+            color: #1e293b;
+            border-bottom-color: #3b82f6;
+        }
+        .connect-wallet {
+            background: #3b82f6;
+            color: white;
+            padding: 0.625rem 1.25rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .coming-soon {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        .coming-soon h2 {
+            font-size: 1.5rem;
+            color: #3b82f6;
+            margin-bottom: 1rem;
+        }
+        .coming-soon p {
+            color: #64748b;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a href="/" class="logo">
+                <div class="logo-icon">R</div>
+                rimtoken
+            </a>
+            <div class="nav-menu">
+                <a href="/trading" class="nav-item">Trade</a>
+                <a href="/portfolio" class="nav-item">Portfolio</a>
+                <a href="/dao" class="nav-item">DAO</a>
+                <a href="/buy" class="nav-item">Buy Crypto</a>
+                <a href="/card" class="nav-item active">Card</a>
+            </div>
+            <a href="#" class="connect-wallet">Connect wallet</a>
+        </nav>
+    </header>
+    <main class="main-content">
+        <h1 class="page-title">RimToken Card</h1>
+        <div class="coming-soon">
+            <h2>Crypto Debit Card</h2>
+            <p>Spend your cryptocurrency anywhere with our physical and virtual debit cards.</p>
+            <a href="/wallet" class="connect-wallet">View Wallet</a>
+        </div>
+    </main>
+</body>
+</html>"""
         self.wfile.write(html_content.encode('utf-8'))
 
 class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
