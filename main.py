@@ -1571,23 +1571,23 @@ class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
     daemon_threads = True
 
 def main():
-    import socket
-    
-    # Find available port
-    for port in [3000, 8000, 8080, 5000]:
-        try:
-            server_address = ('0.0.0.0', port)
+    try:
+        server_address = ('0.0.0.0', 3000)
+        httpd = ThreadedHTTPServer(server_address, LandingPageHandler)
+        print("🚀 RimToken Platform")
+        print("🌐 Running on http://localhost:3000")
+        print("✨ Ready for preview")
+        httpd.serve_forever()
+    except OSError as e:
+        if e.errno == 98:
+            print("Port 3000 in use, trying alternative...")
+            server_address = ('0.0.0.0', 8000)
             httpd = ThreadedHTTPServer(server_address, LandingPageHandler)
-            print(f"🚀 RimToken Landing Page Server")
-            print(f"🌐 Running on http://localhost:{port}")
-            print("✨ Modern landing page with visitor exploration")
+            print("🚀 RimToken Platform")
+            print("🌐 Running on http://localhost:8000")
             httpd.serve_forever()
-            break
-        except OSError as e:
-            if e.errno == 98:  # Address already in use
-                continue
-            else:
-                raise
+        else:
+            raise e
 
 if __name__ == "__main__":
     main()
