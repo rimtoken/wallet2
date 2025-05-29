@@ -27,7 +27,7 @@ function deployToGitHub(message = 'Auto-update RimToken website') {
         
         // رفع التحديثات
         execSync('git add docs/index.html', { stdio: 'inherit' });
-        execSync(`git commit -m "${message}"`, { stdio: 'inherit' });
+        execSync('git commit -m ' + JSON.stringify(message), { stdio: 'inherit' });
         execSync('git push origin main', { stdio: 'inherit' });
         
         console.log('🎉 تم رفع التحديثات بنجاح إلى GitHub!');
