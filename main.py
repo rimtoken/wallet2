@@ -1086,56 +1086,63 @@ class LandingPageHandler(BaseHTTPRequestHandler):
             }});
         }});
 
-        // Language selector functionality
-        const languageBtn = document.getElementById('languageBtn');
-        const languageDropdown = document.getElementById('languageDropdown');
-        const currentLang = document.getElementById('currentLang');
+        // Language selector functionality - wait for DOM to be ready
+        document.addEventListener('DOMContentLoaded', function() {{
+            const languageBtn = document.getElementById('languageBtn');
+            const languageDropdown = document.getElementById('languageDropdown');
+            const currentLang = document.getElementById('currentLang');
 
-        languageBtn.addEventListener('click', function(e) {{
-            e.preventDefault();
-            languageDropdown.classList.toggle('show');
-        }});
+            if (languageBtn && languageDropdown) {{
+                languageBtn.addEventListener('click', function(e) {{
+                    e.preventDefault();
+                    e.stopPropagation();
+                    languageDropdown.classList.toggle('show');
+                }});
 
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(e) {{
-            if (!languageBtn.contains(e.target) && !languageDropdown.contains(e.target)) {{
-                languageDropdown.classList.remove('show');
+                // Close dropdown when clicking outside
+                document.addEventListener('click', function(e) {{
+                    if (!languageBtn.contains(e.target) && !languageDropdown.contains(e.target)) {{
+                        languageDropdown.classList.remove('show');
+                    }}
+                }});
+
+                // Handle language selection
+                document.querySelectorAll('.language-option').forEach(option => {{
+                    option.addEventListener('click', function() {{
+                        // Remove active class from all options
+                        document.querySelectorAll('.language-option').forEach(opt => opt.classList.remove('active'));
+                        
+                        // Add active class to selected option
+                        this.classList.add('active');
+                        
+                        // Update button text
+                        const langCode = this.getAttribute('data-lang');
+                        const langName = this.getAttribute('data-name');
+                        
+                        switch(langCode) {{
+                            case 'en':
+                                currentLang.textContent = 'EN';
+                                break;
+                            case 'ar':
+                                currentLang.textContent = 'AR';
+                                break;
+                            case 'fr':
+                                currentLang.textContent = 'FR';
+                                break;
+                            case 'zh':
+                                currentLang.textContent = 'ZH';
+                                break;
+                        }}
+                        
+                        // Close dropdown
+                        languageDropdown.classList.remove('show');
+                        
+                        // Switch language content
+                        switchLanguage(langCode);
+                    }});
+                }});
             }}
         }});
-
-        // Handle language selection
-        document.querySelectorAll('.language-option').forEach(option => {{
-            option.addEventListener('click', function() {{
-                // Remove active class from all options
-                document.querySelectorAll('.language-option').forEach(opt => opt.classList.remove('active'));
-                
-                // Add active class to selected option
-                this.classList.add('active');
-                
-                // Update button text
-                const langCode = this.getAttribute('data-lang');
-                const langName = this.getAttribute('data-name');
-                
-                switch(langCode) {{
-                    case 'en':
-                        currentLang.textContent = 'EN';
-                        break;
-                    case 'ar':
-                        currentLang.textContent = 'AR';
-                        break;
-                    case 'fr':
-                        currentLang.textContent = 'FR';
-                        break;
-                    case 'zh':
-                        currentLang.textContent = 'ZH';
-                        break;
-                }}
-                
-                // Close dropdown
-                languageDropdown.classList.remove('show');
-                
-                // Switch language content
-                switchLanguage(langCode);
                 
         // Language translation system
         const translations = {{
