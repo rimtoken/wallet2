@@ -78,6 +78,14 @@ class LandingPageHandler(BaseHTTPRequestHandler):
         else:
             self.send_error(404)
     
+    def do_POST(self):
+        if self.path == '/api/register':
+            self.handle_register_api()
+        elif self.path == '/api/login':
+            self.handle_login_api()
+        else:
+            self.send_error(404)
+    
     def handle_crypto_api(self):
         """API endpoint for cryptocurrency prices"""
         self.send_response(200)
@@ -136,6 +144,91 @@ class LandingPageHandler(BaseHTTPRequestHandler):
             self.wfile.write(image_data)
         except FileNotFoundError:
             self.send_error(404)
+    
+    def handle_register_api(self):
+        """Handle user registration POST requests"""
+        try:
+            content_length = int(self.headers['Content-Length'])
+            post_data = self.rfile.read(content_length)
+            data = json.loads(post_data.decode('utf-8'))
+            
+            username = data.get('username', '').strip()
+            email = data.get('email', '').strip()
+            password = data.get('password', '')
+            
+            # Basic validation
+            if not username or not email or not password:
+                self.send_response(400)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                response = {'success': False, 'message': 'All fields are required'}
+                self.wfile.write(json.dumps(response).encode('utf-8'))
+                return
+            
+            if len(password) < 6:
+                self.send_response(400)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                response = {'success': False, 'message': 'Password must be at least 6 characters'}
+                self.wfile.write(json.dumps(response).encode('utf-8'))
+                return
+            
+            # For now, simulate successful registration
+            # In a real implementation, this would save to the database
+            self.send_response(201)
+            self.send_header('Content-Type', 'application/json')
+            self.end_headers()
+            response = {
+                'success': True, 
+                'message': 'Account created successfully',
+                'user': {'username': username, 'email': email}
+            }
+            self.wfile.write(json.dumps(response).encode('utf-8'))
+            
+        except Exception as e:
+            self.send_response(500)
+            self.send_header('Content-Type', 'application/json')
+            self.end_headers()
+            response = {'success': False, 'message': 'Registration failed'}
+            self.wfile.write(json.dumps(response).encode('utf-8'))
+    
+    def handle_login_api(self):
+        """Handle user login POST requests"""
+        try:
+            content_length = int(self.headers['Content-Length'])
+            post_data = self.rfile.read(content_length)
+            data = json.loads(post_data.decode('utf-8'))
+            
+            username = data.get('username', '').strip()
+            password = data.get('password', '')
+            
+            # Basic validation
+            if not username or not password:
+                self.send_response(400)
+                self.send_header('Content-Type', 'application/json')
+                self.end_headers()
+                response = {'success': False, 'message': 'Username and password are required'}
+                self.wfile.write(json.dumps(response).encode('utf-8'))
+                return
+            
+            # For now, simulate successful login
+            # In a real implementation, this would verify against the database
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/json')
+            self.end_headers()
+            response = {
+                'success': True, 
+                'message': 'Login successful',
+                'user': {'username': username}
+            }
+            self.wfile.write(json.dumps(response).encode('utf-8'))
+            
+        except Exception as e:
+            self.send_response(500)
+            self.send_header('Content-Type', 'application/json')
+            self.end_headers()
+            response = {'success': False, 'message': 'Login failed'}
+            self.wfile.write(json.dumps(response).encode('utf-8'))
     
     def handle_register_page(self):
         """Registration page for new users"""
