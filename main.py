@@ -250,6 +250,63 @@ class LandingPageHandler(BaseHTTPRequestHandler):
             height: 18px;
         }}
         
+        .language-dropdown {{
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: rgba(20, 25, 40, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            min-width: 150px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            margin-top: 0.5rem;
+        }}
+        
+        .language-dropdown.show {{
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }}
+        
+        .language-option {{
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: white;
+        }}
+        
+        .language-option:last-child {{
+            border-bottom: none;
+        }}
+        
+        .language-option:hover {{
+            background: rgba(255,255,255,0.1);
+        }}
+        
+        .language-option.active {{
+            background: rgba(255,255,255,0.15);
+        }}
+        
+        .language-flag {{
+            width: 20px;
+            height: 15px;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }}
+        
         .auth-icons {{
             display: flex;
             gap: 1rem;
@@ -634,12 +691,33 @@ class LandingPageHandler(BaseHTTPRequestHandler):
                 <a href="#features" class="nav-link">Features</a>
                 
                 <div class="language-selector">
-                    <button class="language-btn">
+                    <button class="language-btn" id="languageBtn">
                         <svg class="language-icon" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/>
                         </svg>
-                        EN
+                        <span id="currentLang">EN</span>
+                        <svg style="width: 12px; height: 12px; margin-left: 0.25rem;" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M7 10l5 5 5-5z"/>
+                        </svg>
                     </button>
+                    <div class="language-dropdown" id="languageDropdown">
+                        <div class="language-option active" data-lang="en" data-name="English">
+                            <div class="language-flag" style="background: linear-gradient(to bottom, #012169 33%, white 33%, white 66%, #C8102E 66%);">🇺🇸</div>
+                            <span>English</span>
+                        </div>
+                        <div class="language-option" data-lang="ar" data-name="العربية">
+                            <div class="language-flag" style="background: linear-gradient(to bottom, #000 33%, white 33%, white 66%, #007A3D 66%);">🇸🇦</div>
+                            <span>العربية</span>
+                        </div>
+                        <div class="language-option" data-lang="fr" data-name="Français">
+                            <div class="language-flag" style="background: linear-gradient(to right, #002654 33%, white 33%, white 66%, #ED2939 66%);">🇫🇷</div>
+                            <span>Français</span>
+                        </div>
+                        <div class="language-option" data-lang="zh" data-name="中文">
+                            <div class="language-flag" style="background: #DE2910;">🇨🇳</div>
+                            <span>中文</span>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="auth-icons">
@@ -864,6 +942,59 @@ class LandingPageHandler(BaseHTTPRequestHandler):
             tab.addEventListener('click', function() {{
                 document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
                 this.classList.add('active');
+            }});
+        }});
+
+        // Language selector functionality
+        const languageBtn = document.getElementById('languageBtn');
+        const languageDropdown = document.getElementById('languageDropdown');
+        const currentLang = document.getElementById('currentLang');
+
+        languageBtn.addEventListener('click', function(e) {{
+            e.preventDefault();
+            languageDropdown.classList.toggle('show');
+        }});
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {{
+            if (!languageBtn.contains(e.target) && !languageDropdown.contains(e.target)) {{
+                languageDropdown.classList.remove('show');
+            }}
+        }});
+
+        // Handle language selection
+        document.querySelectorAll('.language-option').forEach(option => {{
+            option.addEventListener('click', function() {{
+                // Remove active class from all options
+                document.querySelectorAll('.language-option').forEach(opt => opt.classList.remove('active'));
+                
+                // Add active class to selected option
+                this.classList.add('active');
+                
+                // Update button text
+                const langCode = this.getAttribute('data-lang');
+                const langName = this.getAttribute('data-name');
+                
+                switch(langCode) {{
+                    case 'en':
+                        currentLang.textContent = 'EN';
+                        break;
+                    case 'ar':
+                        currentLang.textContent = 'AR';
+                        break;
+                    case 'fr':
+                        currentLang.textContent = 'FR';
+                        break;
+                    case 'zh':
+                        currentLang.textContent = 'ZH';
+                        break;
+                }}
+                
+                // Close dropdown
+                languageDropdown.classList.remove('show');
+                
+                // Here you can add language switching logic
+                console.log('Language changed to:', langName, '(' + langCode + ')');
             }});
         }});
     </script>
