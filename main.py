@@ -1326,6 +1326,103 @@ class LandingPageHandler(BaseHTTPRequestHandler):
             color: #f87171;
         }}
         
+        /* Team Section Styles */
+        .team-section {{
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6rem 0;
+        }}
+        
+        .team-grid {{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }}
+        
+        .team-member {{
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }}
+        
+        .team-member::before {{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4fd1c7 0%, #06b6d4 100%);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }}
+        
+        .team-member:hover {{
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }}
+        
+        .team-member:hover::before {{
+            transform: scaleX(1);
+        }}
+        
+        .member-photo {{
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }}
+        
+        .team-member:hover .member-photo {{
+            border-color: #4fd1c7;
+            transform: scale(1.05);
+        }}
+        
+        .member-photo img {{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }}
+        
+        .team-member:hover .member-photo img {{
+            transform: scale(1.1);
+        }}
+        
+        .member-info {{
+            color: white;
+        }}
+        
+        .member-name {{
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: white;
+        }}
+        
+        .member-title {{
+            font-size: 1rem;
+            font-weight: 500;
+            color: #4fd1c7;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }}
+        
+        .member-description {{
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }}
+        
         /* Animated Logo */
         .floating-logo {{
             position: fixed;
@@ -1379,6 +1476,9 @@ class LandingPageHandler(BaseHTTPRequestHandler):
             .section {{ padding: 6rem 1rem 2rem; }}
             .price-ticker {{ top: 70px; }}
             .floating-logo {{ display: none; }}
+            .team-grid {{ grid-template-columns: 1fr; gap: 2rem; }}
+            .team-member {{ padding: 1.5rem; }}
+            .member-photo {{ width: 100px; height: 100px; }}
         }}
     </style>
 </head>
