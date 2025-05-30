@@ -1990,6 +1990,429 @@ class LandingPageHandler(BaseHTTPRequestHandler):
             }}
         }}
         
+        /* Guest Wallet Styles */
+        .guest-wallet-view {{
+            display: block;
+        }}
+        
+        .wallet-hero {{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            min-height: 60vh;
+        }}
+        
+        .wallet-main-title {{
+            font-size: 3rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }}
+        
+        .wallet-subtitle {{
+            font-size: 2rem;
+            color: #4fd1c7;
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }}
+        
+        .wallet-description {{
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 3rem;
+        }}
+        
+        .download-section h3 {{
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }}
+        
+        .download-buttons {{
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }}
+        
+        .download-btn {{
+            transition: transform 0.3s ease;
+        }}
+        
+        .download-btn:hover {{
+            transform: scale(1.05);
+        }}
+        
+        .social-icons {{
+            display: flex;
+            gap: 1rem;
+        }}
+        
+        .social-icon {{
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }}
+        
+        .social-icon:hover {{
+            background: linear-gradient(135deg, #4fd1c7 0%, #06b6d4 100%);
+            transform: translateY(-2px);
+        }}
+        
+        /* Phone Mockups */
+        .phone-mockups {{
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }}
+        
+        .phone {{
+            width: 180px;
+            height: 360px;
+            background: linear-gradient(145deg, #2d3748 0%, #1a202c 100%);
+            border-radius: 25px;
+            padding: 8px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }}
+        
+        .phone-2 {{
+            transform: translateY(-30px) scale(0.9);
+            z-index: 2;
+        }}
+        
+        .phone-3 {{
+            transform: translateY(-15px) scale(0.8);
+            z-index: 1;
+        }}
+        
+        .phone-screen {{
+            width: 100%;
+            height: 100%;
+            background: #1a1a1a;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }}
+        
+        .wallet-app {{
+            padding: 1rem;
+            height: 100%;
+            color: white;
+        }}
+        
+        .app-header {{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }}
+        
+        .balance-display {{
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #4fd1c7;
+        }}
+        
+        .app-actions {{
+            font-size: 1.2rem;
+            opacity: 0.7;
+        }}
+        
+        .crypto-list {{
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }}
+        
+        .crypto-item {{
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            font-size: 0.8rem;
+        }}
+        
+        .crypto-icon {{
+            font-size: 1.2rem;
+            width: 24px;
+            text-align: center;
+        }}
+        
+        .crypto-name {{
+            flex: 1;
+            font-weight: 500;
+        }}
+        
+        .crypto-value {{
+            font-weight: 600;
+            color: #4fd1c7;
+        }}
+        
+        .send-interface, .trading-interface {{
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }}
+        
+        .send-header {{
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-align: center;
+        }}
+        
+        .send-form {{
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }}
+        
+        .send-input {{
+            padding: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            color: white;
+            font-size: 0.7rem;
+        }}
+        
+        .send-btn {{
+            padding: 0.75rem;
+            background: linear-gradient(135deg, #4fd1c7 0%, #06b6d4 100%);
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }}
+        
+        .chart-area {{
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            opacity: 0.3;
+        }}
+        
+        .trading-buttons {{
+            display: flex;
+            gap: 0.5rem;
+        }}
+        
+        .trade-btn {{
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }}
+        
+        .trade-btn.buy {{
+            background: #10b981;
+            color: white;
+        }}
+        
+        .trade-btn.sell {{
+            background: #ef4444;
+            color: white;
+        }}
+        
+        /* User Wallet Styles */
+        .user-wallet-view {{
+            display: none;
+        }}
+        
+        .wallet-dashboard {{
+            display: grid;
+            gap: 2rem;
+        }}
+        
+        .balance-card {{
+            background: linear-gradient(135deg, #4fd1c7 0%, #06b6d4 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            color: white;
+        }}
+        
+        .balance-header h3 {{
+            margin: 0 0 1rem 0;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }}
+        
+        .balance-amount {{
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }}
+        
+        .balance-change {{
+            font-size: 1rem;
+            opacity: 0.8;
+        }}
+        
+        .wallet-actions {{
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }}
+        
+        .wallet-action-btn {{
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }}
+        
+        .wallet-action-btn:hover {{
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }}
+        
+        .action-icon {{
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }}
+        
+        .crypto-holdings {{
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 2rem;
+        }}
+        
+        .crypto-holdings h4 {{
+            color: white;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }}
+        
+        .holdings-list {{
+            display: grid;
+            gap: 1rem;
+        }}
+        
+        .holding-item {{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }}
+        
+        .holding-info {{
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }}
+        
+        .crypto-symbol {{
+            font-size: 1.5rem;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #4fd1c7 0%, #06b6d4 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }}
+        
+        .crypto-details {{
+            display: flex;
+            flex-direction: column;
+        }}
+        
+        .crypto-name {{
+            color: white;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }}
+        
+        .crypto-amount {{
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }}
+        
+        .holding-value {{
+            color: white;
+            font-weight: 600;
+        }}
+        
+        .transactions-empty {{
+            text-align: center;
+            padding: 3rem;
+            color: rgba(255, 255, 255, 0.6);
+        }}
+        
+        .empty-icon {{
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }}
+        
+        .transactions-empty h4 {{
+            color: white;
+            margin-bottom: 0.5rem;
+        }}
+        
+        @media (max-width: 768px) {{
+            .wallet-hero {{
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }}
+            
+            .wallet-main-title {{
+                font-size: 2rem;
+            }}
+            
+            .wallet-subtitle {{
+                font-size: 1.5rem;
+            }}
+            
+            .phone-mockups {{
+                justify-content: center;
+                scale: 0.8;
+            }}
+            
+            .wallet-actions {{
+                grid-template-columns: repeat(2, 1fr);
+            }}
+            
+            .download-buttons {{
+                flex-direction: column;
+                align-items: center;
+            }}
+        }}
+        
         /* Price Ticker */
         .price-ticker {{
             background: rgba(0,0,0,0.3);
@@ -2343,128 +2766,300 @@ class LandingPageHandler(BaseHTTPRequestHandler):
     <!-- Wallet Section -->
     <section id="wallet" class="section wallet-section">
         <div class="container">
-            <h2 class="section-title" data-translate="wallet_title">Secure Digital Wallet</h2>
-            
-            <div class="wallet-tabs">
-                <button class="wallet-tab active" data-tab="portfolio">Portfolio</button>
-                <button class="wallet-tab" data-tab="settings">Settings</button>
-                <button class="wallet-tab" data-tab="metatrader">MetaTrader</button>
-            </div>
-            
-            <div class="wallet-content">
-                <!-- Portfolio Tab -->
-                <div class="wallet-tab-content active" id="portfolio">
-                    <div class="portfolio-stats">
-                        <div class="total-value">${total_value:,.2f}</div>
-                        <p style="opacity: 0.8;">Total Portfolio Value</p>
+            <!-- Guest Wallet View (Before Login) -->
+            <div id="guest-wallet" class="guest-wallet-view">
+                <div class="wallet-hero">
+                    <div class="wallet-content-left">
+                        <h1 class="wallet-main-title">RimToken Crypto Wallet:</h1>
+                        <h2 class="wallet-subtitle">Anonymous Bitcoin Wallet</h2>
+                        <p class="wallet-description">
+                            Wallet is the best Crypto Wallet without Verification, ID or KYC. 
+                            Get the most Secure & Anonymous Non-Custodial Crypto Wallet Now.
+                        </p>
+                        
+                        <div class="download-section">
+                            <h3>Download RimToken Wallet</h3>
+                            <div class="download-buttons">
+                                <a href="#" class="download-btn google-play">
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQwIiBoZWlnaHQ9IjQwIiB2aWV3Qm94PSIwIDAgMTQwIDQwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjQwIiByeD0iNSIgZmlsbD0iIzAwMCIvPgo8dGV4dCB4PSI3MCIgeT0iMjUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMiIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+R2V0IGl0IG9uIEdvb2dsZSBQbGF5PC90ZXh0Pgo8L3N2Zz4K" alt="Get it on Google Play">
+                                </a>
+                                <a href="#" class="download-btn app-store">
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQwIiBoZWlnaHQ9IjQwIiB2aWV3Qm94PSIwIDAgMTQwIDQwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjQwIiByeD0iNSIgZmlsbD0iIzAwMCIvPgo8dGV4dCB4PSI3MCIgeT0iMjUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMiIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+RG93bmxvYWQgb24gQXBwIFN0b3JlPC90ZXh0Pgo8L3N2Zz4K" alt="Download on App Store">
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="social-icons">
+                            <a href="https://t.me/rimtoken9" class="social-icon">📱</a>
+                            <a href="https://discord.com/invite/ZqvXkQEwyA" class="social-icon">💬</a>
+                            <a href="https://www.reddit.com/u/rimtoken/s/HnGk0uGY70" class="social-icon">🌐</a>
+                            <a href="https://www.youtube.com/@Rimtoken" class="social-icon">📺</a>
+                        </div>
                     </div>
                     
-                    <div class="portfolio-grid">
-                        {portfolio_items}
+                    <div class="wallet-content-right">
+                        <div class="phone-mockups">
+                            <div class="phone phone-1">
+                                <div class="phone-screen">
+                                    <div class="wallet-app">
+                                        <div class="app-header">
+                                            <div class="balance-display">$9,535.30</div>
+                                            <div class="app-actions">+ - ⚡ =</div>
+                                        </div>
+                                        <div class="crypto-list">
+                                            <div class="crypto-item">
+                                                <span class="crypto-icon">₿</span>
+                                                <span class="crypto-name">Bitcoin</span>
+                                                <span class="crypto-value">$3,443.50</span>
+                                            </div>
+                                            <div class="crypto-item">
+                                                <span class="crypto-icon">Ξ</span>
+                                                <span class="crypto-name">Ethereum</span>
+                                                <span class="crypto-value">$1,340.20</span>
+                                            </div>
+                                            <div class="crypto-item">
+                                                <span class="crypto-icon">◊</span>
+                                                <span class="crypto-name">BNB</span>
+                                                <span class="crypto-value">$1,348.78</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="phone phone-2">
+                                <div class="phone-screen">
+                                    <div class="wallet-app">
+                                        <div class="send-interface">
+                                            <div class="send-header">Send</div>
+                                            <div class="send-form">
+                                                <input type="text" placeholder="Recipient address" class="send-input">
+                                                <input type="text" placeholder="Amount" class="send-input">
+                                                <button class="send-btn">Send Now</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="phone phone-3">
+                                <div class="phone-screen">
+                                    <div class="wallet-app">
+                                        <div class="trading-interface">
+                                            <div class="chart-area">📊</div>
+                                            <div class="trading-buttons">
+                                                <button class="trade-btn buy">Buy</button>
+                                                <button class="trade-btn sell">Sell</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </div>
+            
+            <!-- Logged In Wallet View -->
+            <div id="user-wallet" class="user-wallet-view" style="display: none;">
+                <h2 class="section-title">My Wallet</h2>
                 
-                <!-- Settings Tab -->
-                <div class="wallet-tab-content" id="settings">
-                    <div class="settings-grid">
-                        <div class="setting-card">
-                            <div class="setting-icon">🔐</div>
-                            <h3>Security Settings</h3>
-                            <p>Manage your wallet security preferences</p>
-                            <button class="setting-btn">Configure</button>
+                <div class="wallet-dashboard">
+                    <div class="balance-card">
+                        <div class="balance-header">
+                            <h3>Total Balance</h3>
+                            <div class="balance-amount">$0.00</div>
                         </div>
-                        
-                        <div class="setting-card">
-                            <div class="setting-icon">🔄</div>
-                            <h3>Auto-Trading</h3>
-                            <p>Enable automated trading strategies</p>
-                            <button class="setting-btn">Setup</button>
-                        </div>
-                        
-                        <div class="setting-card">
-                            <div class="setting-icon">📊</div>
-                            <h3>Risk Management</h3>
-                            <p>Set stop-loss and take-profit levels</p>
-                            <button class="setting-btn">Manage</button>
-                        </div>
-                        
-                        <div class="setting-card">
-                            <div class="setting-icon">💰</div>
-                            <h3>Portfolio Limits</h3>
-                            <p>Configure investment limits and alerts</p>
-                            <button class="setting-btn">Set Limits</button>
+                        <div class="balance-change">+0.00% (24h)</div>
+                    </div>
+                    
+                    <div class="wallet-actions">
+                        <button class="wallet-action-btn">
+                            <div class="action-icon">📤</div>
+                            <span>Send</span>
+                        </button>
+                        <button class="wallet-action-btn">
+                            <div class="action-icon">📥</div>
+                            <span>Receive</span>
+                        </button>
+                        <button class="wallet-action-btn">
+                            <div class="action-icon">💱</div>
+                            <span>Trade</span>
+                        </button>
+                        <button class="wallet-action-btn">
+                            <div class="action-icon">📊</div>
+                            <span>Analytics</span>
+                        </button>
+                    </div>
+                    
+                    <div class="crypto-holdings">
+                        <h4>Your Holdings</h4>
+                        <div class="holdings-list">
+                            <div class="holding-item">
+                                <div class="holding-info">
+                                    <span class="crypto-symbol">₿</span>
+                                    <div class="crypto-details">
+                                        <span class="crypto-name">Bitcoin</span>
+                                        <span class="crypto-amount">0.00000000 BTC</span>
+                                    </div>
+                                </div>
+                                <div class="holding-value">$0.00</div>
+                            </div>
+                            
+                            <div class="holding-item">
+                                <div class="holding-info">
+                                    <span class="crypto-symbol">Ξ</span>
+                                    <div class="crypto-details">
+                                        <span class="crypto-name">Ethereum</span>
+                                        <span class="crypto-amount">0.00000000 ETH</span>
+                                    </div>
+                                </div>
+                                <div class="holding-value">$0.00</div>
+                            </div>
+                            
+                            <div class="holding-item">
+                                <div class="holding-info">
+                                    <span class="crypto-symbol">◊</span>
+                                    <div class="crypto-details">
+                                        <span class="crypto-name">BNB</span>
+                                        <span class="crypto-amount">0.00000000 BNB</span>
+                                    </div>
+                                </div>
+                                <div class="holding-value">$0.00</div>
+                            </div>
+                            
+                            <div class="holding-item">
+                                <div class="holding-info">
+                                    <span class="crypto-symbol">⬡</span>
+                                    <div class="crypto-details">
+                                        <span class="crypto-name">Cardano</span>
+                                        <span class="crypto-amount">0.00000000 ADA</span>
+                                    </div>
+                                </div>
+                                <div class="holding-value">$0.00</div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                
-                <!-- MetaTrader Tab -->
-                <div class="wallet-tab-content" id="metatrader">
-                    <div class="metatrader-integration">
-                        <div class="mt-header">
-                            <div class="mt-logo">
-                                <div class="mt-icon">MT</div>
-                                <div>
-                                    <h3>MetaTrader Integration</h3>
-                                    <p>Connect your MetaTrader account for advanced trading</p>
-                                </div>
-                            </div>
-                            <div class="connection-status" id="mtStatus">
-                                <span class="status-dot disconnected"></span>
-                                <span>Disconnected</span>
+                    
+                    <div class="wallet-tabs">
+                        <button class="wallet-tab active" data-tab="transactions">Transactions</button>
+                        <button class="wallet-tab" data-tab="settings">Settings</button>
+                        <button class="wallet-tab" data-tab="metatrader">MetaTrader</button>
+                    </div>
+                    
+                    <div class="wallet-content">
+                        <!-- Transactions Tab -->
+                        <div class="wallet-tab-content active" id="transactions">
+                            <div class="transactions-empty">
+                                <div class="empty-icon">📝</div>
+                                <h4>No transactions yet</h4>
+                                <p>Your transaction history will appear here</p>
                             </div>
                         </div>
                         
-                        <div class="mt-connection-form">
-                            <div class="form-group">
-                                <label>MetaTrader Server</label>
-                                <select class="mt-input" id="mtServer">
-                                    <option value="">Select Server</option>
-                                    <option value="MT5-Demo">MetaTrader 5 Demo</option>
-                                    <option value="MT5-Live">MetaTrader 5 Live</option>
-                                    <option value="MT4-Demo">MetaTrader 4 Demo</option>
-                                    <option value="MT4-Live">MetaTrader 4 Live</option>
-                                </select>
+                        <!-- Settings Tab -->
+                        <div class="wallet-tab-content" id="settings">
+                            <div class="settings-grid">
+                                <div class="setting-card">
+                                    <div class="setting-icon">🔐</div>
+                                    <h3>Security Settings</h3>
+                                    <p>Manage your wallet security preferences</p>
+                                    <button class="setting-btn">Configure</button>
+                                </div>
+                                
+                                <div class="setting-card">
+                                    <div class="setting-icon">🔄</div>
+                                    <h3>Auto-Trading</h3>
+                                    <p>Enable automated trading strategies</p>
+                                    <button class="setting-btn">Setup</button>
+                                </div>
+                                
+                                <div class="setting-card">
+                                    <div class="setting-icon">📊</div>
+                                    <h3>Risk Management</h3>
+                                    <p>Set stop-loss and take-profit levels</p>
+                                    <button class="setting-btn">Manage</button>
+                                </div>
+                                
+                                <div class="setting-card">
+                                    <div class="setting-icon">💰</div>
+                                    <h3>Portfolio Limits</h3>
+                                    <p>Configure investment limits and alerts</p>
+                                    <button class="setting-btn">Set Limits</button>
+                                </div>
                             </div>
-                            
-                            <div class="form-group">
-                                <label>Account Number</label>
-                                <input type="text" class="mt-input" id="mtAccount" placeholder="Enter your account number">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label>Password</label>
-                                <input type="password" class="mt-input" id="mtPassword" placeholder="Enter your password">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label>API Key (Optional)</label>
-                                <input type="text" class="mt-input" id="mtApiKey" placeholder="Enter MetaTrader API key">
-                            </div>
-                            
-                            <button class="mt-connect-btn" onclick="connectMetaTrader()">
-                                <span class="btn-text">Connect to MetaTrader</span>
-                                <span class="loading-spinner" style="display: none;">⟳</span>
-                            </button>
                         </div>
                         
-                        <div class="mt-features">
-                            <h4>Available Features</h4>
-                            <div class="feature-list">
-                                <div class="feature-item">
-                                    <span class="feature-icon">📈</span>
-                                    <span>Real-time market data synchronization</span>
+                        <!-- MetaTrader Tab -->
+                        <div class="wallet-tab-content" id="metatrader">
+                            <div class="metatrader-integration">
+                                <div class="mt-header">
+                                    <div class="mt-logo">
+                                        <div class="mt-icon">MT</div>
+                                        <div>
+                                            <h3>MetaTrader Integration</h3>
+                                            <p>Connect your MetaTrader account for advanced trading</p>
+                                        </div>
+                                    </div>
+                                    <div class="connection-status" id="mtStatus">
+                                        <span class="status-dot disconnected"></span>
+                                        <span>Disconnected</span>
+                                    </div>
                                 </div>
-                                <div class="feature-item">
-                                    <span class="feature-icon">🤖</span>
-                                    <span>Automated trading strategies</span>
+                                
+                                <div class="mt-connection-form">
+                                    <div class="form-group">
+                                        <label>MetaTrader Server</label>
+                                        <select class="mt-input" id="mtServer">
+                                            <option value="">Select Server</option>
+                                            <option value="MT5-Demo">MetaTrader 5 Demo</option>
+                                            <option value="MT5-Live">MetaTrader 5 Live</option>
+                                            <option value="MT4-Demo">MetaTrader 4 Demo</option>
+                                            <option value="MT4-Live">MetaTrader 4 Live</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label>Account Number</label>
+                                        <input type="text" class="mt-input" id="mtAccount" placeholder="Enter your account number">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label>Password</label>
+                                        <input type="password" class="mt-input" id="mtPassword" placeholder="Enter your password">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label>API Key (Optional)</label>
+                                        <input type="text" class="mt-input" id="mtApiKey" placeholder="Enter MetaTrader API key">
+                                    </div>
+                                    
+                                    <button class="mt-connect-btn" onclick="connectMetaTrader()">
+                                        <span class="btn-text">Connect to MetaTrader</span>
+                                        <span class="loading-spinner" style="display: none;">⟳</span>
+                                    </button>
                                 </div>
-                                <div class="feature-item">
-                                    <span class="feature-icon">📊</span>
-                                    <span>Advanced charting and analysis</span>
-                                </div>
-                                <div class="feature-item">
-                                    <span class="feature-icon">⚡</span>
-                                    <span>Lightning-fast order execution</span>
+                                
+                                <div class="mt-features">
+                                    <h4>Available Features</h4>
+                                    <div class="feature-list">
+                                        <div class="feature-item">
+                                            <span class="feature-icon">📈</span>
+                                            <span>Real-time market data synchronization</span>
+                                        </div>
+                                        <div class="feature-item">
+                                            <span class="feature-icon">🤖</span>
+                                            <span>Automated trading strategies</span>
+                                        </div>
+                                        <div class="feature-item">
+                                            <span class="feature-icon">📊</span>
+                                            <span>Advanced charting and analysis</span>
+                                        </div>
+                                        <div class="feature-item">
+                                            <span class="feature-icon">⚡</span>
+                                            <span>Lightning-fast order execution</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -2804,6 +3399,30 @@ class LandingPageHandler(BaseHTTPRequestHandler):
                 alert('Successfully connected to MetaTrader!\\n\\nServer: ' + server + '\\nAccount: ' + account + '\\n\\nYou can now use advanced trading features.');
             }}, 2000);
         }}
+        
+        // Check login status and toggle wallet views
+        function checkLoginStatus() {{
+            // This would normally check session/token in a real application
+            // For demo purposes, we'll check if login was successful
+            const urlParams = new URLSearchParams(window.location.search);
+            const isLoggedIn = urlParams.get('login') === 'success' || localStorage.getItem('isLoggedIn') === 'true';
+            
+            const guestWallet = document.getElementById('guest-wallet');
+            const userWallet = document.getElementById('user-wallet');
+            
+            if (isLoggedIn) {{
+                guestWallet.style.display = 'none';
+                userWallet.style.display = 'block';
+            }} else {{
+                guestWallet.style.display = 'block';
+                userWallet.style.display = 'none';
+            }}
+        }}
+        
+        // Call checkLoginStatus on page load
+        document.addEventListener('DOMContentLoaded', function() {{
+            checkLoginStatus();
+        }});
                 
         // Language translation system
         const translations = {{
