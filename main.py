@@ -73,6 +73,8 @@ class LandingPageHandler(BaseHTTPRequestHandler):
             self.handle_crypto_api()
         elif self.path == '/logo.gif':
             self.handle_logo_image()
+        elif self.path.startswith('/team-photos/'):
+            self.handle_team_photo()
         else:
             self.send_error(404)
     
@@ -101,6 +103,34 @@ class LandingPageHandler(BaseHTTPRequestHandler):
             
             self.send_response(200)
             self.send_header('Content-Type', 'image/gif')
+            self.send_header('Content-Length', str(len(image_data)))
+            self.end_headers()
+            self.wfile.write(image_data)
+        except FileNotFoundError:
+            self.send_error(404)
+    
+    def handle_team_photo(self):
+        """Serve team member photos"""
+        try:
+            # Extract filename from URL path
+            filename = self.path.split('/')[-1]
+            file_path = f'attached_assets/{filename}'
+            
+            with open(file_path, 'rb') as f:
+                image_data = f.read()
+            
+            # Determine content type based on file extension
+            if filename.lower().endswith('.jpg') or filename.lower().endswith('.jpeg'):
+                content_type = 'image/jpeg'
+            elif filename.lower().endswith('.png'):
+                content_type = 'image/png'
+            elif filename.lower().endswith('.gif'):
+                content_type = 'image/gif'
+            else:
+                content_type = 'image/jpeg'  # Default
+            
+            self.send_response(200)
+            self.send_header('Content-Type', content_type)
             self.send_header('Content-Length', str(len(image_data)))
             self.end_headers()
             self.wfile.write(image_data)
@@ -1508,27 +1538,87 @@ class LandingPageHandler(BaseHTTPRequestHandler):
     </section>
 
     <!-- Team Section -->
-    <section id="team" class="section feature-section">
+    <section id="team" class="section team-section">
         <div class="container">
             <h2 class="section-title" data-translate="team_title">Our Expert Team</h2>
+            <p class="section-subtitle" data-translate="team_subtitle">Meet the professionals behind RimToken</p>
             
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">👨‍💼</div>
-                    <h3 class="feature-title">Leadership Team</h3>
-                    <p>Experienced executives leading the future of cryptocurrency innovation.</p>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-photo">
+                        <img src="/team-photos/othmankamra.jpg" alt="Othman Kamra" loading="lazy">
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">Othman Kamra</h3>
+                        <p class="member-title">Chief Executive Officer</p>
+                        <p class="member-description">Visionary leader with extensive experience in fintech and blockchain technology. Driving RimToken's strategic direction and innovation.</p>
+                    </div>
                 </div>
                 
-                <div class="feature-card">
-                    <div class="feature-icon">👩‍💻</div>
-                    <h3 class="feature-title">Development Team</h3>
-                    <p>Expert developers building secure and scalable blockchain solutions.</p>
+                <div class="team-member">
+                    <div class="member-photo">
+                        <img src="/team-photos/rim.jpg" alt="Rim" loading="lazy">
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">Rim</h3>
+                        <p class="member-title">Chief Technology Officer</p>
+                        <p class="member-description">Technical architect and blockchain expert leading our development team. Specializes in secure cryptocurrency infrastructure.</p>
+                    </div>
                 </div>
                 
-                <div class="feature-card">
-                    <div class="feature-icon">👨‍🔬</div>
-                    <h3 class="feature-title">Research Team</h3>
-                    <p>Dedicated researchers advancing cryptocurrency technology and market analysis.</p>
+                <div class="team-member">
+                    <div class="member-photo">
+                        <img src="/team-photos/hacen.jpg" alt="Hacen" loading="lazy">
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">Hacen</h3>
+                        <p class="member-title">Lead Developer</p>
+                        <p class="member-description">Full-stack developer with expertise in React, Node.js, and blockchain integration. Building scalable trading platform solutions.</p>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-photo">
+                        <img src="/team-photos/hamido.jpg" alt="Hamido" loading="lazy">
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">Hamido</h3>
+                        <p class="member-title">Security Engineer</p>
+                        <p class="member-description">Cybersecurity specialist ensuring the highest security standards for user funds and platform infrastructure.</p>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-photo">
+                        <img src="/team-photos/hatan.jpg" alt="Hatan" loading="lazy">
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">Hatan</h3>
+                        <p class="member-title">Market Analyst</p>
+                        <p class="member-description">Financial markets expert providing real-time analysis and insights for cryptocurrency trading strategies.</p>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-photo">
+                        <img src="/team-photos/joen.jpg" alt="Joen" loading="lazy">
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">Joen</h3>
+                        <p class="member-title">Product Manager</p>
+                        <p class="member-description">Product strategy expert focusing on user experience and feature development for the trading platform.</p>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-photo">
+                        <img src="/team-photos/anbarzan.jpg" alt="Anbarzan" loading="lazy">
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">Anbarzan</h3>
+                        <p class="member-title">Marketing Director</p>
+                        <p class="member-description">Digital marketing strategist building RimToken's brand presence and community engagement across global markets.</p>
+                    </div>
                 </div>
             </div>
         </div>
