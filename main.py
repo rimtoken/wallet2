@@ -67,6 +67,8 @@ class LandingPageHandler(BaseHTTPRequestHandler):
             self.handle_landing_page()
         elif self.path == '/api/crypto/prices':
             self.handle_crypto_api()
+        elif self.path == '/logo.gif':
+            self.handle_logo_image()
         else:
             self.send_error(404)
     
@@ -86,6 +88,20 @@ class LandingPageHandler(BaseHTTPRequestHandler):
         }
         
         self.wfile.write(json.dumps(response_data, ensure_ascii=False).encode('utf-8'))
+    
+    def handle_logo_image(self):
+        """Serve the logo image"""
+        try:
+            with open('attached_assets/unnamed.gif', 'rb') as f:
+                image_data = f.read()
+            
+            self.send_response(200)
+            self.send_header('Content-Type', 'image/gif')
+            self.send_header('Content-Length', str(len(image_data)))
+            self.end_headers()
+            self.wfile.write(image_data)
+        except FileNotFoundError:
+            self.send_error(404)
     
     def handle_landing_page(self):
         """Single-page website with all sections accessible by scrolling"""
@@ -220,7 +236,7 @@ class LandingPageHandler(BaseHTTPRequestHandler):
         .logo-icon {{
             width: 40px;
             height: 40px;
-            background-image: url('@assets/unnamed.gif');
+            background-image: url('/logo.gif');
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
@@ -738,14 +754,14 @@ class LandingPageHandler(BaseHTTPRequestHandler):
             position: fixed;
             width: 60px;
             height: 60px;
-            background-image: url('@assets/unnamed.gif');
+            background-image: url('/logo.gif');
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
             border-radius: 15%;
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
             z-index: 998;
-            animation: float-around 20s ease-in-out infinite;
+            animation: float-around 60s ease-in-out infinite;
             backdrop-filter: blur(10px);
         }}
         
