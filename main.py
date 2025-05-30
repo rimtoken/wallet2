@@ -2352,7 +2352,8 @@ class LandingPageHandler(BaseHTTPRequestHandler):
                 'contact_title': 'Get In Touch', 'contact_subtitle': "We're here to help you succeed"
             }},
             'ar': {{
-                'home': 'الرئيسية', 'trading': 'التداول', 'wallet': 'المحفظة', 'downloads': 'التحميلات', 'team': 'الفريق', 'contact': 'اتصل بنا',
+                'home': 'الرئيسية', 'trading': 'التداول', 'wallet': 'المحفظة', 'team': 'الفريق', 'contact': 'اتصل بنا',
+                'contact_title': 'تواصل معنا', 'contact_subtitle': 'نحن هنا لمساعدتك على النجاح',
                 'welcome_title': 'مرحباً بك في ريم توكن', 'welcome_subtitle': 'مستقبل تداول العملات المشفرة',
                 'welcome_description': 'استمتع بتداول العملات المشفرة بسلاسة مع بيانات السوق في الوقت الفعلي وإدارة محفظة متقدمة.',
                 'get_started_btn': 'ابدأ الآن', 'learn_more_btn': 'اعرف المزيد',
@@ -2367,7 +2368,8 @@ class LandingPageHandler(BaseHTTPRequestHandler):
                 'contact_title': 'تواصل معنا', 'contact_subtitle': 'نحن هنا لمساعدتك على النجاح'
             }},
             'fr': {{
-                'home': 'Accueil', 'trading': 'Trading', 'wallet': 'Portefeuille', 'downloads': 'Téléchargements', 'team': 'Équipe', 'contact': 'Contact',
+                'home': 'Accueil', 'trading': 'Trading', 'wallet': 'Portefeuille', 'team': 'Équipe', 'contact': 'Contact',
+                'contact_title': 'Nous Contacter', 'contact_subtitle': 'Nous sommes là pour vous aider à réussir',
                 'welcome_title': 'Bienvenue sur RimToken', 'welcome_subtitle': "L'avenir du trading de cryptomonnaies",
                 'welcome_description': 'Découvrez le trading de cryptomonnaies fluide avec des données de marché en temps réel.',
                 'get_started_btn': 'Commencer', 'learn_more_btn': 'En savoir plus',
@@ -2382,7 +2384,8 @@ class LandingPageHandler(BaseHTTPRequestHandler):
                 'contact_title': 'Contactez-nous', 'contact_subtitle': 'Nous sommes là pour vous aider'
             }},
             'zh': {{
-                'home': '首页', 'trading': '交易', 'wallet': '钱包', 'downloads': '下载', 'team': '团队', 'contact': '联系',
+                'home': '首页', 'trading': '交易', 'wallet': '钱包', 'team': '团队', 'contact': '联系我们',
+                'contact_title': '联系我们', 'contact_subtitle': '我们在这里帮助您成功',
                 'welcome_title': '欢迎来到RimToken', 'welcome_subtitle': '加密货币交易的未来',
                 'welcome_description': '体验无缝的加密货币交易，实时市场数据，先进的投资组合管理。',
                 'get_started_btn': '开始使用', 'learn_more_btn': '了解更多',
