@@ -814,11 +814,11 @@ class LandingPageHandler(BaseHTTPRequestHandler):
                 RimToken
             </a>
             <div class="nav-menu">
-                <a href="#home" class="nav-link">Home</a>
-                <a href="#trading" class="nav-link">Trading</a>
-                <a href="#wallet" class="nav-link">Wallet</a>
-                <a href="#team" class="nav-link">Team</a>
-                <a href="#features" class="nav-link">Features</a>
+                <a href="#home" class="nav-link" data-translate="home">Home</a>
+                <a href="#trading" class="nav-link" data-translate="trading">Trading</a>
+                <a href="#wallet" class="nav-link" data-translate="wallet">Wallet</a>
+                <a href="#team" class="nav-link" data-translate="team">Team</a>
+                <a href="#downloads" class="nav-link" data-translate="downloads">Downloads</a>
                 
                 <div class="language-selector">
                     <button class="language-btn" id="languageBtn">
@@ -881,15 +881,15 @@ class LandingPageHandler(BaseHTTPRequestHandler):
     <!-- Home Section -->
     <section id="home" class="section home-section">
         <div class="container">
-            <h1 class="hero-title">Professional Cryptocurrency Platform</h1>
-            <p class="hero-subtitle">
-                Trade, manage, and invest in cryptocurrencies with real-time data, 
-                advanced analytics, and secure portfolio management.
+            <h1 class="hero-title" data-translate="welcome_title">Welcome to RimToken</h1>
+            <p class="hero-subtitle" data-translate="welcome_description">
+                Experience seamless cryptocurrency trading with real-time market data, 
+                advanced portfolio management, and secure wallet integration.
             </p>
             
             <div class="cta-buttons">
-                <a href="#trading" class="btn btn-primary">Start Trading</a>
-                <a href="#wallet" class="btn btn-secondary">Downloads</a>
+                <a href="#trading" class="btn btn-primary" data-translate="get_started_btn">Get Started</a>
+                <a href="#wallet" class="btn btn-secondary" data-translate="learn_more_btn">Learn More</a>
             </div>
             
             <div class="live-prices">
@@ -904,7 +904,7 @@ class LandingPageHandler(BaseHTTPRequestHandler):
     <!-- Trading Section -->
     <section id="trading" class="section trading-section">
         <div class="container">
-            <h2 class="section-title">Advanced Trading Platform</h2>
+            <h2 class="section-title" data-translate="trading_title">Live Trading Dashboard</h2>
             
             <div class="trading-interface">
                 <div class="swap-tabs">
@@ -947,7 +947,7 @@ class LandingPageHandler(BaseHTTPRequestHandler):
     <!-- Wallet Section -->
     <section id="wallet" class="section wallet-section">
         <div class="container">
-            <h2 class="section-title">Your Portfolio</h2>
+            <h2 class="section-title" data-translate="wallet_title">Secure Digital Wallet</h2>
             
             <div class="portfolio-stats">
                 <div class="total-value">${total_value:,.2f}</div>
@@ -963,7 +963,7 @@ class LandingPageHandler(BaseHTTPRequestHandler):
     <!-- Team Section -->
     <section id="team" class="section feature-section">
         <div class="container">
-            <h2 class="section-title">Our Team</h2>
+            <h2 class="section-title" data-translate="team_title">Our Expert Team</h2>
             
             <div class="features-grid">
                 <div class="feature-card">
