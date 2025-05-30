@@ -630,7 +630,7 @@ class LandingPageHandler(BaseHTTPRequestHandler):
                 <a href="#home" class="nav-link">Home</a>
                 <a href="#trading" class="nav-link">Trading</a>
                 <a href="#wallet" class="nav-link">Wallet</a>
-                <a href="#portfolio" class="nav-link">Portfolio</a>
+                <a href="#team" class="nav-link">Team</a>
                 <a href="#features" class="nav-link">Features</a>
                 
                 <div class="language-selector">
@@ -655,7 +655,7 @@ class LandingPageHandler(BaseHTTPRequestHandler):
                     </a>
                 </div>
             </div>
-            <a href="#wallet" class="download-btn">Get Started</a>
+            <a href="#wallet" class="download-btn">Downloads</a>
         </div>
     </nav>
 
@@ -670,7 +670,7 @@ class LandingPageHandler(BaseHTTPRequestHandler):
             
             <div class="cta-buttons">
                 <a href="#trading" class="btn btn-primary">Start Trading</a>
-                <a href="#wallet" class="btn btn-secondary">Explore Wallet</a>
+                <a href="#wallet" class="btn btn-secondary">Downloads</a>
             </div>
             
             <div class="live-prices">
@@ -741,28 +741,28 @@ class LandingPageHandler(BaseHTTPRequestHandler):
         </div>
     </section>
 
-    <!-- Portfolio Section -->
-    <section id="portfolio" class="section feature-section">
+    <!-- Team Section -->
+    <section id="team" class="section feature-section">
         <div class="container">
-            <h2 class="section-title">Portfolio Analytics</h2>
+            <h2 class="section-title">Our Team</h2>
             
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3 class="feature-title">Advanced Analytics</h3>
-                    <p>Real-time portfolio tracking with detailed performance metrics and insights.</p>
+                    <div class="feature-icon">👨‍💼</div>
+                    <h3 class="feature-title">Leadership Team</h3>
+                    <p>Experienced executives leading the future of cryptocurrency innovation.</p>
                 </div>
                 
                 <div class="feature-card">
-                    <div class="feature-icon">🔒</div>
-                    <h3 class="feature-title">Secure Storage</h3>
-                    <p>Your assets are protected with industry-leading security measures.</p>
+                    <div class="feature-icon">👩‍💻</div>
+                    <h3 class="feature-title">Development Team</h3>
+                    <p>Expert developers building secure and scalable blockchain solutions.</p>
                 </div>
                 
                 <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3 class="feature-title">Instant Trading</h3>
-                    <p>Execute trades instantly with minimal fees and maximum efficiency.</p>
+                    <div class="feature-icon">👨‍🔬</div>
+                    <h3 class="feature-title">Research Team</h3>
+                    <p>Dedicated researchers advancing cryptocurrency technology and market analysis.</p>
                 </div>
             </div>
         </div>
