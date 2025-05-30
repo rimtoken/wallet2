@@ -250,6 +250,37 @@ class LandingPageHandler(BaseHTTPRequestHandler):
             height: 18px;
         }}
         
+        .auth-icons {{
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-left: 1rem;
+        }}
+        
+        .auth-btn {{
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }}
+        
+        .auth-btn:hover {{
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }}
+        
+        .auth-icon {{
+            width: 18px;
+            height: 18px;
+        }}
+        
         .nav-link {{
             color: white;
             text-decoration: none;
@@ -609,6 +640,19 @@ class LandingPageHandler(BaseHTTPRequestHandler):
                         </svg>
                         EN
                     </button>
+                </div>
+                
+                <div class="auth-icons">
+                    <a href="#login" class="auth-btn" title="Login">
+                        <svg class="auth-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        </svg>
+                    </a>
+                    <a href="#register" class="auth-btn" title="Register">
+                        <svg class="auth-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        </svg>
+                    </a>
                 </div>
             </div>
             <a href="#wallet" class="download-btn">Get Started</a>
