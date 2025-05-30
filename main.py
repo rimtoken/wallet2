@@ -1691,6 +1691,305 @@ class LandingPageHandler(BaseHTTPRequestHandler):
             }}
         }}
         
+        /* Wallet Tabs */
+        .wallet-tabs {{
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }}
+        
+        .wallet-tab {{
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.7);
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }}
+        
+        .wallet-tab:hover {{
+            color: white;
+        }}
+        
+        .wallet-tab.active {{
+            color: #4fd1c7;
+            border-bottom-color: #4fd1c7;
+        }}
+        
+        .wallet-tab-content {{
+            display: none;
+        }}
+        
+        .wallet-tab-content.active {{
+            display: block;
+        }}
+        
+        /* Settings Grid */
+        .settings-grid {{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }}
+        
+        .setting-card {{
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }}
+        
+        .setting-card:hover {{
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }}
+        
+        .setting-icon {{
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }}
+        
+        .setting-card h3 {{
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            color: white;
+        }}
+        
+        .setting-card p {{
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }}
+        
+        .setting-btn {{
+            background: linear-gradient(135deg, #4fd1c7 0%, #06b6d4 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }}
+        
+        .setting-btn:hover {{
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(79, 209, 199, 0.3);
+        }}
+        
+        /* MetaTrader Integration */
+        .metatrader-integration {{
+            max-width: 600px;
+            margin: 0 auto;
+        }}
+        
+        .mt-header {{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }}
+        
+        .mt-logo {{
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }}
+        
+        .mt-icon {{
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #4fd1c7 0%, #06b6d4 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 1.2rem;
+        }}
+        
+        .mt-logo h3 {{
+            margin: 0;
+            color: white;
+            font-size: 1.3rem;
+        }}
+        
+        .mt-logo p {{
+            margin: 0;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }}
+        
+        .connection-status {{
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }}
+        
+        .status-dot {{
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ef4444;
+        }}
+        
+        .status-dot.connected {{
+            background: #10b981;
+        }}
+        
+        .status-dot.disconnected {{
+            background: #ef4444;
+        }}
+        
+        .mt-connection-form {{
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }}
+        
+        .form-group {{
+            margin-bottom: 1.5rem;
+        }}
+        
+        .form-group label {{
+            display: block;
+            margin-bottom: 0.5rem;
+            color: white;
+            font-weight: 500;
+        }}
+        
+        .mt-input {{
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            color: white;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }}
+        
+        .mt-input:focus {{
+            outline: none;
+            border-color: #4fd1c7;
+            box-shadow: 0 0 0 2px rgba(79, 209, 199, 0.2);
+        }}
+        
+        .mt-input::placeholder {{
+            color: rgba(255, 255, 255, 0.6);
+        }}
+        
+        .mt-connect-btn {{
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #4fd1c7 0%, #06b6d4 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }}
+        
+        .mt-connect-btn:hover {{
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(79, 209, 199, 0.3);
+        }}
+        
+        .mt-connect-btn:disabled {{
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }}
+        
+        .loading-spinner {{
+            animation: spin 1s linear infinite;
+        }}
+        
+        @keyframes spin {{
+            from {{ transform: rotate(0deg); }}
+            to {{ transform: rotate(360deg); }}
+        }}
+        
+        .mt-features {{
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 2rem;
+        }}
+        
+        .mt-features h4 {{
+            color: white;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }}
+        
+        .feature-list {{
+            display: grid;
+            gap: 1rem;
+        }}
+        
+        .feature-item {{
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }}
+        
+        .feature-icon {{
+            font-size: 1.2rem;
+            width: 30px;
+            text-align: center;
+        }}
+        
+        @media (max-width: 768px) {{
+            .wallet-tabs {{
+                flex-direction: column;
+            }}
+            
+            .wallet-tab {{
+                text-align: center;
+                border-bottom: none;
+                border-left: 2px solid transparent;
+            }}
+            
+            .wallet-tab.active {{
+                border-left-color: #4fd1c7;
+                border-bottom-color: transparent;
+            }}
+            
+            .mt-header {{
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }}
+            
+            .settings-grid {{
+                grid-template-columns: 1fr;
+            }}
+        }}
+        
         /* Price Ticker */
         .price-ticker {{
             background: rgba(0,0,0,0.3);
@@ -2046,13 +2345,131 @@ class LandingPageHandler(BaseHTTPRequestHandler):
         <div class="container">
             <h2 class="section-title" data-translate="wallet_title">Secure Digital Wallet</h2>
             
-            <div class="portfolio-stats">
-                <div class="total-value">${total_value:,.2f}</div>
-                <p style="opacity: 0.8;">Total Portfolio Value</p>
+            <div class="wallet-tabs">
+                <button class="wallet-tab active" data-tab="portfolio">Portfolio</button>
+                <button class="wallet-tab" data-tab="settings">Settings</button>
+                <button class="wallet-tab" data-tab="metatrader">MetaTrader</button>
             </div>
             
-            <div class="portfolio-grid">
-                {portfolio_items}
+            <div class="wallet-content">
+                <!-- Portfolio Tab -->
+                <div class="wallet-tab-content active" id="portfolio">
+                    <div class="portfolio-stats">
+                        <div class="total-value">${total_value:,.2f}</div>
+                        <p style="opacity: 0.8;">Total Portfolio Value</p>
+                    </div>
+                    
+                    <div class="portfolio-grid">
+                        {portfolio_items}
+                    </div>
+                </div>
+                
+                <!-- Settings Tab -->
+                <div class="wallet-tab-content" id="settings">
+                    <div class="settings-grid">
+                        <div class="setting-card">
+                            <div class="setting-icon">🔐</div>
+                            <h3>Security Settings</h3>
+                            <p>Manage your wallet security preferences</p>
+                            <button class="setting-btn">Configure</button>
+                        </div>
+                        
+                        <div class="setting-card">
+                            <div class="setting-icon">🔄</div>
+                            <h3>Auto-Trading</h3>
+                            <p>Enable automated trading strategies</p>
+                            <button class="setting-btn">Setup</button>
+                        </div>
+                        
+                        <div class="setting-card">
+                            <div class="setting-icon">📊</div>
+                            <h3>Risk Management</h3>
+                            <p>Set stop-loss and take-profit levels</p>
+                            <button class="setting-btn">Manage</button>
+                        </div>
+                        
+                        <div class="setting-card">
+                            <div class="setting-icon">💰</div>
+                            <h3>Portfolio Limits</h3>
+                            <p>Configure investment limits and alerts</p>
+                            <button class="setting-btn">Set Limits</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- MetaTrader Tab -->
+                <div class="wallet-tab-content" id="metatrader">
+                    <div class="metatrader-integration">
+                        <div class="mt-header">
+                            <div class="mt-logo">
+                                <div class="mt-icon">MT</div>
+                                <div>
+                                    <h3>MetaTrader Integration</h3>
+                                    <p>Connect your MetaTrader account for advanced trading</p>
+                                </div>
+                            </div>
+                            <div class="connection-status" id="mtStatus">
+                                <span class="status-dot disconnected"></span>
+                                <span>Disconnected</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-connection-form">
+                            <div class="form-group">
+                                <label>MetaTrader Server</label>
+                                <select class="mt-input" id="mtServer">
+                                    <option value="">Select Server</option>
+                                    <option value="MT5-Demo">MetaTrader 5 Demo</option>
+                                    <option value="MT5-Live">MetaTrader 5 Live</option>
+                                    <option value="MT4-Demo">MetaTrader 4 Demo</option>
+                                    <option value="MT4-Live">MetaTrader 4 Live</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Account Number</label>
+                                <input type="text" class="mt-input" id="mtAccount" placeholder="Enter your account number">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" class="mt-input" id="mtPassword" placeholder="Enter your password">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>API Key (Optional)</label>
+                                <input type="text" class="mt-input" id="mtApiKey" placeholder="Enter MetaTrader API key">
+                            </div>
+                            
+                            <button class="mt-connect-btn" onclick="connectMetaTrader()">
+                                <span class="btn-text">Connect to MetaTrader</span>
+                                <span class="loading-spinner" style="display: none;">⟳</span>
+                            </button>
+                        </div>
+                        
+                        <div class="mt-features">
+                            <h4>Available Features</h4>
+                            <div class="feature-list">
+                                <div class="feature-item">
+                                    <span class="feature-icon">📈</span>
+                                    <span>Real-time market data synchronization</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span class="feature-icon">🤖</span>
+                                    <span>Automated trading strategies</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span class="feature-icon">📊</span>
+                                    <span>Advanced charting and analysis</span>
+                                </div>
+                                <div class="feature-item">
+                                    <span class="feature-icon">⚡</span>
+                                    <span>Lightning-fast order execution</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -2332,6 +2749,61 @@ class LandingPageHandler(BaseHTTPRequestHandler):
                 }});
             }}
         }});
+        
+        // Wallet tabs functionality
+        document.querySelectorAll('.wallet-tab').forEach(tab => {{
+            tab.addEventListener('click', function() {{
+                const targetTab = this.getAttribute('data-tab');
+                
+                // Remove active class from all tabs and content
+                document.querySelectorAll('.wallet-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.wallet-tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                this.classList.add('active');
+                document.getElementById(targetTab).classList.add('active');
+            }});
+        }});
+        
+        // MetaTrader connection function
+        function connectMetaTrader() {{
+            const server = document.getElementById('mtServer').value;
+            const account = document.getElementById('mtAccount').value;
+            const password = document.getElementById('mtPassword').value;
+            const apiKey = document.getElementById('mtApiKey').value;
+            
+            if (!server || !account || !password) {{
+                alert('Please fill in all required fields');
+                return;
+            }}
+            
+            const button = document.querySelector('.mt-connect-btn');
+            const btnText = button.querySelector('.btn-text');
+            const spinner = button.querySelector('.loading-spinner');
+            const statusDot = document.querySelector('.status-dot');
+            const statusText = document.querySelector('#mtStatus span:last-child');
+            
+            // Show loading state
+            button.disabled = true;
+            btnText.style.display = 'none';
+            spinner.style.display = 'inline-block';
+            
+            // Simulate connection process (in real implementation, this would connect to MetaTrader API)
+            setTimeout(() => {{
+                // Reset button state
+                button.disabled = false;
+                btnText.style.display = 'inline-block';
+                spinner.style.display = 'none';
+                
+                // Update connection status
+                statusDot.className = 'status-dot connected';
+                statusText.textContent = 'Connected';
+                btnText.textContent = 'Reconnect to MetaTrader';
+                
+                // Show success message
+                alert('Successfully connected to MetaTrader!\\n\\nServer: ' + server + '\\nAccount: ' + account + '\\n\\nYou can now use advanced trading features.');
+            }}, 2000);
+        }}
                 
         // Language translation system
         const translations = {{
