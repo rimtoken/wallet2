@@ -1134,10 +1134,83 @@ class LandingPageHandler(BaseHTTPRequestHandler):
                 // Close dropdown
                 languageDropdown.classList.remove('show');
                 
-                // Here you can add language switching logic
-                console.log('Language changed to:', langName, '(' + langCode + ')');
+                // Switch language content
+                switchLanguage(langCode);
+                
+        // Language translation system
+        const translations = {{
+            'en': {{
+                'home': 'Home', 'trading': 'Trading', 'wallet': 'Wallet', 'downloads': 'Downloads', 'team': 'Team', 'contact': 'Contact',
+                'welcome_title': 'Welcome to RimToken', 'welcome_subtitle': 'The Future of Cryptocurrency Trading',
+                'welcome_description': 'Experience seamless cryptocurrency trading with real-time market data, advanced portfolio management, and secure wallet integration.',
+                'get_started_btn': 'Get Started', 'learn_more_btn': 'Learn More',
+                'trading_title': 'Live Trading Dashboard', 'trading_subtitle': 'Real-time cryptocurrency market data',
+                'name_symbol': 'Name/Symbol', 'price': 'Price', 'change_24h': 'Change (24h)', 'market_cap': 'Market Cap',
+                'wallet_title': 'Secure Digital Wallet', 'wallet_subtitle': 'Manage your cryptocurrencies safely',
+                'wallet_description': 'Your digital assets are protected with bank-level security. Enjoy seamless transactions and real-time portfolio tracking.',
+                'create_wallet_btn': 'Create Wallet', 'import_wallet_btn': 'Import Wallet',
+                'downloads_title': 'Download RimToken', 'downloads_subtitle': 'Get the app on all your devices',
+                'downloads_description': 'Access your portfolio anywhere with our mobile and desktop applications.',
+                'team_title': 'Our Expert Team', 'team_subtitle': 'Meet the professionals behind RimToken',
+                'contact_title': 'Get In Touch', 'contact_subtitle': "We're here to help you succeed"
+            }},
+            'ar': {{
+                'home': 'الرئيسية', 'trading': 'التداول', 'wallet': 'المحفظة', 'downloads': 'التحميلات', 'team': 'الفريق', 'contact': 'اتصل بنا',
+                'welcome_title': 'مرحباً بك في ريم توكن', 'welcome_subtitle': 'مستقبل تداول العملات المشفرة',
+                'welcome_description': 'استمتع بتداول العملات المشفرة بسلاسة مع بيانات السوق في الوقت الفعلي وإدارة محفظة متقدمة.',
+                'get_started_btn': 'ابدأ الآن', 'learn_more_btn': 'اعرف المزيد',
+                'trading_title': 'لوحة التداول المباشر', 'trading_subtitle': 'بيانات سوق العملات المشفرة في الوقت الفعلي',
+                'name_symbol': 'الاسم/الرمز', 'price': 'السعر', 'change_24h': 'التغيير (24 ساعة)', 'market_cap': 'القيمة السوقية',
+                'wallet_title': 'محفظة رقمية آمنة', 'wallet_subtitle': 'إدارة عملاتك المشفرة بأمان',
+                'wallet_description': 'أصولك الرقمية محمية بأمان مصرفي. استمتع بمعاملات سلسة وتتبع المحفظة في الوقت الفعلي.',
+                'create_wallet_btn': 'إنشاء محفظة', 'import_wallet_btn': 'استيراد محفظة',
+                'downloads_title': 'تحميل ريم توكن', 'downloads_subtitle': 'احصل على التطبيق على جميع أجهزتك',
+                'downloads_description': 'الوصول إلى محفظتك في أي مكان مع تطبيقات الهاتف المحمول وسطح المكتب.',
+                'team_title': 'فريقنا الخبير', 'team_subtitle': 'تعرف على المحترفين وراء ريم توكن',
+                'contact_title': 'تواصل معنا', 'contact_subtitle': 'نحن هنا لمساعدتك على النجاح'
+            }},
+            'fr': {{
+                'home': 'Accueil', 'trading': 'Trading', 'wallet': 'Portefeuille', 'downloads': 'Téléchargements', 'team': 'Équipe', 'contact': 'Contact',
+                'welcome_title': 'Bienvenue sur RimToken', 'welcome_subtitle': "L'avenir du trading de cryptomonnaies",
+                'welcome_description': 'Découvrez le trading de cryptomonnaies fluide avec des données de marché en temps réel.',
+                'get_started_btn': 'Commencer', 'learn_more_btn': 'En savoir plus',
+                'trading_title': 'Tableau de bord trading', 'trading_subtitle': 'Données de marché en temps réel',
+                'name_symbol': 'Nom/Symbole', 'price': 'Prix', 'change_24h': 'Changement (24h)', 'market_cap': 'Capitalisation',
+                'wallet_title': 'Portefeuille sécurisé', 'wallet_subtitle': 'Gérez vos cryptomonnaies',
+                'wallet_description': 'Vos actifs numériques sont protégés par une sécurité bancaire.',
+                'create_wallet_btn': 'Créer portefeuille', 'import_wallet_btn': 'Importer portefeuille',
+                'downloads_title': 'Télécharger RimToken', 'downloads_subtitle': "L'application sur tous vos appareils",
+                'downloads_description': 'Accédez à votre portefeuille partout avec nos applications.',
+                'team_title': 'Notre équipe', 'team_subtitle': 'Les professionnels derrière RimToken',
+                'contact_title': 'Contactez-nous', 'contact_subtitle': 'Nous sommes là pour vous aider'
+            }},
+            'zh': {{
+                'home': '首页', 'trading': '交易', 'wallet': '钱包', 'downloads': '下载', 'team': '团队', 'contact': '联系',
+                'welcome_title': '欢迎来到RimToken', 'welcome_subtitle': '加密货币交易的未来',
+                'welcome_description': '体验无缝的加密货币交易，实时市场数据，先进的投资组合管理。',
+                'get_started_btn': '开始使用', 'learn_more_btn': '了解更多',
+                'trading_title': '实时交易面板', 'trading_subtitle': '实时加密货币市场数据',
+                'name_symbol': '名称/符号', 'price': '价格', 'change_24h': '24小时变化', 'market_cap': '市值',
+                'wallet_title': '安全数字钱包', 'wallet_subtitle': '安全管理您的加密货币',
+                'wallet_description': '您的数字资产受到银行级安全保护。享受无缝交易和实时跟踪。',
+                'create_wallet_btn': '创建钱包', 'import_wallet_btn': '导入钱包',
+                'downloads_title': '下载RimToken', 'downloads_subtitle': '在所有设备上获取应用',
+                'downloads_description': '通过我们的移动和桌面应用程序随时随地访问您的投资组合。',
+                'team_title': '我们的专家团队', 'team_subtitle': '认识RimToken背后的专业人士',
+                'contact_title': '联系我们', 'contact_subtitle': '我们在这里帮助您成功'
+            }}
+        }};
+
+        function switchLanguage(lang) {{
+            const elements = document.querySelectorAll('[data-translate]');
+            elements.forEach(element => {{
+                const key = element.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) {{
+                    element.textContent = translations[lang][key];
+                }}
             }});
-        }});
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+        }}
     </script>
 </body>
 </html>"""
