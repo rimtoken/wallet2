@@ -57,6 +57,9 @@ class CryptoAPIService:
             {'symbol': 'ADA', 'name': 'Cardano', 'price': 0.52, 'change_24h': -2.3}
         ]
 
+# Global user storage (in production, this would be a database)
+USERS_DATABASE = []
+
 class LandingPageHandler(BaseHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         self.crypto_service = CryptoAPIService()
@@ -75,6 +78,8 @@ class LandingPageHandler(BaseHTTPRequestHandler):
             self.handle_logo_image()
         elif self.path.startswith('/team-photos/'):
             self.handle_team_photo()
+        elif self.path == '/admin/users':
+            self.handle_admin_users()
         else:
             self.send_error(404)
     
@@ -173,8 +178,26 @@ class LandingPageHandler(BaseHTTPRequestHandler):
                 self.wfile.write(json.dumps(response).encode('utf-8'))
                 return
             
-            # For now, simulate successful registration
-            # In a real implementation, this would save to the database
+            # Check if username already exists
+            for user in USERS_DATABASE:
+                if user['username'] == username:
+                    self.send_response(400)
+                    self.send_header('Content-Type', 'application/json')
+                    self.end_headers()
+                    response = {'success': False, 'message': 'Username already exists'}
+                    self.wfile.write(json.dumps(response).encode('utf-8'))
+                    return
+            
+            # Store user data
+            user_data = {
+                'id': len(USERS_DATABASE) + 1,
+                'username': username,
+                'email': email,
+                'password': password,  # In production, this would be hashed
+                'created_at': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            }
+            USERS_DATABASE.append(user_data)
+            
             self.send_response(201)
             self.send_header('Content-Type', 'application/json')
             self.end_headers()
@@ -768,6 +791,232 @@ class LandingPageHandler(BaseHTTPRequestHandler):
             successDiv.style.display = 'block';
         }}
     </script>
+</body>
+</html>"""
+        
+        self.wfile.write(html_content.encode('utf-8'))
+    
+    def handle_admin_users(self):
+        """Admin panel to view all registered users"""
+        self.send_response(200)
+        self.send_header('Content-Type', 'text/html; charset=utf-8')
+        self.end_headers()
+        
+        # Generate user rows for the table
+        user_rows = ""
+        for user in USERS_DATABASE:
+            user_rows += f"""
+                <tr>
+                    <td>{user['id']}</td>
+                    <td>{user['username']}</td>
+                    <td>{user['email']}</td>
+                    <td>{user['created_at']}</td>
+                </tr>
+            """
+        
+        if not user_rows:
+            user_rows = """
+                <tr>
+                    <td colspan="4" style="text-align: center; color: #666;">No users registered yet</td>
+                </tr>
+            """
+        
+        html_content = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RimToken - User Administration</title>
+    <style>
+        * {{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }}
+        
+        body {{
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            min-height: 100vh;
+            color: white;
+            padding: 2rem;
+        }}
+        
+        .admin-container {{
+            max-width: 1200px;
+            margin: 0 auto;
+        }}
+        
+        .header {{
+            text-align: center;
+            margin-bottom: 3rem;
+        }}
+        
+        .logo-icon {{
+            width: 60px;
+            height: 60px;
+            background-image: url('/logo.gif');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            margin: 0 auto 1rem;
+        }}
+        
+        h1 {{
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: white;
+        }}
+        
+        .subtitle {{
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+        }}
+        
+        .stats-grid {{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }}
+        
+        .stat-card {{
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+        }}
+        
+        .stat-number {{
+            font-size: 2rem;
+            font-weight: 700;
+            color: #4fd1c7;
+            margin-bottom: 0.5rem;
+        }}
+        
+        .stat-label {{
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }}
+        
+        .users-table {{
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }}
+        
+        .table-header {{
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }}
+        
+        table {{
+            width: 100%;
+            border-collapse: collapse;
+        }}
+        
+        th, td {{
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }}
+        
+        th {{
+            background: rgba(255, 255, 255, 0.05);
+            font-weight: 600;
+            color: #4fd1c7;
+        }}
+        
+        tr:hover {{
+            background: rgba(255, 255, 255, 0.05);
+        }}
+        
+        .back-btn {{
+            background: linear-gradient(135deg, #4fd1c7 0%, #06b6d4 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }}
+        
+        .back-btn:hover {{
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(79, 209, 199, 0.3);
+        }}
+        
+        .refresh-btn {{
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            float: right;
+        }}
+        
+        .refresh-btn:hover {{
+            background: rgba(255, 255, 255, 0.2);
+        }}
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="header">
+            <div class="logo-icon"></div>
+            <h1>RimToken Administration</h1>
+            <p class="subtitle">User Registration Management</p>
+        </div>
+        
+        <a href="/" class="back-btn">← Back to Main Site</a>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">{len(USERS_DATABASE)}</div>
+                <div class="stat-label">Total Registered Users</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{len([u for u in USERS_DATABASE if datetime.datetime.now().strftime('%Y-%m-%d') in u.get('created_at', '')])}</div>
+                <div class="stat-label">Registered Today</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{len(set(u['email'].split('@')[1] for u in USERS_DATABASE if '@' in u['email']))}</div>
+                <div class="stat-label">Email Domains</div>
+            </div>
+        </div>
+        
+        <div class="users-table">
+            <div class="table-header">
+                Registered Users
+                <button class="refresh-btn" onclick="location.reload()">Refresh</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Registration Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {user_rows}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 </html>"""
         
