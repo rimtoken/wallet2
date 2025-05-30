@@ -167,7 +167,7 @@ class LandingPageHandler(BaseHTTPRequestHandler):
         
         body {{ 
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
             color: white;
             line-height: 1.6;
             overflow-x: hidden;
@@ -212,7 +212,7 @@ class LandingPageHandler(BaseHTTPRequestHandler):
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #667eea;
+            color: #2d3748;
             font-weight: bold;
         }}
         
@@ -220,6 +220,34 @@ class LandingPageHandler(BaseHTTPRequestHandler):
             display: flex;
             gap: 2rem;
             align-items: center;
+        }}
+        
+        .language-selector {{
+            position: relative;
+            margin-left: 1rem;
+        }}
+        
+        .language-btn {{
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }}
+        
+        .language-btn:hover {{
+            background: rgba(255,255,255,0.2);
+        }}
+        
+        .language-icon {{
+            width: 18px;
+            height: 18px;
         }}
         
         .nav-link {{
@@ -237,7 +265,7 @@ class LandingPageHandler(BaseHTTPRequestHandler):
         
         .download-btn {{
             background: rgba(255,255,255,0.9);
-            color: #667eea;
+            color: #2d3748;
             padding: 0.625rem 1.25rem;
             border-radius: 8px;
             text-decoration: none;
@@ -302,7 +330,7 @@ class LandingPageHandler(BaseHTTPRequestHandler):
         
         .btn-primary {{
             background: rgba(255,255,255,0.9);
-            color: #667eea;
+            color: #2d3748;
         }}
         
         .btn-secondary {{
@@ -420,7 +448,7 @@ class LandingPageHandler(BaseHTTPRequestHandler):
         
         .swap-button {{
             background: rgba(255,255,255,0.9);
-            color: #667eea;
+            color: #2d3748;
             padding: 1rem;
             border: none;
             border-radius: 8px;
@@ -573,6 +601,15 @@ class LandingPageHandler(BaseHTTPRequestHandler):
                 <a href="#wallet" class="nav-link">Wallet</a>
                 <a href="#portfolio" class="nav-link">Portfolio</a>
                 <a href="#features" class="nav-link">Features</a>
+                
+                <div class="language-selector">
+                    <button class="language-btn">
+                        <svg class="language-icon" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/>
+                        </svg>
+                        EN
+                    </button>
+                </div>
             </div>
             <a href="#wallet" class="download-btn">Get Started</a>
         </div>
