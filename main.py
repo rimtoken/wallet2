@@ -220,13 +220,13 @@ class LandingPageHandler(BaseHTTPRequestHandler):
         .logo-icon {{
             width: 40px;
             height: 40px;
-            background: white;
-            border-radius: 50%;
+            background-image: url('@assets/unnamed.gif');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #2d3748;
-            font-weight: bold;
         }}
         
         .nav-menu {{
@@ -738,15 +738,12 @@ class LandingPageHandler(BaseHTTPRequestHandler):
             position: fixed;
             width: 60px;
             height: 60px;
-            background: rgba(255,255,255,0.9);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #2d3748;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            background-image: url('@assets/unnamed.gif');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: 15%;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
             z-index: 998;
             animation: float-around 20s ease-in-out infinite;
             backdrop-filter: blur(10px);
@@ -797,7 +794,7 @@ class LandingPageHandler(BaseHTTPRequestHandler):
     <nav class="navbar">
         <div class="nav-container">
             <a href="#home" class="logo">
-                <div class="logo-icon">R</div>
+                <div class="logo-icon"></div>
                 RimToken
             </a>
             <div class="nav-menu">
@@ -863,7 +860,7 @@ class LandingPageHandler(BaseHTTPRequestHandler):
     </div>
 
     <!-- Animated Logo -->
-    <div class="floating-logo">R</div>
+    <div class="floating-logo"></div>
 
     <!-- Home Section -->
     <section id="home" class="section home-section">
