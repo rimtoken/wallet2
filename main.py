@@ -65,6 +65,10 @@ class LandingPageHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         if self.path == '/':
             self.handle_landing_page()
+        elif self.path == '/register':
+            self.handle_register_page()
+        elif self.path == '/login':
+            self.handle_login_page()
         elif self.path == '/api/crypto/prices':
             self.handle_crypto_api()
         elif self.path == '/logo.gif':
@@ -102,6 +106,549 @@ class LandingPageHandler(BaseHTTPRequestHandler):
             self.wfile.write(image_data)
         except FileNotFoundError:
             self.send_error(404)
+    
+    def handle_register_page(self):
+        """Registration page for new users"""
+        self.send_response(200)
+        self.send_header('Content-Type', 'text/html; charset=utf-8')
+        self.end_headers()
+        
+        html_content = f"""<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - RimToken</title>
+    <style>
+        * {{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }}
+        
+        body {{
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }}
+        
+        .auth-container {{
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 3rem;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }}
+        
+        .logo-section {{
+            text-align: center;
+            margin-bottom: 2rem;
+        }}
+        
+        .logo-icon {{
+            width: 60px;
+            height: 60px;
+            background-image: url('/logo.gif');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            margin: 0 auto 1rem;
+        }}
+        
+        .logo-text {{
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.5rem;
+        }}
+        
+        .logo-subtitle {{
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }}
+        
+        .form-group {{
+            margin-bottom: 1.5rem;
+        }}
+        
+        .form-label {{
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.9);
+        }}
+        
+        .form-input {{
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }}
+        
+        .form-input:focus {{
+            outline: none;
+            border-color: #4fd1c7;
+            box-shadow: 0 0 0 3px rgba(79, 209, 199, 0.1);
+        }}
+        
+        .form-input::placeholder {{
+            color: rgba(255, 255, 255, 0.5);
+        }}
+        
+        .submit-btn {{
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #4fd1c7 0%, #06b6d4 100%);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }}
+        
+        .submit-btn:hover {{
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(79, 209, 199, 0.3);
+        }}
+        
+        .auth-link {{
+            text-align: center;
+            margin-top: 1.5rem;
+        }}
+        
+        .auth-link a {{
+            color: #4fd1c7;
+            text-decoration: none;
+            font-weight: 500;
+        }}
+        
+        .auth-link a:hover {{
+            text-decoration: underline;
+        }}
+        
+        .error-message {{
+            background: rgba(248, 113, 113, 0.2);
+            border: 1px solid rgba(248, 113, 113, 0.3);
+            color: #f87171;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            display: none;
+        }}
+        
+        .success-message {{
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #22c55e;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            display: none;
+        }}
+        
+        .home-link {{
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }}
+        
+        .home-link:hover {{
+            color: white;
+        }}
+    </style>
+</head>
+<body>
+    <a href="/" class="home-link">← Back to Home</a>
+    
+    <div class="auth-container">
+        <div class="logo-section">
+            <div class="logo-icon"></div>
+            <h1 class="logo-text" data-translate="register_title">Create Account</h1>
+            <p class="logo-subtitle" data-translate="register_subtitle">Join RimToken Platform</p>
+        </div>
+        
+        <div class="error-message" id="errorMessage"></div>
+        <div class="success-message" id="successMessage"></div>
+        
+        <form id="registerForm">
+            <div class="form-group">
+                <label class="form-label" data-translate="username_label">Username</label>
+                <input type="text" class="form-input" id="username" name="username" 
+                       placeholder="Enter your username" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" data-translate="email_label">Email Address</label>
+                <input type="email" class="form-input" id="email" name="email" 
+                       placeholder="Enter your email" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" data-translate="password_label">Password</label>
+                <input type="password" class="form-input" id="password" name="password" 
+                       placeholder="Create a strong password" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" data-translate="confirm_password_label">Confirm Password</label>
+                <input type="password" class="form-input" id="confirmPassword" name="confirmPassword" 
+                       placeholder="Confirm your password" required>
+            </div>
+            
+            <button type="submit" class="submit-btn" data-translate="register_btn">Create Account</button>
+        </form>
+        
+        <div class="auth-link">
+            <span data-translate="have_account">Already have an account?</span>
+            <a href="/login" data-translate="login_link">Sign In</a>
+        </div>
+    </div>
+    
+    <script>
+        // Form submission handling
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {{
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const password = formData.get('password');
+            const confirmPassword = formData.get('confirmPassword');
+            
+            // Clear previous messages
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+            
+            // Validate passwords match
+            if (password !== confirmPassword) {{
+                showError('Passwords do not match');
+                return;
+            }}
+            
+            // Validate password strength
+            if (password.length < 6) {{
+                showError('Password must be at least 6 characters long');
+                return;
+            }}
+            
+            try {{
+                const response = await fetch('/api/register', {{
+                    method: 'POST',
+                    headers: {{
+                        'Content-Type': 'application/json',
+                    }},
+                    body: JSON.stringify({{
+                        username: formData.get('username'),
+                        email: formData.get('email'),
+                        password: formData.get('password')
+                    }})
+                }});
+                
+                const result = await response.json();
+                
+                if (result.success) {{
+                    showSuccess('Account created successfully! Redirecting...');
+                    setTimeout(() => {{
+                        window.location.href = '/';
+                    }}, 2000);
+                }} else {{
+                    showError(result.message || 'Registration failed');
+                }}
+            }} catch (error) {{
+                showError('Network error. Please try again.');
+            }}
+        }});
+        
+        function showError(message) {{
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }}
+        
+        function showSuccess(message) {{
+            const successDiv = document.getElementById('successMessage');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+        }}
+    </script>
+</body>
+</html>"""
+        
+        self.wfile.write(html_content.encode('utf-8'))
+    
+    def handle_login_page(self):
+        """Login page for existing users"""
+        self.send_response(200)
+        self.send_header('Content-Type', 'text/html; charset=utf-8')
+        self.end_headers()
+        
+        html_content = f"""<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - RimToken</title>
+    <style>
+        * {{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }}
+        
+        body {{
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }}
+        
+        .auth-container {{
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 3rem;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }}
+        
+        .logo-section {{
+            text-align: center;
+            margin-bottom: 2rem;
+        }}
+        
+        .logo-icon {{
+            width: 60px;
+            height: 60px;
+            background-image: url('/logo.gif');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            margin: 0 auto 1rem;
+        }}
+        
+        .logo-text {{
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.5rem;
+        }}
+        
+        .logo-subtitle {{
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }}
+        
+        .form-group {{
+            margin-bottom: 1.5rem;
+        }}
+        
+        .form-label {{
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.9);
+        }}
+        
+        .form-input {{
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }}
+        
+        .form-input:focus {{
+            outline: none;
+            border-color: #4fd1c7;
+            box-shadow: 0 0 0 3px rgba(79, 209, 199, 0.1);
+        }}
+        
+        .form-input::placeholder {{
+            color: rgba(255, 255, 255, 0.5);
+        }}
+        
+        .submit-btn {{
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #4fd1c7 0%, #06b6d4 100%);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }}
+        
+        .submit-btn:hover {{
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(79, 209, 199, 0.3);
+        }}
+        
+        .auth-link {{
+            text-align: center;
+            margin-top: 1.5rem;
+        }}
+        
+        .auth-link a {{
+            color: #4fd1c7;
+            text-decoration: none;
+            font-weight: 500;
+        }}
+        
+        .auth-link a:hover {{
+            text-decoration: underline;
+        }}
+        
+        .error-message {{
+            background: rgba(248, 113, 113, 0.2);
+            border: 1px solid rgba(248, 113, 113, 0.3);
+            color: #f87171;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            display: none;
+        }}
+        
+        .success-message {{
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: #22c55e;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            display: none;
+        }}
+        
+        .home-link {{
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }}
+        
+        .home-link:hover {{
+            color: white;
+        }}
+    </style>
+</head>
+<body>
+    <a href="/" class="home-link">← Back to Home</a>
+    
+    <div class="auth-container">
+        <div class="logo-section">
+            <div class="logo-icon"></div>
+            <h1 class="logo-text" data-translate="login_title">Welcome Back</h1>
+            <p class="logo-subtitle" data-translate="login_subtitle">Sign in to your account</p>
+        </div>
+        
+        <div class="error-message" id="errorMessage"></div>
+        <div class="success-message" id="successMessage"></div>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label class="form-label" data-translate="username_label">Username</label>
+                <input type="text" class="form-input" id="username" name="username" 
+                       placeholder="Enter your username" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" data-translate="password_label">Password</label>
+                <input type="password" class="form-input" id="password" name="password" 
+                       placeholder="Enter your password" required>
+            </div>
+            
+            <button type="submit" class="submit-btn" data-translate="login_btn">Sign In</button>
+        </form>
+        
+        <div class="auth-link">
+            <span data-translate="no_account">Don't have an account?</span>
+            <a href="/register" data-translate="register_link">Create Account</a>
+        </div>
+    </div>
+    
+    <script>
+        // Form submission handling
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {{
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            
+            // Clear previous messages
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+            
+            try {{
+                const response = await fetch('/api/login', {{
+                    method: 'POST',
+                    headers: {{
+                        'Content-Type': 'application/json',
+                    }},
+                    body: JSON.stringify({{
+                        username: formData.get('username'),
+                        password: formData.get('password')
+                    }})
+                }});
+                
+                const result = await response.json();
+                
+                if (result.success) {{
+                    showSuccess('Login successful! Redirecting...');
+                    setTimeout(() => {{
+                        window.location.href = '/';
+                    }}, 1500);
+                }} else {{
+                    showError(result.message || 'Login failed');
+                }}
+            }} catch (error) {{
+                showError('Network error. Please try again.');
+            }}
+        }});
+        
+        function showError(message) {{
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }}
+        
+        function showSuccess(message) {{
+            const successDiv = document.getElementById('successMessage');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+        }}
+    </script>
+</body>
+</html>"""
+        
+        self.wfile.write(html_content.encode('utf-8'))
     
     def handle_landing_page(self):
         """Single-page website with all sections accessible by scrolling"""
@@ -851,12 +1398,12 @@ class LandingPageHandler(BaseHTTPRequestHandler):
                 </div>
                 
                 <div class="auth-icons">
-                    <a href="#login" class="auth-btn" title="Login">
+                    <a href="/login" class="auth-btn" title="Login">
                         <svg class="auth-icon" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
                         </svg>
                     </a>
-                    <a href="#register" class="auth-btn" title="Register">
+                    <a href="/register" class="auth-btn" title="Register">
                         <svg class="auth-icon" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
                         </svg>
