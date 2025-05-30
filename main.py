@@ -95,7 +95,20 @@ class LandingPageHandler(BaseHTTPRequestHandler):
         
         crypto_data = self.crypto_service.get_real_time_prices()
         
-        # Generate live price ticker for home section
+        # Generate live price ticker for moving ticker
+        ticker_items = ""
+        for coin in crypto_data:
+            change_class = "positive" if coin['change_24h'] >= 0 else "negative"
+            change_symbol = "+" if coin['change_24h'] >= 0 else ""
+            ticker_items += f"""
+                <div class="ticker-item">
+                    <span class="ticker-symbol">{coin['symbol']}</span>
+                    <span class="ticker-price">${coin['price']:,.2f}</span>
+                    <span class="ticker-change {change_class}">{change_symbol}{coin['change_24h']:.2f}%</span>
+                </div>
+            """
+        
+        # Generate live price grid for home section
         price_ticker = ""
         for coin in crypto_data[:4]:
             change_class = "positive" if coin['change_24h'] >= 0 else "negative"
@@ -368,7 +381,7 @@ class LandingPageHandler(BaseHTTPRequestHandler):
         /* Sections */
         .section {{
             min-height: 100vh;
-            padding: 6rem 2rem 4rem;
+            padding: 8rem 2rem 4rem;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -665,13 +678,117 @@ class LandingPageHandler(BaseHTTPRequestHandler):
             margin-bottom: 1rem;
         }}
         
+        /* Price Ticker */
+        .price-ticker {{
+            background: rgba(0,0,0,0.3);
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            overflow: hidden;
+            position: fixed;
+            top: 80px;
+            width: 100%;
+            z-index: 999;
+        }}
+        
+        .ticker-track {{
+            display: flex;
+            animation: scroll-ticker 60s linear infinite;
+            gap: 3rem;
+            white-space: nowrap;
+        }}
+        
+        @keyframes scroll-ticker {{
+            0% {{ transform: translateX(100%); }}
+            100% {{ transform: translateX(-100%); }}
+        }}
+        
+        .ticker-item {{
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.9rem;
+            color: white;
+            min-width: 200px;
+        }}
+        
+        .ticker-symbol {{
+            font-weight: 700;
+            color: white;
+        }}
+        
+        .ticker-price {{
+            font-weight: 600;
+        }}
+        
+        .ticker-change {{
+            font-weight: 600;
+            font-size: 0.85rem;
+        }}
+        
+        .ticker-change.positive {{
+            color: #4ade80;
+        }}
+        
+        .ticker-change.negative {{
+            color: #f87171;
+        }}
+        
+        /* Animated Logo */
+        .floating-logo {{
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2d3748;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            z-index: 998;
+            animation: float-around 20s ease-in-out infinite;
+            backdrop-filter: blur(10px);
+        }}
+        
+        @keyframes float-around {{
+            0% {{
+                top: 200px;
+                left: 50px;
+                transform: rotate(0deg);
+            }}
+            25% {{
+                top: 300px;
+                left: calc(100% - 110px);
+                transform: rotate(90deg);
+            }}
+            50% {{
+                top: 500px;
+                left: 50px;
+                transform: rotate(180deg);
+            }}
+            75% {{
+                top: 600px;
+                left: calc(100% - 110px);
+                transform: rotate(270deg);
+            }}
+            100% {{
+                top: 200px;
+                left: 50px;
+                transform: rotate(360deg);
+            }}
+        }}
+        
         /* Mobile Responsive */
         @media (max-width: 768px) {{
             .hero-title {{ font-size: 2.5rem; }}
             .nav-menu {{ display: none; }}
             .cta-buttons {{ flex-direction: column; align-items: center; }}
             .prices-grid {{ grid-template-columns: 1fr; }}
-            .section {{ padding: 4rem 1rem 2rem; }}
+            .section {{ padding: 6rem 1rem 2rem; }}
+            .price-ticker {{ top: 70px; }}
+            .floating-logo {{ display: none; }}
         }}
     </style>
 </head>
@@ -736,6 +853,17 @@ class LandingPageHandler(BaseHTTPRequestHandler):
             <a href="#wallet" class="download-btn">Downloads</a>
         </div>
     </nav>
+
+    <!-- Price Ticker -->
+    <div class="price-ticker">
+        <div class="ticker-track">
+            {ticker_items}
+            {ticker_items}
+        </div>
+    </div>
+
+    <!-- Animated Logo -->
+    <div class="floating-logo">R</div>
 
     <!-- Home Section -->
     <section id="home" class="section home-section">
